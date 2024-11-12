@@ -15,28 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
-    private bool doubleJump;
-
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (IsGrounded())
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            doubleJump = false;
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (IsGrounded())
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            }
-            else if (!doubleJump)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                doubleJump = true;
-            }
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -47,9 +32,11 @@ public class PlayerMovement : MonoBehaviour
         Flip();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        Debug.Log("IsGrounded: " + grounded);
+        return grounded;
     }
 
     private void FixedUpdate()
@@ -80,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
-            localScale.x *= -1f; 
+            localScale.x = Mathf.Abs(localScale.x) * (isFacingRight ? 1 : -1);
             transform.localScale = localScale;
         }
     }
