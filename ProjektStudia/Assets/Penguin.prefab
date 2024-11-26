@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.78, y: 0.26, z: 0}
-  m_LocalScale: {x: 1.3801, y: 1.3801, z: 1.3801}
+  m_LocalScale: {x: 13.265774, y: 13.265774, z: 13.265774}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5891116919037365468}
@@ -220,7 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpingPower: 14
+  speed: 25
+  jumpingPower: 40
   rb: {fileID: 3636474170696390609}
   groundCheck: {fileID: 5891116919037365468}
   groundLayer:
@@ -238,9 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d220a2d87e0c38478a3409bd4470368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawnPoint: {fileID: 0}
-  respawnDelay: 1
-  deathHeight: -10
+  deathHeight: -60
 --- !u!114 &540290802583244899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 9137642154222133471}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -0.65, z: 0.04050204}
+  m_LocalPosition: {x: -0.021, y: -0.604, z: 0.04050204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

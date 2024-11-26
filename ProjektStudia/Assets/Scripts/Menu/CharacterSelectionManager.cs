@@ -2,27 +2,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using TMPro;
 
 public class CharacterSelectionManager : MonoBehaviour
 {
     public List<Button> characterButtons;
     public List<Sprite> characterIcons;
+    public TextMeshProUGUI selectedCountText;
+    public Button confirmButton; // Przycisk "ZatwierdŸ"
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
-    private int selectedMap; // Przeniesiono selectedMap na poziom klasy
 
     private void Start()
     {
-        selectedMap = PlayerPrefs.GetInt("SelectedMap", 1); // Pobierz wybran¹ mapê z PlayerPrefs
-        maxSelectableCharacters = (selectedMap == 1) ? 2 : 5; // Ustaw maksymaln¹ liczbê postaci
+        // Pobierz wybran¹ mapê z PlayerPrefs
+        int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
 
-        // Dodaj listenery do przycisków
+        // Ustaw maksymaln¹ liczbê postaci w zale¿noœci od mapy
+        maxSelectableCharacters = (selectedMap == 1) ? 2 : 3;
+
+        // Ustaw pocz¹tkowy stan przycisku "ZatwierdŸ"
+        confirmButton.interactable = false;
+
+        UpdateSelectionCount();
+
+        // Dodaj listener do przycisków postaci
         for (int i = 0; i < characterButtons.Count; i++)
         {
             int index = i;
             characterButtons[i].onClick.AddListener(() => SelectCharacter(index));
         }
+
+        // Dodaj listener do przycisku "ZatwierdŸ"
+        confirmButton.onClick.AddListener(SaveSelectionAndLoadMap);
     }
 
     public void SelectCharacter(int characterIndex)
@@ -32,25 +45,40 @@ public class CharacterSelectionManager : MonoBehaviour
             selectedCharacters.Add(characterIndex);
             characterButtons[characterIndex].interactable = false;
 
+            UpdateSelectionCount();
+
+            // Aktywuj przycisk "ZatwierdŸ", jeœli osi¹gniêto limit
             if (selectedCharacters.Count == maxSelectableCharacters)
             {
-                PlayerPrefs.SetString("SelectedCharacters", string.Join(",", selectedCharacters));
-
-                List<string> selectedIcons = new List<string>
-                {
-                    characterIcons[selectedCharacters[0]].name,
-                    characterIcons[selectedCharacters[1]].name
-                };
-
-                for (int i = 2; i < selectedCharacters.Count; i++)
-                {
-                    selectedIcons.Add(characterIcons[selectedCharacters[i]].name);
-                }
-
-                PlayerPrefs.SetString("SelectedIcons", string.Join(",", selectedIcons));
-
-                SceneManager.LoadScene("Map" + selectedMap); // Tutaj zmienna selectedMap jest widoczna
+                confirmButton.interactable = true;
             }
         }
+    }
+
+    private void UpdateSelectionCount()
+    {
+        selectedCountText.text = $"Wybrano: {selectedCharacters.Count}/{maxSelectableCharacters}";
+    }
+
+    private void SaveSelectionAndLoadMap()
+    {
+        // Zapisz wybrane postacie
+        PlayerPrefs.SetString("SelectedCharacters", string.Join(",", selectedCharacters));
+
+        // Zapisz wybrane ikony
+        List<string> selectedIcons = new List<string>();
+        foreach (int index in selectedCharacters)
+        {
+            selectedIcons.Add(characterIcons[index].name);
+        }
+        PlayerPrefs.SetString("SelectedIcons", string.Join(",", selectedIcons));
+
+        // Pobierz wybran¹ mapê
+        int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
+
+        // Za³aduj odpowiedni¹ scenê
+        string sceneToLoad = "Map" + selectedMap;
+        Debug.Log("£adowanie sceny: " + sceneToLoad);
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
