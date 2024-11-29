@@ -16,7 +16,7 @@ public class CollectibleItem : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isCollected)
         {
-            isCollected = true;  // Ustawiamy flagê, aby zapobiec wielokrotnemu zebraniu
+            isCollected = true; 
             Debug.Log($"[CollectibleItem] {gameObject.name} collected by player.");
             OnItemCollected?.Invoke();
             Destroy(gameObject);

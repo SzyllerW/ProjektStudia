@@ -6,6 +6,8 @@ public class LevelManager : MonoBehaviour
     private int totalItems = 0;
     private int itemsCollected = 0;
 
+    [SerializeField] private GameObject victoryScreenPrefab; // Przeciπgnij prefab ekranu wygranej w inspektorze
+
     private void OnEnable()
     {
         CollectibleItem.OnItemCollected += ItemCollected;
@@ -49,6 +51,22 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("[LevelManager] Level Completed!");
 
+        // Sprawdü, czy prefab ekranu wygranej zosta≥ przypisany
+        if (victoryScreenPrefab != null)
+        {
+            // Wyúwietl prefab ekranu wygranej
+            GameObject victoryScreen = Instantiate(victoryScreenPrefab);
+            victoryScreen.SetActive(true); // Aktywuj ekran wygranej
+        }
+        else
+        {
+            // Domyúlne zachowanie: przejúcie do kolejnej sceny
+            LoadNextScene();
+        }
+    }
+
+    public void LoadNextScene()
+    {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
@@ -59,6 +77,7 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("[LevelManager] All levels completed. Returning to main menu or ending game.");
             // Moøna dodaÊ kod powrotu do menu g≥Ûwnego
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
