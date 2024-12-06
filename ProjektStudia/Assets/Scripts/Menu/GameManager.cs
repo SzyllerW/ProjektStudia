@@ -21,15 +21,30 @@ public class GameManager : MonoBehaviour
     private void LoadSelectedCharacters()
     {
         string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
+
+        if (string.IsNullOrEmpty(selectedCharacters))
+        {
+            Debug.LogError("Brak wybranych postaci w PlayerPrefs!");
+            return;
+        }
+
         string[] characterIndexes = selectedCharacters.Split(',');
 
         foreach (string index in characterIndexes)
         {
-            int characterIndex = int.Parse(index);
-            GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
-            character.SetActive(false);
-            activeCharacters.Add(character);
+            if (int.TryParse(index, out int characterIndex) && characterIndex >= 0 && characterIndex < characterPrefabs.Count)
+            {
+                GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
+                character.SetActive(false);
+                activeCharacters.Add(character);
+            }
+            else
+            {
+                Debug.LogWarning($"Nieprawid³owy indeks postaci: {index}");
+            }
         }
+
+        Debug.Log("Za³adowano postacie: " + string.Join(", ", activeCharacters));
     }
 
     private void ActivateCharacter(int index)

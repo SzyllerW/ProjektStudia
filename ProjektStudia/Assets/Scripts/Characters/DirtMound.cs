@@ -12,8 +12,9 @@ public class DirtMound : MonoBehaviour
             if (playerRb != null)
             {
                 playerRb.velocity = new Vector2(playerRb.velocity.x, bouncePower);
-                Destroy(gameObject);
             }
+
+            Destroy(gameObject);
         }
     }
 }

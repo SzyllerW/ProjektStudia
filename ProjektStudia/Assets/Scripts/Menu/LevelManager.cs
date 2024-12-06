@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
     private int totalItems = 0;
     private int itemsCollected = 0;
 
-    [SerializeField] private GameObject victoryScreenPrefab; // Przeci¹gnij prefab ekranu wygranej w inspektorze
+    [SerializeField] private GameObject victoryScreenPrefab; 
 
     private void OnEnable()
     {
@@ -22,7 +22,6 @@ public class LevelManager : MonoBehaviour
     {
         ClearPrefsOnLoad();
 
-        // Zlicza przedmioty tylko na pocz¹tku gry
         totalItems = FindObjectsOfType<CollectibleItem>().Length;
         Debug.Log($"[LevelManager] Total items to collect at start: {totalItems}");
     }
@@ -51,16 +50,13 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("[LevelManager] Level Completed!");
 
-        // SprawdŸ, czy prefab ekranu wygranej zosta³ przypisany
         if (victoryScreenPrefab != null)
         {
-            // Wyœwietl prefab ekranu wygranej
             GameObject victoryScreen = Instantiate(victoryScreenPrefab);
-            victoryScreen.SetActive(true); // Aktywuj ekran wygranej
+            victoryScreen.SetActive(true);
         }
         else
         {
-            // Domyœlne zachowanie: przejœcie do kolejnej sceny
             LoadNextScene();
         }
     }
@@ -76,7 +72,6 @@ public class LevelManager : MonoBehaviour
         else
         {
             Debug.Log("[LevelManager] All levels completed. Returning to main menu or ending game.");
-            // Mo¿na dodaæ kod powrotu do menu g³ównego
             SceneManager.LoadScene("MainMenu");
         }
     }

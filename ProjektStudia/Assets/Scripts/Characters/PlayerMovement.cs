@@ -4,68 +4,40 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float horizontal;
-    public float speed = 16f;
-    private float airControlFactor = 1f;
-    private float airDragFactor = 0.98f;
-    private bool isFacingRight = true;
+    private float horizontal; 
+    public float speed = 16f; 
+    private bool isFacingRight = true; 
 
-    [SerializeField] private float jumpingPower = 14f;
+    [SerializeField] private float jumpingPower = 14f; 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform groundCheck; 
+    [SerializeField] private LayerMask groundLayer; 
 
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = Input.GetAxisRaw("Horizontal"); 
 
-        // Skok
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        // Spowolnienie skoku, jeœli gracz puszcza przycisk
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        // Przyspieszenie spadania
-        if (rb.velocity.y < 0)
-        {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (2f - 1) * Time.deltaTime; // Przyspieszenie spadania
-        }
-
-        Flip();
+        Flip(); 
     }
 
     public bool IsGrounded()
     {
-        bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-        return grounded;
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
     private void FixedUpdate()
     {
-        if (IsGrounded())
-        {
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-        }
-        else
-        {
-            float targetHorizontalSpeed = horizontal * speed * airControlFactor;
-            float currentHorizontalSpeed = rb.velocity.x;
-
-            if (horizontal == 0)
-            {
-                rb.velocity = new Vector2(currentHorizontalSpeed * airDragFactor, rb.velocity.y);
-            }
-            else
-            {
-                rb.velocity = new Vector2(targetHorizontalSpeed, rb.velocity.y);
-            }
-        }
+        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
     }
 
     private void Flip()

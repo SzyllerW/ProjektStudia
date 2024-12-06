@@ -3,25 +3,24 @@ using UnityEngine;
 
 public class MoleAbility : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
     private Rigidbody2D rb;
 
     [SerializeField] private GameObject dirtMoundPrefab;
-    [SerializeField] private float moundHeight = 2f;
+    [SerializeField] private float diggingDelay = 1f;  
+    [SerializeField] private LayerMask groundLayer; 
+    [SerializeField] private Transform groundCheck;   
+    [SerializeField] private float groundCheckRadius = 0.2f; 
 
-    private bool isMole = false;
     private bool isDigging = false;
-    private bool canControl = true;
 
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isMole && playerMovement.IsGrounded() && !isDigging)
+        if (Input.GetKeyDown(KeyCode.E) && !isDigging && IsGrounded())
         {
             StartDigging();
         }
@@ -29,32 +28,34 @@ public class MoleAbility : MonoBehaviour
 
     private void StartDigging()
     {
+        if (isDigging) return;
+
         isDigging = true;
-        canControl = false;
 
-        rb.velocity = Vector2.zero;  
-        rb.isKinematic = true; 
+        rb.velocity = Vector2.zero; 
+        rb.isKinematic = true;   
 
-        StartCoroutine(WaitAndCreateMound());
+        StartCoroutine(DigAndSwitch());
     }
 
-    private IEnumerator WaitAndCreateMound()
+    private IEnumerator DigAndSwitch()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(diggingDelay);
 
         Instantiate(dirtMoundPrefab, transform.position, Quaternion.identity);
 
-        rb.isKinematic = false;  
-        canControl = false;
-        isMole = true;
+        rb.isKinematic = false;
+        gameObject.SetActive(false);
 
-        gameObject.SetActive(false); 
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.SwitchToNextCharacter();
+        }
     }
 
-    public void ResetMoleAbility()
+    private bool IsGrounded()
     {
-        gameObject.SetActive(true);
-        canControl = true;
-        isMole = false;
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 }

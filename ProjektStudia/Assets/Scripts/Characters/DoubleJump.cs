@@ -5,7 +5,9 @@ public class DoubleJump : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private Rigidbody2D rb;
+
     private bool canDoubleJump = false;
+    private bool jumpKeyWasPressed = false; 
     [SerializeField] private float doubleJumpPower = 12f;
 
     void Start()
@@ -16,15 +18,29 @@ public class DoubleJump : MonoBehaviour
 
     void Update()
     {
+     
         if (playerMovement.IsGrounded())
         {
-            canDoubleJump = true; 
+            canDoubleJump = true;
+            jumpKeyWasPressed = false; 
         }
 
-        if (Input.GetButtonDown("Jump") && !playerMovement.IsGrounded() && canDoubleJump)
+
+        if (Input.GetButtonDown("Jump") && !jumpKeyWasPressed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, doubleJumpPower);
-            canDoubleJump = false; 
+            if (!playerMovement.IsGrounded() && canDoubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, doubleJumpPower);
+                canDoubleJump = false; 
+            }
+
+            jumpKeyWasPressed = true; 
+        }
+
+
+        if (Input.GetButtonUp("Jump"))
+        {
+            jumpKeyWasPressed = false;
         }
     }
 }

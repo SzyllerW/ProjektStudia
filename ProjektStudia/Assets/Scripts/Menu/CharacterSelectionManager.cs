@@ -9,32 +9,27 @@ public class CharacterSelectionManager : MonoBehaviour
     public List<Button> characterButtons;
     public List<Sprite> characterIcons;
     public TextMeshProUGUI selectedCountText;
-    public Button confirmButton; // Przycisk "ZatwierdŸ"
+    public Button confirmButton; 
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
 
     private void Start()
     {
-        // Pobierz wybran¹ mapê z PlayerPrefs
         int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
 
-        // Ustaw maksymaln¹ liczbê postaci w zale¿noœci od mapy
         maxSelectableCharacters = (selectedMap == 1) ? 2 : 3;
 
-        // Ustaw pocz¹tkowy stan przycisku "ZatwierdŸ"
         confirmButton.interactable = false;
 
         UpdateSelectionCount();
 
-        // Dodaj listener do przycisków postaci
         for (int i = 0; i < characterButtons.Count; i++)
         {
             int index = i;
             characterButtons[i].onClick.AddListener(() => SelectCharacter(index));
         }
 
-        // Dodaj listener do przycisku "ZatwierdŸ"
         confirmButton.onClick.AddListener(SaveSelectionAndLoadMap);
     }
 
@@ -47,7 +42,6 @@ public class CharacterSelectionManager : MonoBehaviour
 
             UpdateSelectionCount();
 
-            // Aktywuj przycisk "ZatwierdŸ", jeœli osi¹gniêto limit
             if (selectedCharacters.Count == maxSelectableCharacters)
             {
                 confirmButton.interactable = true;
@@ -72,6 +66,10 @@ public class CharacterSelectionManager : MonoBehaviour
             selectedIcons.Add(characterIcons[index].name);
         }
         PlayerPrefs.SetString("SelectedIcons", string.Join(",", selectedIcons));
+
+        // Debugowanie zapisanych danych
+        Debug.Log("SelectedCharacters: " + PlayerPrefs.GetString("SelectedCharacters"));
+        Debug.Log("SelectedIcons: " + PlayerPrefs.GetString("SelectedIcons"));
 
         // Pobierz wybran¹ mapê
         int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
