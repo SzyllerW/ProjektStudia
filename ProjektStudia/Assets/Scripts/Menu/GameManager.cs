@@ -1,15 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public Transform respawnPoint; // Punkt respawnu postaci
-    public Image[] iconSlots;     // Ikony w UI (lewym górnym rogu)
-    public List<GameObject> characterPrefabs; // Prefaby postaci
+    public Transform respawnPoint;
+    public Image[] iconSlots;
+    public List<GameObject> characterPrefabs;
 
     private List<GameObject> activeCharacters = new List<GameObject>();
     private int currentCharacterIndex = 0;
+
+    [SerializeField] private float switchDelay = 0.5f;
 
     private void Start()
     {
@@ -21,49 +24,47 @@ public class GameManager : MonoBehaviour
     private void LoadSelectedCharacters()
     {
         string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
-
-        if (string.IsNullOrEmpty(selectedCharacters))
-        {
-            Debug.LogError("Brak wybranych postaci w PlayerPrefs!");
-            return;
-        }
-
         string[] characterIndexes = selectedCharacters.Split(',');
 
         foreach (string index in characterIndexes)
         {
-            if (int.TryParse(index, out int characterIndex) && characterIndex >= 0 && characterIndex < characterPrefabs.Count)
-            {
-                GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
-                character.SetActive(false);
-                activeCharacters.Add(character);
-            }
-            else
-            {
-                Debug.LogWarning($"Nieprawid³owy indeks postaci: {index}");
-            }
+            int characterIndex = int.Parse(index);
+            GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
+            character.SetActive(false);
+            activeCharacters.Add(character);
         }
-
-        Debug.Log("Za³adowano postacie: " + string.Join(", ", activeCharacters));
     }
 
     private void ActivateCharacter(int index)
     {
         if (index >= activeCharacters.Count)
         {
-            Debug.Log("Brak wiêcej postaci! Koniec gry.");
-            return; // Koniec gry
+            Debug.Log("No more characters available! End of game.");
+            return;
         }
 
         currentCharacterIndex = index;
-        activeCharacters[currentCharacterIndex].transform.position = respawnPoint.position;
-        activeCharacters[currentCharacterIndex].SetActive(true);
+        GameObject newCharacter = activeCharacters[currentCharacterIndex];
+        ResetCharacter(newCharacter);
+        newCharacter.transform.position = respawnPoint.position;
+        newCharacter.SetActive(true);
     }
 
     public void SwitchToNextCharacter()
     {
-        activeCharacters[currentCharacterIndex].SetActive(false);
-        ActivateCharacter(currentCharacterIndex + 1);
+        if (activeCharacters.Count == 0) return;
+
+        StartCoroutine(SwitchCharacterWithDelay());
+    }
+
+    private IEnumerator SwitchCharacterWithDelay()
+    {
+        GameObject currentCharacter = activeCharacters[currentCharacterIndex];
+        currentCharacter.SetActive(false);
+
+        yield return new WaitForSeconds(switchDelay);
+
+        ActivateCharacter((currentCharacterIndex + 1) % activeCharacters.Count);
         UpdateIcons();
     }
 
@@ -73,12 +74,29 @@ public class GameManager : MonoBehaviour
         {
             if (i < activeCharacters.Count)
             {
-                iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray; // Aktywna postaæ na bia³o
+                iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray;
             }
             else
             {
-                iconSlots[i].color = Color.clear; // Ukryj puste sloty
+                iconSlots[i].color = Color.clear;
             }
         }
+    }
+
+    private void ResetCharacter(GameObject character)
+    {
+        Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero; 
+        }
+
+        Animator animator = character.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetBool("IsJumping", false);
+        }
+
     }
 }

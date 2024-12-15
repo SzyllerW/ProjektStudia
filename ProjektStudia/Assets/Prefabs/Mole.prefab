@@ -213,6 +213,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  animator: {fileID: 0}
+  sideView: {fileID: 0}
+  frontView: {fileID: 0}
 --- !u!114 &6478169019955314660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,7 +234,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 7216310607126592192}
-  groundCheckRadius: 0.5
+  groundCheckRadius: 0.2
 --- !u!114 &5781958495095437326
 MonoBehaviour:
   m_ObjectHideFlags: 0

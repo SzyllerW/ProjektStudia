@@ -1,46 +1,55 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class DoubleJump : MonoBehaviour
 {
-    private PlayerMovement playerMovement;
-    private Rigidbody2D rb;
+    [SerializeField] private float jumpPower = 14f; // Si³a pierwszego skoku
+    [SerializeField] private float doubleJumpPower = 12f; // Si³a podwójnego skoku
+    [SerializeField] private Transform groundCheck; // Punkt sprawdzania ziemi
+    [SerializeField] private LayerMask groundLayer; // Warstwa ziemi
 
-    private bool canDoubleJump = false;
-    private bool jumpKeyWasPressed = false; 
-    [SerializeField] private float doubleJumpPower = 12f;
+    private Rigidbody2D rb;
+    private bool canDoubleJump = false; // Czy podwójny skok jest mo¿liwy
 
     void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-     
-        if (playerMovement.IsGrounded())
+        // Sprawdzanie, czy postaæ jest na ziemi
+        bool isGrounded = IsGrounded();
+
+        // Reset podwójnego skoku po wyl¹dowaniu
+        if (isGrounded)
         {
             canDoubleJump = true;
-            jumpKeyWasPressed = false; 
         }
 
-
-        if (Input.GetButtonDown("Jump") && !jumpKeyWasPressed)
+        // Skok
+        if (Input.GetButtonDown("Jump"))
         {
-            if (!playerMovement.IsGrounded() && canDoubleJump)
+            if (isGrounded)
             {
-                rb.velocity = new Vector2(rb.velocity.x, doubleJumpPower);
-                canDoubleJump = false; 
+                PerformJump(jumpPower); // Pierwszy skok
             }
-
-            jumpKeyWasPressed = true; 
+            else if (canDoubleJump)
+            {
+                PerformJump(doubleJumpPower); // Podwójny skok
+                canDoubleJump = false; // Zu¿ycie podwójnego skoku
+            }
         }
+    }
 
+    private void PerformJump(float power)
+    {
+        rb.velocity = new Vector2(rb.velocity.x, power); // Ustaw pionow¹ prêdkoœæ skoku
+    }
 
-        if (Input.GetButtonUp("Jump"))
-        {
-            jumpKeyWasPressed = false;
-        }
+    private bool IsGrounded()
+    {
+        // Sprawdza, czy postaæ dotyka ziemi
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 }
