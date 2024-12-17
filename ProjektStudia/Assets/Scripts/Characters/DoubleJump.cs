@@ -3,13 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class DoubleJump : MonoBehaviour
 {
-    [SerializeField] private float jumpPower = 14f; // Si³a pierwszego skoku
-    [SerializeField] private float doubleJumpPower = 12f; // Si³a podwójnego skoku
-    [SerializeField] private Transform groundCheck; // Punkt sprawdzania ziemi
-    [SerializeField] private LayerMask groundLayer; // Warstwa ziemi
+    [SerializeField] private float jumpPower = 14f; 
+    [SerializeField] private float doubleJumpPower = 12f; 
+    [SerializeField] private Transform groundCheck; 
+    [SerializeField] private LayerMask groundLayer; 
 
     private Rigidbody2D rb;
-    private bool canDoubleJump = false; // Czy podwójny skok jest mo¿liwy
+    private bool canDoubleJump = false; 
 
     void Start()
     {
@@ -18,38 +18,34 @@ public class DoubleJump : MonoBehaviour
 
     void Update()
     {
-        // Sprawdzanie, czy postaæ jest na ziemi
         bool isGrounded = IsGrounded();
 
-        // Reset podwójnego skoku po wyl¹dowaniu
         if (isGrounded)
         {
             canDoubleJump = true;
         }
 
-        // Skok
         if (Input.GetButtonDown("Jump"))
         {
             if (isGrounded)
             {
-                PerformJump(jumpPower); // Pierwszy skok
+                PerformJump(jumpPower); 
             }
             else if (canDoubleJump)
             {
-                PerformJump(doubleJumpPower); // Podwójny skok
-                canDoubleJump = false; // Zu¿ycie podwójnego skoku
+                PerformJump(doubleJumpPower); 
+                canDoubleJump = false; 
             }
         }
     }
 
     private void PerformJump(float power)
     {
-        rb.velocity = new Vector2(rb.velocity.x, power); // Ustaw pionow¹ prêdkoœæ skoku
+        rb.velocity = new Vector2(rb.velocity.x, power); 
     }
 
     private bool IsGrounded()
     {
-        // Sprawdza, czy postaæ dotyka ziemi
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 }

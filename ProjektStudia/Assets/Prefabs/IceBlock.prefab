@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5502016881373158587}
   - component: {fileID: 5186861593487791973}
   m_Layer: 6
-  m_Name: ew
+  m_Name: IceBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

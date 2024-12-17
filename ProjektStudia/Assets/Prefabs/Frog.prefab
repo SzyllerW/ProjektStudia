@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  jumpingPower: 40
+  jumpingPower: 30
   rb: {fileID: 6482799358026499942}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc98df40d1a92045907a418b909d5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 14
+  jumpPower: 30
   doubleJumpPower: 40
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
@@ -226,7 +226,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1651335, y: 21.666002}
+  m_Offset: {x: 1.1651335, y: 21.943499}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -237,7 +237,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 15.900356, y: 22.45805}
+  m_Size: {x: 15.900356, y: 21.903057}
   m_EdgeRadius: 0
 --- !u!1 &4459225670038836037
 GameObject:
@@ -264,7 +264,7 @@ Transform:
   m_GameObject: {fileID: 4459225670038836037}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.88, y: 9.69, z: 0.21616174}
+  m_LocalPosition: {x: 0.88, y: 10.36, z: 0.21616174}
   m_LocalScale: {x: 0.95581, y: 0.95581, z: 0.95581}
   m_ConstrainProportionsScale: 0
   m_Children: []
