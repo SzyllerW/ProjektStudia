@@ -4,29 +4,63 @@ using UnityEngine.UI;
 
 public class MapSelectionManager : MonoBehaviour
 {
-    public GameObject map2Button;
+    public Button map1Button; 
+    public Button map2Button; 
+    public Button backButton; 
+    public Button confirmButton; 
+
+    private int selectedMap = 0; 
+    private Color defaultColor = Color.white;
+    private Color selectedColor = Color.grey;
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt("Map2Unlocked", 0) == 1)
+        map2Button.interactable = PlayerPrefs.GetInt("Map2Unlocked", 0) == 1;
+
+        backButton.onClick.AddListener(BackToMainMenu);
+        confirmButton.onClick.AddListener(ConfirmSelection);
+        confirmButton.interactable = false;
+
+        map1Button.onClick.AddListener(() => ToggleMapSelection(1, map1Button));
+        map2Button.onClick.AddListener(() => ToggleMapSelection(2, map2Button));
+
+        ResetButtonColors();
+    }
+
+    public void ToggleMapSelection(int mapIndex, Button button)
+    {
+        if (selectedMap == mapIndex)
         {
-            map2Button.GetComponent<Button>().interactable = true; 
+            selectedMap = 0; 
+            confirmButton.interactable = false;
+            button.GetComponent<Image>().color = defaultColor;
         }
         else
         {
-            map2Button.GetComponent<Button>().interactable = false; 
+            selectedMap = mapIndex;
+            confirmButton.interactable = true;
+            ResetButtonColors();
+            button.GetComponent<Image>().color = selectedColor; 
         }
     }
 
-    public void SelectMap1()
+    private void ResetButtonColors()
     {
-        PlayerPrefs.SetInt("SelectedMap", 1);
-        SceneManager.LoadScene("CharacterSelection");
+        map1Button.GetComponent<Image>().color = defaultColor;
+        map2Button.GetComponent<Image>().color = defaultColor;
     }
 
-    public void SelectMap2()
+    private void ConfirmSelection()
     {
-        PlayerPrefs.SetInt("SelectedMap", 2);
-        SceneManager.LoadScene("CharacterSelection");
+        if (selectedMap > 0)
+        {
+            PlayerPrefs.SetInt("SelectedMap", selectedMap);
+            SceneManager.LoadScene("CharacterSelection");
+        }
+    }
+
+    private void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

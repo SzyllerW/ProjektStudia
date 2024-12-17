@@ -15,34 +15,45 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject sideView;
     [SerializeField] private GameObject frontView;
 
-    private bool isJumping = false;
+    private bool isJumping = false; 
+    private bool wasGrounded = true; 
 
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
 
-        if (!IsGrounded() && !isJumping)
-        {
-            animator.SetBool("IsJumping", true);
-            isJumping = true;
-            UpdateVisibility();
-        }
-
-        if (IsGrounded() && isJumping)
-        {
-            animator.SetBool("IsJumping", false);
-            isJumping = false;
-            UpdateVisibility();
-        }
-
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            animator.SetBool("IsJumping", true);
             isJumping = true;
+            animator.SetBool("IsJumping", true);
             UpdateVisibility();
         }
+
+        if (!IsGrounded())
+        {
+            if (isJumping) 
+            {
+                animator.SetBool("IsJumping", true);
+            }
+            else
+            {
+                animator.SetBool("IsFalling", true); 
+            }
+        }
+
+        if (IsGrounded())
+        {
+            if (!wasGrounded) 
+            {
+                animator.SetBool("IsJumping", false);
+                animator.SetBool("IsFalling", false);
+                isJumping = false;
+            }
+        }
+
+        wasGrounded = IsGrounded(); 
 
         Flip();
         UpdateVisibility();
@@ -93,10 +104,5 @@ public class PlayerMovement : MonoBehaviour
             sideView.SetActive(true);
             frontView.SetActive(false);
         }
-    }
-
-    public float GetJumpingPower()
-    {
-        return jumpingPower;
     }
 }

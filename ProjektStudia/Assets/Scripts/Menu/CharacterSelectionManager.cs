@@ -9,7 +9,8 @@ public class CharacterSelectionManager : MonoBehaviour
     public List<Button> characterButtons;
     public List<Sprite> characterIcons;
     public TextMeshProUGUI selectedCountText;
-    public Button confirmButton; 
+    public Button confirmButton;
+    public Button backButton;
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
@@ -17,36 +18,36 @@ public class CharacterSelectionManager : MonoBehaviour
     private void Start()
     {
         int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
-
         maxSelectableCharacters = (selectedMap == 1) ? 2 : 3;
-
         confirmButton.interactable = false;
-
         UpdateSelectionCount();
 
         for (int i = 0; i < characterButtons.Count; i++)
         {
             int index = i;
-            characterButtons[i].onClick.AddListener(() => SelectCharacter(index));
+            characterButtons[i].onClick.AddListener(() => ToggleCharacterSelection(index));
         }
 
         confirmButton.onClick.AddListener(SaveSelectionAndLoadMap);
+        backButton.onClick.AddListener(BackToPreviousScreen);
     }
 
-    public void SelectCharacter(int characterIndex)
+    public void ToggleCharacterSelection(int characterIndex)
     {
-        if (!selectedCharacters.Contains(characterIndex) && selectedCharacters.Count < maxSelectableCharacters)
+        if (selectedCharacters.Contains(characterIndex))
+        {
+            selectedCharacters.Remove(characterIndex);
+            characterButtons[characterIndex].interactable = true;
+            characterButtons[characterIndex].GetComponent<Image>().color = Color.white; 
+        }
+        else if (selectedCharacters.Count < maxSelectableCharacters)
         {
             selectedCharacters.Add(characterIndex);
-            characterButtons[characterIndex].interactable = false;
-
-            UpdateSelectionCount();
-
-            if (selectedCharacters.Count == maxSelectableCharacters)
-            {
-                confirmButton.interactable = true;
-            }
+            characterButtons[characterIndex].GetComponent<Image>().color = Color.gray; 
         }
+
+        UpdateSelectionCount();
+        confirmButton.interactable = selectedCharacters.Count == maxSelectableCharacters;
     }
 
     private void UpdateSelectionCount()
@@ -56,10 +57,7 @@ public class CharacterSelectionManager : MonoBehaviour
 
     private void SaveSelectionAndLoadMap()
     {
-        // Zapisz wybrane postacie
         PlayerPrefs.SetString("SelectedCharacters", string.Join(",", selectedCharacters));
-
-        // Zapisz wybrane ikony
         List<string> selectedIcons = new List<string>();
         foreach (int index in selectedCharacters)
         {
@@ -67,16 +65,13 @@ public class CharacterSelectionManager : MonoBehaviour
         }
         PlayerPrefs.SetString("SelectedIcons", string.Join(",", selectedIcons));
 
-        // Debugowanie zapisanych danych
-        Debug.Log("SelectedCharacters: " + PlayerPrefs.GetString("SelectedCharacters"));
-        Debug.Log("SelectedIcons: " + PlayerPrefs.GetString("SelectedIcons"));
-
-        // Pobierz wybran¹ mapê
         int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
-
-        // Za³aduj odpowiedni¹ scenê
         string sceneToLoad = "Map" + selectedMap;
-        Debug.Log("£adowanie sceny: " + sceneToLoad);
         SceneManager.LoadScene(sceneToLoad);
+    }
+
+    private void BackToPreviousScreen()
+    {
+        SceneManager.LoadScene("MapSelection");
     }
 }

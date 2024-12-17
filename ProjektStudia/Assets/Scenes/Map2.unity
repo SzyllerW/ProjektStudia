@@ -1303,7 +1303,8 @@ MonoBehaviour:
   characterPrefabs:
   - {fileID: 1841985961319422964, guid: 89e1a7dbdd7874d4a91d4d47881c4ba3, type: 3}
   - {fileID: 1886497336514422082, guid: 6230f4f3e75eedb40aeb83ac65041e5f, type: 3}
-  - {fileID: 4590704991606549768, guid: 59d7d638ccc8d6c458093a1fc16c9ea6, type: 3}
+  - {fileID: 8865687083874275941, guid: cadea58fc0824134ca097350db110bac, type: 3}
+  switchDelay: 0.5
 --- !u!4 &2083600505
 Transform:
   m_ObjectHideFlags: 0
