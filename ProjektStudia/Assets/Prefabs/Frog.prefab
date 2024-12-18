@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  jumpingPower: 30
+  speed: 35
+  jumpingPower: 40
   rb: {fileID: 6482799358026499942}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbc98df40d1a92045907a418b909d5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 30
+  jumpPower: 40
   doubleJumpPower: 40
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
@@ -237,7 +237,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 15.900356, y: 21.903057}
+  m_Size: {x: 10, y: 21}
   m_EdgeRadius: 0
 --- !u!1 &4459225670038836037
 GameObject:
@@ -400,6 +400,14 @@ PrefabInstance:
     - target: {fileID: -7552582706839291426, guid: f59455ee7b794384291c944971e70471, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2784061682722121986, guid: f59455ee7b794384291c944971e70471, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.06943107
+      objectReference: {fileID: 0}
+    - target: {fileID: -2784061682722121986, guid: f59455ee7b794384291c944971e70471, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 14.335239
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

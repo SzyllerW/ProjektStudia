@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  jumpingPower: 30
+  speed: 35
+  jumpingPower: 40
   rb: {fileID: 5120900271061709305}
   groundCheck: {fileID: 7511505962762408153}
   groundLayer:
@@ -221,7 +221,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0007305145, y: 21.85483}
+  m_Offset: {x: 3.18, y: 21.85483}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -232,7 +232,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 15.540171, y: 21.511387}
+  m_Size: {x: 10, y: 21}
   m_EdgeRadius: 0
 --- !u!1 &6554799767693548473
 GameObject:
@@ -346,7 +346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: a6c8534fb59c68f40b474a1fd1358c2a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.76
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: a6c8534fb59c68f40b474a1fd1358c2a, type: 3}
       propertyPath: m_LocalPosition.y
