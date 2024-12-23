@@ -25,21 +25,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
+            Debug.Log("Skok rozpoczêty");
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             isJumping = true;
             animator.SetBool("IsJumping", true);
             UpdateVisibility();
         }
 
-        if (!IsGrounded())
+        if (IsGrounded())
         {
-            if (isJumping) 
+            if (isJumping)
             {
-                animator.SetBool("IsJumping", true);
-            }
-            else
-            {
-                animator.SetBool("IsFalling", true); 
+                Debug.Log("Postaæ wyl¹dowa³a");
+                isJumping = false;
+                animator.SetBool("IsJumping", false);
             }
         }
 

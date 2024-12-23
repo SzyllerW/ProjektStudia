@@ -4,11 +4,10 @@ using UnityEngine.UI;
 
 public class MapSelectionManager : MonoBehaviour
 {
-    public Button map1Button; 
-    public Button map2Button; 
-    public Button backButton; 
-    public Button confirmButton; 
-
+    public UnityEngine.UI.Button map1Button; 
+    public UnityEngine.UI.Button map2Button; 
+    public UnityEngine.UI.Button backButton; 
+    public UnityEngine.UI.Button confirmButton; 
     private int selectedMap = 0; 
     private Color defaultColor = Color.white;
     private Color selectedColor = Color.grey;
@@ -27,7 +26,7 @@ public class MapSelectionManager : MonoBehaviour
         ResetButtonColors();
     }
 
-    public void ToggleMapSelection(int mapIndex, Button button)
+    public void ToggleMapSelection(int mapIndex, UnityEngine.UI.Button button)
     {
         if (selectedMap == mapIndex)
         {

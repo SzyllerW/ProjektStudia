@@ -6,11 +6,11 @@ using TMPro;
 
 public class CharacterSelectionManager : MonoBehaviour
 {
-    public List<Button> characterButtons;
+    public List<UnityEngine.UI.Button> characterButtons; 
     public List<Sprite> characterIcons;
     public TextMeshProUGUI selectedCountText;
-    public Button confirmButton;
-    public Button backButton;
+    public UnityEngine.UI.Button confirmButton; 
+    public UnityEngine.UI.Button backButton; 
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
@@ -38,12 +38,12 @@ public class CharacterSelectionManager : MonoBehaviour
         {
             selectedCharacters.Remove(characterIndex);
             characterButtons[characterIndex].interactable = true;
-            characterButtons[characterIndex].GetComponent<Image>().color = Color.white; 
+            characterButtons[characterIndex].GetComponent<Image>().color = Color.white;
         }
         else if (selectedCharacters.Count < maxSelectableCharacters)
         {
             selectedCharacters.Add(characterIndex);
-            characterButtons[characterIndex].GetComponent<Image>().color = Color.gray; 
+            characterButtons[characterIndex].GetComponent<Image>().color = Color.gray;
         }
 
         UpdateSelectionCount();
