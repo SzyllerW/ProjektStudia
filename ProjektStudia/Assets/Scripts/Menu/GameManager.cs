@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,22 +15,52 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log($"[GameManager] Character prefabs count: {characterPrefabs.Count}");
+        if (characterPrefabs.Count == 0)
+        {
+            Debug.LogError("[GameManager] No prefabs assigned in the inspector.");
+            return;
+        }
+
         LoadSelectedCharacters();
-        ActivateCharacter(0);
-        UpdateIcons();
+
+        if (activeCharacters.Count > 0)
+        {
+            ActivateCharacter(0);
+            UpdateIcons();
+        }
+        else
+        {
+            Debug.LogError("[GameManager] No characters loaded!");
+        }
     }
 
     private void LoadSelectedCharacters()
     {
         string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
+        Debug.Log($"[GameManager] Loaded Selected Characters: '{selectedCharacters}'");
+
+        if (string.IsNullOrWhiteSpace(selectedCharacters))
+        {
+            Debug.LogError("[GameManager] No characters selected or data is empty.");
+            return;
+        }
+
         string[] characterIndexes = selectedCharacters.Split(',');
 
         foreach (string index in characterIndexes)
         {
-            int characterIndex = int.Parse(index);
-            GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
-            character.SetActive(false);
-            activeCharacters.Add(character);
+            if (int.TryParse(index, out int characterIndex) && characterIndex < characterPrefabs.Count)
+            {
+                GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
+                character.SetActive(false);
+                activeCharacters.Add(character);
+                Debug.Log($"[GameManager] Instantiated character: {character.name}");
+            }
+            else
+            {
+                Debug.LogError($"[GameManager] Invalid character index or prefab not found: {index}");
+            }
         }
     }
 
@@ -39,7 +68,7 @@ public class GameManager : MonoBehaviour
     {
         if (index >= activeCharacters.Count)
         {
-            Debug.Log("No more characters available! End of game.");
+            Debug.LogError("[GameManager] Invalid character index to activate.");
             return;
         }
 
@@ -48,6 +77,7 @@ public class GameManager : MonoBehaviour
         ResetCharacter(newCharacter);
         newCharacter.transform.position = respawnPoint.position;
         newCharacter.SetActive(true);
+        Debug.Log($"[GameManager] Activated character: {newCharacter.name}");
     }
 
     public void SwitchToNextCharacter()
@@ -57,7 +87,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SwitchCharacterWithDelay());
     }
 
-    private IEnumerator SwitchCharacterWithDelay()
+    private System.Collections.IEnumerator SwitchCharacterWithDelay()
     {
         GameObject currentCharacter = activeCharacters[currentCharacterIndex];
         currentCharacter.SetActive(false);
@@ -88,7 +118,7 @@ public class GameManager : MonoBehaviour
         Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = Vector2.zero; 
+            rb.velocity = Vector2.zero;
         }
 
         Animator animator = character.GetComponent<Animator>();
@@ -97,6 +127,5 @@ public class GameManager : MonoBehaviour
             animator.SetFloat("Speed", 0f);
             animator.SetBool("IsJumping", false);
         }
-
     }
 }

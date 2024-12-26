@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 
 public class CharacterSelectionManager : MonoBehaviour
 {
-    public List<UnityEngine.UI.Button> characterButtons; 
+    public List<Button> characterButtons;
     public List<Sprite> characterIcons;
     public TextMeshProUGUI selectedCountText;
-    public UnityEngine.UI.Button confirmButton; 
-    public UnityEngine.UI.Button backButton; 
+    public Button confirmButton;
+    public Button backButton;
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
@@ -57,16 +57,20 @@ public class CharacterSelectionManager : MonoBehaviour
 
     private void SaveSelectionAndLoadMap()
     {
-        PlayerPrefs.SetString("SelectedCharacters", string.Join(",", selectedCharacters));
-        List<string> selectedIcons = new List<string>();
-        foreach (int index in selectedCharacters)
+        if (selectedCharacters.Count == 0)
         {
-            selectedIcons.Add(characterIcons[index].name);
+            Debug.LogError("[CharacterSelectionManager] No characters selected to save!");
+            return;
         }
-        PlayerPrefs.SetString("SelectedIcons", string.Join(",", selectedIcons));
+
+        PlayerPrefs.SetString("SelectedCharacters", string.Join(",", selectedCharacters));
+        PlayerPrefs.Save();
+        Debug.Log($"[CharacterSelectionManager] Saved characters: {string.Join(",", selectedCharacters)}");
 
         int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
         string sceneToLoad = "Map" + selectedMap;
+
+        Debug.Log($"[CharacterSelectionManager] Loading scene: {sceneToLoad}");
         SceneManager.LoadScene(sceneToLoad);
     }
 

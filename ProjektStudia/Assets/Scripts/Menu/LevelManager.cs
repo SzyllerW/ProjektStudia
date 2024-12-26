@@ -28,10 +28,9 @@ public class LevelManager : MonoBehaviour
 
     private void ClearPrefsOnLoad()
     {
-        PlayerPrefs.DeleteKey("SelectedMap");
-        PlayerPrefs.DeleteKey("SelectedCharacters");
+        PlayerPrefs.DeleteKey("OtherUnnecessaryKey");
         PlayerPrefs.Save();
-        Debug.Log("[LevelManager] Cleared PlayerPrefs for selected map and characters.");
+        Debug.Log("[LevelManager] Cleared irrelevant PlayerPrefs keys.");
     }
 
     private void ItemCollected()

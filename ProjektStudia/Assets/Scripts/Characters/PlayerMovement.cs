@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
 
     [SerializeField] private float jumpingPower = 14f;
+    [SerializeField] private float fallAcceleration = 2.5f; 
+    [SerializeField] private float airAcceleration = 1f; 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -15,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject sideView;
     [SerializeField] private GameObject frontView;
 
-    private bool isJumping = false; 
-    private bool wasGrounded = true; 
+    private bool isJumping = false;
+    private bool wasGrounded = true;
 
     void Update()
     {
@@ -29,31 +31,43 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             isJumping = true;
             animator.SetBool("IsJumping", true);
+            animator.SetBool("IsFalling", false);
             UpdateVisibility();
         }
 
         if (IsGrounded())
         {
-            if (isJumping)
+            if (isJumping || animator.GetBool("IsFalling"))
             {
                 Debug.Log("Postaæ wyl¹dowa³a");
                 isJumping = false;
                 animator.SetBool("IsJumping", false);
-            }
-        }
-
-        if (IsGrounded())
-        {
-            if (!wasGrounded) 
-            {
-                animator.SetBool("IsJumping", false);
                 animator.SetBool("IsFalling", false);
-                isJumping = false;
+                animator.speed = 1f;
+
+                rb.velocity = new Vector2(rb.velocity.x, 0f);
+            }
+        }
+        else
+        {
+            if (rb.velocity.y > 0)
+            {
+                Debug.Log("Postaæ wznosi siê");
+                animator.SetBool("IsJumping", true);
+                animator.SetBool("IsFalling", false);
+                animator.speed = 1f;
+            }
+            else if (rb.velocity.y < 0)
+            {
+                Debug.Log("Postaæ spada");
+                ApplyFallAcceleration();
+                animator.SetBool("IsJumping", false);
+                animator.SetBool("IsFalling", true);
+                animator.speed = 1f;
             }
         }
 
-        wasGrounded = IsGrounded(); 
-
+        wasGrounded = IsGrounded();
         Flip();
         UpdateVisibility();
     }
@@ -71,8 +85,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.velocity = new Vector2(horizontal * speed * 0.5f, rb.velocity.y);
+            rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, horizontal * speed, airAcceleration * Time.deltaTime), rb.velocity.y);
         }
+    }
+
+    private void ApplyFallAcceleration()
+    {
+        rb.velocity += Vector2.up * Physics2D.gravity.y * (fallAcceleration - 1) * Time.deltaTime;
     }
 
     private void Flip()
