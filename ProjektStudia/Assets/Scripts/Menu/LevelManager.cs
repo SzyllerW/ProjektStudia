@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
     private int totalItems = 0;
     private int itemsCollected = 0;
 
-    [SerializeField] private GameObject victoryScreenPrefab; 
+    [SerializeField] private string victorySceneName = "LevelComplete";
 
     private void OnEnable()
     {
@@ -30,7 +30,6 @@ public class LevelManager : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("OtherUnnecessaryKey");
         PlayerPrefs.Save();
-        Debug.Log("[LevelManager] Cleared irrelevant PlayerPrefs keys.");
     }
 
     private void ItemCollected()
@@ -49,13 +48,14 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("[LevelManager] Level Completed!");
 
-        if (victoryScreenPrefab != null)
+        if (!string.IsNullOrEmpty(victorySceneName))
         {
-            GameObject victoryScreen = Instantiate(victoryScreenPrefab);
-            victoryScreen.SetActive(true);
+            Debug.Log("[LevelManager] Loading victory scene.");
+            SceneManager.LoadScene(victorySceneName); 
         }
         else
         {
+            Debug.LogWarning("[LevelManager] Victory scene not set. Loading next scene.");
             LoadNextScene();
         }
     }

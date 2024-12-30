@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    public float deathHeight = -5f; // Wysokoœæ œmierci
+    public float deathHeight = -200f; 
     private GameManager gameManager;
 
     private void Start()

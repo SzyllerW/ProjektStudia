@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,15 +11,18 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> activeCharacters = new List<GameObject>();
     private int currentCharacterIndex = 0;
+    private int usedCharactersCount = 0; 
 
     [SerializeField] private float switchDelay = 0.5f;
+    [SerializeField] private float respawnCooldown = 1.0f; 
+    [SerializeField] private string gameOverSceneName = "GameOverScene"; 
 
     private void Start()
     {
-        Debug.Log($"[GameManager] Character prefabs count: {characterPrefabs.Count}");
+        Debug.Log($"[LevelManager] Character prefabs count: {characterPrefabs.Count}");
         if (characterPrefabs.Count == 0)
         {
-            Debug.LogError("[GameManager] No prefabs assigned in the inspector.");
+            Debug.LogError("[LevelManager] No prefabs assigned in the inspector.");
             return;
         }
 
@@ -31,18 +35,18 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[GameManager] No characters loaded!");
+            Debug.LogError("[LevelManager] No characters loaded!");
         }
     }
 
     private void LoadSelectedCharacters()
     {
         string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
-        Debug.Log($"[GameManager] Loaded Selected Characters: '{selectedCharacters}'");
+        Debug.Log($"[LevelManager] Loaded Selected Characters: '{selectedCharacters}'");
 
         if (string.IsNullOrWhiteSpace(selectedCharacters))
         {
-            Debug.LogError("[GameManager] No characters selected or data is empty.");
+            Debug.LogError("[LevelManager] No characters selected or data is empty.");
             return;
         }
 
@@ -55,11 +59,11 @@ public class GameManager : MonoBehaviour
                 GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
                 character.SetActive(false);
                 activeCharacters.Add(character);
-                Debug.Log($"[GameManager] Instantiated character: {character.name}");
+                Debug.Log($"[LevelManager] Instantiated character: {character.name}");
             }
             else
             {
-                Debug.LogError($"[GameManager] Invalid character index or prefab not found: {index}");
+                Debug.LogError($"[LevelManager] Invalid character index or prefab not found: {index}");
             }
         }
     }
@@ -68,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
         if (index >= activeCharacters.Count)
         {
-            Debug.LogError("[GameManager] Invalid character index to activate.");
+            Debug.LogError("[LevelManager] Invalid character index to activate.");
             return;
         }
 
@@ -77,7 +81,7 @@ public class GameManager : MonoBehaviour
         ResetCharacter(newCharacter);
         newCharacter.transform.position = respawnPoint.position;
         newCharacter.SetActive(true);
-        Debug.Log($"[GameManager] Activated character: {newCharacter.name}");
+        Debug.Log($"[LevelManager] Activated character: {newCharacter.name}");
     }
 
     public void SwitchToNextCharacter()
@@ -91,11 +95,21 @@ public class GameManager : MonoBehaviour
     {
         GameObject currentCharacter = activeCharacters[currentCharacterIndex];
         currentCharacter.SetActive(false);
+        usedCharactersCount++;
 
         yield return new WaitForSeconds(switchDelay);
 
-        ActivateCharacter((currentCharacterIndex + 1) % activeCharacters.Count);
-        UpdateIcons();
+        if (usedCharactersCount >= activeCharacters.Count)
+        {
+            TriggerGameOver();
+        }
+        else
+        {
+            ActivateCharacter((currentCharacterIndex + 1) % activeCharacters.Count);
+            UpdateIcons();
+
+            yield return new WaitForSeconds(respawnCooldown);
+        }
     }
 
     private void UpdateIcons()
@@ -128,4 +142,26 @@ public class GameManager : MonoBehaviour
             animator.SetBool("IsJumping", false);
         }
     }
+
+    public void CharacterFellOffMap(GameObject character)
+    {
+        character.SetActive(false);
+        usedCharactersCount++;
+
+        if (usedCharactersCount >= activeCharacters.Count)
+        {
+            TriggerGameOver();
+        }
+        else
+        {
+            SwitchToNextCharacter();
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        Debug.Log("[LevelManager] Game Over! Switching to game over scene.");
+        SceneManager.LoadScene(gameOverSceneName);
+    }
 }
+

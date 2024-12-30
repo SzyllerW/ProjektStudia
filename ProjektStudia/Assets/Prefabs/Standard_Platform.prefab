@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 229430741122477998}
   - component: {fileID: 5730843465131329782}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Panel_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6097634628040635972}
   - component: {fileID: 7407918674819432372}
   - component: {fileID: 2825340128610352194}
+  - component: {fileID: 5740106830669798110}
   m_Layer: 6
   m_Name: Standard_Platform
   m_TagString: Untagged
@@ -221,6 +222,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!61 &5740106830669798110
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005842149968923704}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.0001, y: 0.0001}
+  m_EdgeRadius: 0
 --- !u!1 &3125180577167631980
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2858856657399475458}
   - component: {fileID: 8499533405571499469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Panel_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4570255859859006824}
   - component: {fileID: 8497701808725965182}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Panel_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7104017040600787081}
   - component: {fileID: 6342132567878475860}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ventilation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +530,7 @@ GameObject:
   - component: {fileID: 5823643904725598495}
   - component: {fileID: 7860395002990400811}
   - component: {fileID: 8498771473687849937}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
