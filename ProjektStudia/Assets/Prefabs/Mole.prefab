@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3b4916560540b428380bf3f0362844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dirtMoundPrefab: {fileID: 8120809946743615725, guid: dd67a84141d917a4bac7016e825c7d5a, type: 3}
+  dirtMoundPrefab: {fileID: 3019233208399858090, guid: 072586c377fdcde4d9933e05f4363382, type: 3}
   diggingDelay: 1
   groundLayer:
     serializedVersion: 2

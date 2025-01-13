@@ -37,31 +37,22 @@ public class MovingPlatform : MonoBehaviour
 
         if (movementMode == MovementMode.Horizontal)
         {
-            MovePlatform(startTransform.position, endTransform.position, Vector3.right);
+            MovePlatform(startTransform.position, endTransform.position);
         }
         else if (movementMode == MovementMode.Vertical)
         {
-            MovePlatform(startTransform.position, endTransform.position, Vector3.up);
+            MovePlatform(startTransform.position, endTransform.position);
         }
     }
 
-    private void MovePlatform(Vector3 start, Vector3 end, Vector3 direction)
+    private void MovePlatform(Vector3 start, Vector3 end)
     {
-        if (movingToEnd)
+        Vector3 targetPosition = movingToEnd ? end : start;
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, end, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, end) < 0.1f)
-            {
-                movingToEnd = false; 
-            }
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, start, speed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, start) < 0.1f)
-            {
-                movingToEnd = true; 
-            }
+            movingToEnd = !movingToEnd; 
         }
     }
 }
