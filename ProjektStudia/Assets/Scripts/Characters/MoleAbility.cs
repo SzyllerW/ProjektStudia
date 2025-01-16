@@ -4,18 +4,20 @@ using UnityEngine;
 public class MoleAbility : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private Animator animator;
 
     [SerializeField] private GameObject dirtMoundPrefab;
-    [SerializeField] private float diggingDelay = 1f;  
-    [SerializeField] private LayerMask groundLayer; 
-    [SerializeField] private Transform groundCheck;   
-    [SerializeField] private float groundCheckRadius = 0.2f; 
+    [SerializeField] private float diggingDelay = 2.833f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius = 0.2f;
 
     private bool isDigging = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -32,8 +34,11 @@ public class MoleAbility : MonoBehaviour
 
         isDigging = true;
 
-        rb.velocity = Vector2.zero; 
-        rb.isKinematic = true;   
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
+
+        animator.SetTrigger("Dig");
+        Debug.Log("Trigger 'Dig' activated"); 
 
         StartCoroutine(DigAndSwitch());
     }
@@ -52,6 +57,8 @@ public class MoleAbility : MonoBehaviour
         {
             gameManager.SwitchToNextCharacter();
         }
+
+        isDigging = false;
     }
 
     private bool IsGrounded()
