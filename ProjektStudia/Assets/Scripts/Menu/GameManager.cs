@@ -118,10 +118,18 @@ public class GameManager : MonoBehaviour
         {
             if (i < activeCharacters.Count)
             {
-                iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray;
+                if (i == currentCharacterIndex)
+                {
+                    iconSlots[i].color = Color.white;
+                }
+                else
+                {
+                    iconSlots[i].color = Color.gray; 
+                }
             }
             else
             {
+
                 iconSlots[i].color = Color.clear;
             }
         }
