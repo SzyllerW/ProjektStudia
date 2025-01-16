@@ -6,9 +6,10 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 16f;
     private bool isFacingRight = true;
 
-    [SerializeField] private float jumpingPower = 14f;
-    [SerializeField] private float fallAcceleration = 2.5f; 
-    [SerializeField] private float airAcceleration = 1f; 
+    [SerializeField] private float verticalJumpSpeed = 10f; 
+    [SerializeField] private float horizontalJumpDistance = 8f; 
+    [SerializeField] private float fallAcceleration = 2.5f;
+    [SerializeField] private float airAcceleration = 1f;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             Debug.Log("Skok rozpoczêty");
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            rb.velocity = new Vector2(horizontal * horizontalJumpDistance, verticalJumpSpeed); 
             isJumping = true;
             animator.SetBool("IsJumping", true);
             animator.SetBool("IsFalling", false);

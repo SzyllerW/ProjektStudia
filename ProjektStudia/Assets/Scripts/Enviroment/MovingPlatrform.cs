@@ -5,17 +5,10 @@ public class MovingPlatform : MonoBehaviour
     public Transform startTransform;
     public Transform endTransform;
     public float speed = 2f;
-    public MovementMode movementMode = MovementMode.Horizontal;
 
     private bool movingToEnd = true;
 
-    public enum MovementMode
-    {
-        Horizontal,
-        Vertical
-    }
-
-    void Start()
+    private void Start()
     {
         if (startTransform != null)
         {
@@ -27,7 +20,7 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (startTransform == null || endTransform == null)
         {
@@ -35,14 +28,7 @@ public class MovingPlatform : MonoBehaviour
             return;
         }
 
-        if (movementMode == MovementMode.Horizontal)
-        {
-            MovePlatform(startTransform.position, endTransform.position);
-        }
-        else if (movementMode == MovementMode.Vertical)
-        {
-            MovePlatform(startTransform.position, endTransform.position);
-        }
+        MovePlatform(startTransform.position, endTransform.position);
     }
 
     private void MovePlatform(Vector3 start, Vector3 end)
@@ -52,7 +38,25 @@ public class MovingPlatform : MonoBehaviour
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
-            movingToEnd = !movingToEnd; 
+            movingToEnd = !movingToEnd;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            Debug.Log("Player attached to platform.");
+            collision.collider.transform.SetParent(transform); 
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            Debug.Log("Player detached from platform.");
+            collision.collider.transform.SetParent(null);
         }
     }
 }

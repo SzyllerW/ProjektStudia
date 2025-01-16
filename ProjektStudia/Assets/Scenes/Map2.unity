@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5619940971683553129, guid: c42ae2a15cd28b046b9147310db941df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.000001
+      value: -23.7
       objectReference: {fileID: 0}
     - target: {fileID: 5619940971683553129, guid: c42ae2a15cd28b046b9147310db941df, type: 3}
       propertyPath: m_LocalPosition.z
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f0b2b4a3b248049bfb3a3c409f9c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  victoryScreenPrefab: {fileID: 6168151675713139725, guid: 9086e0a440e4d834c8e6e27cbcd8969a, type: 3}
+  victorySceneName: LevelComplete
 --- !u!4 &1132855416
 Transform:
   m_ObjectHideFlags: 0
@@ -1098,6 +1098,8 @@ MonoBehaviour:
   - {fileID: 1886497336514422082, guid: 6230f4f3e75eedb40aeb83ac65041e5f, type: 3}
   - {fileID: 8865687083874275941, guid: cadea58fc0824134ca097350db110bac, type: 3}
   switchDelay: 0.5
+  respawnCooldown: 1
+  gameOverSceneName: GameOverScene
 --- !u!4 &2083600505
 Transform:
   m_ObjectHideFlags: 0
