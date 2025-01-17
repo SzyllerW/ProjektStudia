@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class MapSelectionManager : MonoBehaviour
 {
     public UnityEngine.UI.Button map1Button; 
-    public UnityEngine.UI.Button map2Button; 
+    public UnityEngine.UI.Button map2Button;
+    public UnityEngine.UI.Button map3Button;
     public UnityEngine.UI.Button backButton; 
     public UnityEngine.UI.Button confirmButton; 
     private int selectedMap = 0; 
@@ -22,6 +23,7 @@ public class MapSelectionManager : MonoBehaviour
 
         map1Button.onClick.AddListener(() => ToggleMapSelection(1, map1Button));
         map2Button.onClick.AddListener(() => ToggleMapSelection(2, map2Button));
+        map3Button.onClick.AddListener(() => ToggleMapSelection(3, map3Button));
 
         ResetButtonColors();
     }
@@ -47,6 +49,7 @@ public class MapSelectionManager : MonoBehaviour
     {
         map1Button.GetComponent<Image>().color = defaultColor;
         map2Button.GetComponent<Image>().color = defaultColor;
+        map3Button.GetComponent<Image>().color = defaultColor;
     }
 
     private void ConfirmSelection()

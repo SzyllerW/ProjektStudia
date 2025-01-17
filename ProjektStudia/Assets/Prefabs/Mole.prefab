@@ -263,7 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 35
   verticalJumpSpeed: 50
-  horizontalJumpDistance: 8
+  horizontalJumpDistance: 1
   fallAcceleration: 2.5
   airAcceleration: 1
   rb: {fileID: 6080653459921135651}
