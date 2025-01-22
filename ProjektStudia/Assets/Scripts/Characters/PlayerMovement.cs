@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     AudioSource audioSource;
     Rigidbody2D rb2D;
     float x;
+    [SerializeField] private AudioClip jumpSoundClip;
 
     [SerializeField] private float verticalJumpSpeed = 10f; 
     [SerializeField] private float horizontalJumpDistance = 8f; 
@@ -55,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", true);
             animator.SetBool("IsFalling", false);
             UpdateVisibility();
+
+            //play sound FX
+            SoundFXManager.instance.PlaySoundFXClip(jumpSoundClip, transform, 0.7f);
         }
 
         if (IsGrounded())

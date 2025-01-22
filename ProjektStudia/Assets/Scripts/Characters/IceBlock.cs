@@ -5,6 +5,8 @@ public class IceBlock : MonoBehaviour
     private Rigidbody2D rb;
     private bool isIceBlock = false;
 
+    [SerializeField] private AudioClip iceBlockEnterSoundClip;
+
     [SerializeField] private GameObject iceBlockPrefab; // Prefab bloku lodu
     private GameManager gameManager;
 
@@ -52,6 +54,9 @@ public class IceBlock : MonoBehaviour
             // Tworzenie kostki lodu z poprawn¹ pozycj¹
             GameObject iceBlock = Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
             Debug.Log("Blok lodu utworzony na pozycji: " + spawnPosition);
+
+            //play sound FX
+            SoundFXManager.instance.PlaySoundFXClip(iceBlockEnterSoundClip, transform, 1f);
         }
         else
         {
