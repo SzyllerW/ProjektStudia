@@ -9,6 +9,7 @@ public class DoubleJump : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip jumpSoundClip;
 
     private Rigidbody2D rb;
     private bool canDoubleJump = false;
@@ -45,6 +46,9 @@ public class DoubleJump : MonoBehaviour
                 canDoubleJump = false;
                 animator.SetBool("IsJumping", true);
                 animator.Play("Jump", 0, 0f);
+
+                //play sound FX
+                SoundFXManager.instance.PlaySoundFXClip(jumpSoundClip, transform, 0.7f);
             }
         }
 

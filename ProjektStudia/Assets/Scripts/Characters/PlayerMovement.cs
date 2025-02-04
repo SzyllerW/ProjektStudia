@@ -5,6 +5,10 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     public float speed = 16f;
     private bool isFacingRight = true;
+    AudioSource audioSource;
+    Rigidbody2D rb2D;
+    float x;
+    [SerializeField] private AudioClip jumpSoundClip;
 
     [SerializeField] private float verticalJumpSpeed = 10f; 
     [SerializeField] private float horizontalJumpDistance = 8f; 
@@ -21,10 +25,28 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     private bool wasGrounded = true;
 
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        rb2D = GetComponent<Rigidbody2D>();
+    }
+    
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
+
+        if (rb2D.velocity.x != 0 && IsGrounded())
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.Stop();
+        }
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -34,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", true);
             animator.SetBool("IsFalling", false);
             UpdateVisibility();
+
+            //play sound FX
+            SoundFXManager.instance.PlaySoundFXClip(jumpSoundClip, transform, 0.7f);
         }
 
         if (IsGrounded())

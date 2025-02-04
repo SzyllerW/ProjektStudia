@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +13,8 @@ public class MapSelectionManager : MonoBehaviour
     private int selectedMap = 0; 
     private Color defaultColor = Color.white;
     private Color selectedColor = Color.grey;
+
+    [SerializeField] private AudioClip buttonSoundClip;
 
     private void Start()
     {
@@ -52,17 +55,21 @@ public class MapSelectionManager : MonoBehaviour
         map3Button.GetComponent<Image>().color = defaultColor;
     }
 
-    private void ConfirmSelection()
+    private async void ConfirmSelection()
     {
         if (selectedMap > 0)
         {
+            SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+            await Task.Delay(100);
             PlayerPrefs.SetInt("SelectedMap", selectedMap);
             SceneManager.LoadScene("CharacterSelection");
         }
     }
 
-    private void BackToMainMenu()
+    private async void BackToMainMenu()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
         SceneManager.LoadScene("MainMenu");
     }
 }

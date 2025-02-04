@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class CharacterSelectionManager : MonoBehaviour
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
+
+    [SerializeField] private AudioClip buttonSoundClip;
 
     private void Start()
     {
@@ -55,7 +58,7 @@ public class CharacterSelectionManager : MonoBehaviour
         selectedCountText.text = $"Wybrano: {selectedCharacters.Count}/{maxSelectableCharacters}";
     }
 
-    private void SaveSelectionAndLoadMap()
+    private async void SaveSelectionAndLoadMap()
     {
         if (selectedCharacters.Count == 0)
         {
@@ -70,12 +73,17 @@ public class CharacterSelectionManager : MonoBehaviour
         int selectedMap = PlayerPrefs.GetInt("SelectedMap", 1);
         string sceneToLoad = "Map" + selectedMap;
 
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         Debug.Log($"[CharacterSelectionManager] Loading scene: {sceneToLoad}");
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    private void BackToPreviousScreen()
+    private async void BackToPreviousScreen()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
         SceneManager.LoadScene("MapSelection");
     }
 }
