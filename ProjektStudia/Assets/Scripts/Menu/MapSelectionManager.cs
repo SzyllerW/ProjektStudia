@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class MapSelectionManager : MonoBehaviour
 {
-    public UnityEngine.UI.Button map1Button; 
-    public UnityEngine.UI.Button map2Button;
-    public UnityEngine.UI.Button map3Button;
-    public UnityEngine.UI.Button backButton; 
-    public UnityEngine.UI.Button confirmButton; 
-    private int selectedMap = 0; 
+    public Button map1Button;
+    public Button map2Button;
+    public Button map3Button;
+    public Button backButton;
+    public Button confirmButton;
+
+    private int selectedMap = 0;
     private Color defaultColor = Color.white;
     private Color selectedColor = Color.grey;
 
@@ -18,7 +19,15 @@ public class MapSelectionManager : MonoBehaviour
 
     private void Start()
     {
-        map2Button.interactable = PlayerPrefs.GetInt("Map2Unlocked", 0) == 1;
+        int map1Completed = PlayerPrefs.GetInt("Map1Completed", 1);
+        int map2Completed = PlayerPrefs.GetInt("Map2Completed", 1);
+
+        Debug.Log($"Map1Completed: {map1Completed}");
+        Debug.Log($"Map2Completed: {map2Completed}");
+
+        map1Button.interactable = true;
+        map2Button.interactable = true;
+        map3Button.interactable = true;
 
         backButton.onClick.AddListener(BackToMainMenu);
         confirmButton.onClick.AddListener(ConfirmSelection);
@@ -31,11 +40,11 @@ public class MapSelectionManager : MonoBehaviour
         ResetButtonColors();
     }
 
-    public void ToggleMapSelection(int mapIndex, UnityEngine.UI.Button button)
+    public void ToggleMapSelection(int mapIndex, Button button)
     {
         if (selectedMap == mapIndex)
         {
-            selectedMap = 0; 
+            selectedMap = 0;
             confirmButton.interactable = false;
             button.GetComponent<Image>().color = defaultColor;
         }
@@ -44,7 +53,7 @@ public class MapSelectionManager : MonoBehaviour
             selectedMap = mapIndex;
             confirmButton.interactable = true;
             ResetButtonColors();
-            button.GetComponent<Image>().color = selectedColor; 
+            button.GetComponent<Image>().color = selectedColor;
         }
     }
 
@@ -62,6 +71,7 @@ public class MapSelectionManager : MonoBehaviour
             SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
             await Task.Delay(100);
             PlayerPrefs.SetInt("SelectedMap", selectedMap);
+            PlayerPrefs.Save();
             SceneManager.LoadScene("CharacterSelection");
         }
     }
@@ -71,5 +81,26 @@ public class MapSelectionManager : MonoBehaviour
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         await Task.Delay(100);
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void CompleteLevel()
+    {
+        Debug.Log("[LevelManager] Level Completed!");
+
+        int currentMap = PlayerPrefs.GetInt("SelectedMap", 1);
+        Debug.Log($"[LevelManager] Current Map: {currentMap}");
+
+        if (currentMap == 1 && PlayerPrefs.GetInt("Map1Completed", 0) == 0)
+        {
+            PlayerPrefs.SetInt("Map1Completed", 1);
+            Debug.Log("Mapa 1 ukoñczona! Map2 odblokowana!");
+        }
+        else if (currentMap == 2 && PlayerPrefs.GetInt("Map2Completed", 0) == 0)
+        {
+            PlayerPrefs.SetInt("Map2Completed", 1);
+            Debug.Log("Mapa 2 ukoñczona! Map3 odblokowana!");
+        }
+
+        PlayerPrefs.Save();
     }
 }
