@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8562574370339486523}
   - component: {fileID: 7212674301057256054}
   - component: {fileID: 6571674977927980426}
+  - component: {fileID: 3001653704972173676}
   m_Layer: 0
   m_Name: Penguin
   m_TagString: Player
@@ -102,20 +103,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 35
-  jumpSoundClip: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
-  verticalJumpSpeed: 30
-  horizontalJumpDistance: 8
-  fallAcceleration: 2.5
-  airAcceleration: 1
+  speed: 30
+  acceleration: 30
+  deceleration: 35
+  airAcceleration: 15
+  airDeceleration: 5
+  jumpForce: 30
+  baseFallMultiplier: 4
+  maxFallMultiplier: 30
+  fallAccelerationRate: 8
+  lowJumpMultiplier: 6
+  maxFallSpeed: -80
+  coyoteTime: 0.1
+  jumpBufferTime: 0.15
+  peakPauseTime: 0.1
+  peakSpeedReduction: 0.5
   rb: {fileID: 5120900271061709305}
   groundCheck: {fileID: 7511505962762408153}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 4086955653596576098}
-  sideView: {fileID: 4518695540119265105}
-  frontView: {fileID: 4472827862066144206}
 --- !u!114 &3714165534188299346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +345,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3001653704972173676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886497336514422082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4721c6091066ebc458a1d17365c50b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sideView: {fileID: 4518695540119265105}
+  frontView: {fileID: 4472827862066144206}
+  playerMovement: {fileID: -528462042821501047}
 --- !u!1 &6554799767693548473
 GameObject:
   m_ObjectHideFlags: 0

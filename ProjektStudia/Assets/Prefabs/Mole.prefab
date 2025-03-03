@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 6143837852630749680}
   - component: {fileID: 1201959364616346854}
   - component: {fileID: 1792568672613506511}
+  - component: {fileID: 5376042123755209824}
   m_Layer: 0
   m_Name: Mole
   m_TagString: Player
@@ -262,20 +263,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 35
-  jumpSoundClip: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
-  verticalJumpSpeed: 50
-  horizontalJumpDistance: 1
-  fallAcceleration: 2.5
-  airAcceleration: 1
+  speed: 30
+  acceleration: 30
+  deceleration: 35
+  airAcceleration: 15
+  airDeceleration: 5
+  jumpForce: 25
+  baseFallMultiplier: 4
+  maxFallMultiplier: 30
+  fallAccelerationRate: 8
+  lowJumpMultiplier: 6
+  maxFallSpeed: -80
+  coyoteTime: 0.1
+  jumpBufferTime: 0.15
+  peakPauseTime: 0.1
+  peakSpeedReduction: 0.5
   rb: {fileID: 6080653459921135651}
   groundCheck: {fileID: 440415993664081664}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 4336597031928889974}
-  sideView: {fileID: 3858822691484679708}
-  frontView: {fileID: 4215443564987670758}
 --- !u!114 &8205737369769770963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +465,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5376042123755209824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865687083874275941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4721c6091066ebc458a1d17365c50b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sideView: {fileID: 3858822691484679708}
+  frontView: {fileID: 4215443564987670758}
+  playerMovement: {fileID: 6642466150483178687}
 --- !u!1001 &3632862373791375265
 PrefabInstance:
   m_ObjectHideFlags: 0

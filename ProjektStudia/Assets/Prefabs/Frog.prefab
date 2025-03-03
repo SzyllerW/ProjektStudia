@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 6482799358026499942}
   - component: {fileID: 6755318869794899884}
   - component: {fileID: 1018397282838980999}
-  - component: {fileID: -5546998111074222840}
   - component: {fileID: 8648044253487501700}
   - component: {fileID: 3187086125510839560}
   - component: {fileID: 5441515989707216482}
+  - component: {fileID: 8864869810093681115}
+  - component: {fileID: 1930732681635942429}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Player
@@ -102,20 +103,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 35
-  jumpSoundClip: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
-  verticalJumpSpeed: 10
-  horizontalJumpDistance: 8
-  fallAcceleration: 2.5
-  airAcceleration: 1
+  speed: 30
+  acceleration: 30
+  deceleration: 35
+  airAcceleration: 15
+  airDeceleration: 5
+  jumpForce: 40
+  baseFallMultiplier: 4
+  maxFallMultiplier: 30
+  fallAccelerationRate: 8
+  lowJumpMultiplier: 6
+  maxFallSpeed: -80
+  coyoteTime: 0.1
+  jumpBufferTime: 0.15
+  peakPauseTime: 0.1
+  peakSpeedReduction: 0.5
   rb: {fileID: 6482799358026499942}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 3234283007144487377}
-  sideView: {fileID: 5368540112597320643}
-  frontView: {fileID: 9063423494025626867}
 --- !u!114 &1018397282838980999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,27 +138,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathHeight: -200
   deathSoundClip: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
---- !u!114 &-5546998111074222840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841985961319422964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc98df40d1a92045907a418b909d5de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpPower: 40
-  doubleJumpPower: 40
-  fallAcceleration: 2.5
-  groundCheck: {fileID: 2202916903179979711}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  animator: {fileID: 3234283007144487377}
-  jumpSoundClip: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
 --- !u!212 &8648044253487501700
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -344,6 +331,40 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8864869810093681115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841985961319422964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc98df40d1a92045907a418b909d5de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxJumps: 2
+  doubleJumpForce: 30
+  doubleJumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
+  groundCheck: {fileID: 2202916903179979711}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &1930732681635942429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841985961319422964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4721c6091066ebc458a1d17365c50b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sideView: {fileID: 5368540112597320643}
+  frontView: {fileID: 9063423494025626867}
+  playerMovement: {fileID: 6755318869794899884}
 --- !u!1 &4459225670038836037
 GameObject:
   m_ObjectHideFlags: 0
