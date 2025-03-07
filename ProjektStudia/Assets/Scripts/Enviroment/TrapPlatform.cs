@@ -62,7 +62,7 @@ public class TrapPlatform : MonoBehaviour
 
     private void KillPlayer(GameObject player)
     {
-        FindObjectOfType<GameManager>().SwitchToNextCharacter();
+        FindObjectOfType<PlayerVisualManager>().PlayerTouchedSpikes();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
