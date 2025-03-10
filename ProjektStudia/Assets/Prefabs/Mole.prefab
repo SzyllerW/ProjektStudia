@@ -480,6 +480,7 @@ MonoBehaviour:
   sideView: {fileID: 3858822691484679708}
   frontView: {fileID: 4215443564987670758}
   playerMovement: {fileID: 6642466150483178687}
+  animator: {fileID: 4336597031928889974}
 --- !u!1001 &3632862373791375265
 PrefabInstance:
   m_ObjectHideFlags: 0

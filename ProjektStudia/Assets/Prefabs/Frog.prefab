@@ -365,6 +365,7 @@ MonoBehaviour:
   sideView: {fileID: 5368540112597320643}
   frontView: {fileID: 9063423494025626867}
   playerMovement: {fileID: 6755318869794899884}
+  animator: {fileID: 3234283007144487377}
 --- !u!1 &4459225670038836037
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +448,10 @@ PrefabInstance:
     - target: {fileID: -7552582706839291426, guid: 4743a819b55f63f4e8ecd434b8b7655f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4528959352953535934, guid: 4743a819b55f63f4e8ecd434b8b7655f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2784061682722121986, guid: 4743a819b55f63f4e8ecd434b8b7655f, type: 3}
       propertyPath: m_LocalPosition.x

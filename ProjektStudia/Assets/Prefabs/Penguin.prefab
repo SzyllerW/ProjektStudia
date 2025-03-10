@@ -360,6 +360,7 @@ MonoBehaviour:
   sideView: {fileID: 4518695540119265105}
   frontView: {fileID: 4472827862066144206}
   playerMovement: {fileID: -528462042821501047}
+  animator: {fileID: 4086955653596576098}
 --- !u!1 &6554799767693548473
 GameObject:
   m_ObjectHideFlags: 0

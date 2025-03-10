@@ -5,6 +5,7 @@ public class PlayerVisualManager : MonoBehaviour
     [SerializeField] private GameObject sideView; 
     [SerializeField] private GameObject frontView; 
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Animator animator;
 
     void Update()
     {
@@ -12,7 +13,7 @@ public class PlayerVisualManager : MonoBehaviour
         {
             SetSideView();
         }
-        else
+        else if (!animator.GetBool("IsKilledBySpikes"))
         {
             SetFrontView();
         }
@@ -28,5 +29,16 @@ public class PlayerVisualManager : MonoBehaviour
     {
         sideView.SetActive(false);
         frontView.SetActive(true);
+    }
+
+    public void PlayerTouchedSpikes()
+    {
+        SetSideView();
+        animator.SetBool("IsKilledBySpikes", true);
+    }
+    
+    public void KilledBySpikes()
+    {
+        FindObjectOfType<GameManager>().SwitchToNextCharacter();
     }
 }
