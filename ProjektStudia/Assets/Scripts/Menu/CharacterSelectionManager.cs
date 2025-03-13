@@ -8,13 +8,17 @@ using TMPro;
 public class CharacterSelectionManager : MonoBehaviour
 {
     public List<Button> characterButtons;
+    public List<Sprite> originalSprites;
+    public List<Sprite> alternateSprites;
     public List<Sprite> characterIcons;
     public TextMeshProUGUI selectedCountText;
     public Button confirmButton;
     public Button backButton;
+    public CharacterSpawner characterSpawner;
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
+    private HashSet<int> toggledButtons = new HashSet<int>();
 
     [SerializeField] private AudioClip buttonSoundClip;
 
@@ -35,27 +39,62 @@ public class CharacterSelectionManager : MonoBehaviour
         backButton.onClick.AddListener(BackToPreviousScreen);
     }
 
+    private void ToggleCharacterSprite(int characterIndex)
+    {
+        if (toggledButtons.Contains(characterIndex))
+        {
+            characterButtons[characterIndex].GetComponent<Image>().sprite = originalSprites[characterIndex];
+            toggledButtons.Remove(characterIndex);
+        }
+        else
+        {
+            characterButtons[characterIndex].GetComponent<Image>().sprite = alternateSprites[characterIndex];
+            toggledButtons.Add(characterIndex);
+        }
+    }
+
     public void ToggleCharacterSelection(int characterIndex)
     {
         if (selectedCharacters.Contains(characterIndex))
         {
             selectedCharacters.Remove(characterIndex);
-            characterButtons[characterIndex].interactable = true;
-            characterButtons[characterIndex].GetComponent<Image>().color = Color.white;
+
+            if (originalSprites != null && originalSprites.Count > characterIndex)
+            {
+                characterButtons[characterIndex].GetComponent<Image>().sprite = originalSprites[characterIndex];
+            }
+
+            Debug.Log($"Postaæ {characterIndex} zosta³a odznaczona.");
         }
         else if (selectedCharacters.Count < maxSelectableCharacters)
         {
             selectedCharacters.Add(characterIndex);
-            characterButtons[characterIndex].GetComponent<Image>().color = Color.gray;
+
+            if (alternateSprites != null && alternateSprites.Count > characterIndex)
+            {
+                characterButtons[characterIndex].GetComponent<Image>().sprite = alternateSprites[characterIndex];
+            }
+
+            Debug.Log($"Postaæ {characterIndex} zosta³a wybrana.");
+
+            if (characterSpawner != null)
+            {
+                characterSpawner.SpawnCharacter(characterIndex);
+            }
+            else
+            {
+                Debug.LogError("CharacterSpawner nie jest przypisany w inspektorze!");
+            }
         }
 
         UpdateSelectionCount();
+
         confirmButton.interactable = selectedCharacters.Count == maxSelectableCharacters;
     }
 
     private void UpdateSelectionCount()
     {
-        selectedCountText.text = $"Wybrano: {selectedCharacters.Count}/{maxSelectableCharacters}";
+        selectedCountText.text = $"Wybrano: {selectedCharacters.Count} z {maxSelectableCharacters}";
     }
 
     private async void SaveSelectionAndLoadMap()
