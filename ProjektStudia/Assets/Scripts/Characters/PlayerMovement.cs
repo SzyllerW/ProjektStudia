@@ -3,13 +3,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float horizontal { get; private set; }
-    private bool isJumping;
     private bool isFalling;
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
     private bool isFacingRight = true;
     private float fallTime = 0f;
-    private bool isAtPeak = false;
 
     [Header("Movement Settings")]
     public float speed = 25f;
@@ -20,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump Settings")]
     public float jumpForce = 35f;
+    public float ascentSpeedMultiplier = 1.5f;
     public float baseFallMultiplier = 5f;
     public float maxFallMultiplier = 15f;
     public float fallAccelerationRate = 3f;
@@ -28,7 +27,8 @@ public class PlayerMovement : MonoBehaviour
     public float coyoteTime = 0.2f;
     public float jumpBufferTime = 0.2f;
     public float peakPauseTime = 0.1f;
-    public float peakSpeedReduction = 0.5f; 
+    public float peakSpeedReduction = 0.8f;
+    public float horizontalJumpReduction = 0.6f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -44,21 +44,22 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        HandleJumpInput();
-        Flip();
+        HandleJumpInput(); // Obs³uguje wykrywanie skoku
+        Flip(); // Obraca postaæ w zale¿noœci od kierunku ruchu
     }
 
     private void FixedUpdate()
     {
-        ApplyMovement();
-        ApplyJumpPhysics();
+        ApplyMovement(); // Obs³uguje ruch poziomy
+        ApplyJumpPhysics(); // Kontroluje fizykê skoku i opadania
     }
 
+    // Sprawdza wejœcie gracza dotycz¹ce skoku i stosuje mechanizmy u³atwiaj¹ce skok (coyote time, jump buffer)
     private void HandleJumpInput()
     {
         if (IsGrounded())
         {
-            coyoteTimeCounter = coyoteTime;
+            coyoteTimeCounter = coyoteTime; // Resetuje czas na dodatkowy skok po zejœciu z platformy
             isFalling = false;
             fallTime = 0f;
         }
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            jumpBufferCounter = jumpBufferTime;
+            jumpBufferCounter = jumpBufferTime; // Aktywuje buforowanie skoku
             Debug.Log("Jump Buffer Activated! Timer: " + jumpBufferCounter);
         }
         else
@@ -79,23 +80,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {
-            Jump();
+            Jump(); // Wywo³uje skok
             jumpBufferCounter = 0;
-            Debug.Log("Jump Buffer Used! Skok wykonany.");
-        }
-
-        if (jumpBufferCounter <= 0 && jumpBufferCounter > -0.1f)
-        {
-            Debug.Log("Jump Buffer Expired!");
         }
     }
 
+    // Wykonuje skok - ustawia prêdkoœæ pionow¹ i zmniejsza poziom¹, jeœli trzeba
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
+        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
+
+        rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce);
         animator.SetBool("IsJumping", true);
         coyoteTimeCounter = 0;
-        isJumping = true;
+
+        Debug.Log("Jump! Modified Jump Force: " + modifiedJumpForce + " | Modified Horizontal Velocity: " + modifiedHorizontalVelocity);
     }
 
     private void ApplyMovement()
@@ -108,31 +108,12 @@ public class PlayerMovement : MonoBehaviour
             accelerationRate = Mathf.Abs(horizontal) > 0.1f ? airAcceleration : airDeceleration;
         }
 
-        if (isAtPeak)
-        {
-            targetSpeed *= peakSpeedReduction; // Zmniejszamy prêdkoœæ poziom¹ na szczycie skoku
-            Debug.Log("Peak Movement Activated! Speed Reduced: " + targetSpeed);
-        }
-
         rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, targetSpeed, accelerationRate * Time.fixedDeltaTime), rb.velocity.y);
     }
 
+    // Kontroluje opadanie - im d³u¿ej spadamy, tym szybciej opadamy
     private void ApplyJumpPhysics()
     {
-        if (rb.velocity.y > 0 && rb.velocity.y < 1f) // Pauza na szczycie skoku
-        {
-            if (!isAtPeak)
-            {
-                isAtPeak = true;
-                Debug.Log("Peak Reached! Applying Pause...");
-                StartCoroutine(PeakPause());
-            }
-        }
-        else
-        {
-            isAtPeak = false;
-        }
-
         if (rb.velocity.y < 0)
         {
             fallTime += Time.fixedDeltaTime;
@@ -146,26 +127,17 @@ public class PlayerMovement : MonoBehaviour
             }
 
             isFalling = true;
+            Debug.Log("Falling: " + rb.velocity.y + " | Fall Time: " + fallTime + " | Fall Multiplier: " + currentFallMultiplier);
         }
         else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
         {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime; // Skraca skok jeœli gracz puœci przycisk
         }
         else
         {
             fallTime = 0f;
         }
     }
-
-    private System.Collections.IEnumerator PeakPause()
-    {
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = originalGravity * 0.2f; 
-        yield return new WaitForSeconds(peakPauseTime);
-        rb.gravityScale = originalGravity;
-        Debug.Log("Peak Pause Ended! Gravity Restored.");
-    }
-
 
     private void Flip()
     {

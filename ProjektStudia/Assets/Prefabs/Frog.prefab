@@ -103,12 +103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 70
   acceleration: 30
   deceleration: 35
   airAcceleration: 15
   airDeceleration: 5
   jumpForce: 40
+  ascentSpeedMultiplier: 1.5
   baseFallMultiplier: 4
   maxFallMultiplier: 30
   fallAccelerationRate: 8
@@ -118,6 +119,7 @@ MonoBehaviour:
   jumpBufferTime: 0.15
   peakPauseTime: 0.1
   peakSpeedReduction: 0.5
+  horizontalJumpReduction: 0.6
   rb: {fileID: 6482799358026499942}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
