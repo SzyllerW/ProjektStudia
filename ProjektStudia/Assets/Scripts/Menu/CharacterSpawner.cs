@@ -105,8 +105,32 @@ public class CharacterSpawner : MonoBehaviour
                 descriptionPanel.SetActive(true);
             }
 
+            // Podzia³ opisu na nag³ówki
+            string characterName = string.Empty;
+            string characterClass = string.Empty;
+            string descriptionBody = characterDescriptions[characterIndex];
+
+            if (characterIndex == 0)
+            {
+                characterName = "¯ABA";
+                characterClass = "kaskader";
+            }
+            else if (characterIndex == 1)
+            {
+                characterName = "PINGWIN";
+                characterClass = "pomocnik";
+            }
+            else if (characterIndex == 2)
+            {
+                characterName = "KRET";
+                characterClass = "inicjator";
+            }
+
+            // Zmiana formatowania nag³ówków
+            string formattedHeader = $"<size=150%>{characterName} (klasa: <color=#FF8F52>{characterClass}</color>)</size>\n";
+
             // Aktualizacja opisu
-            descriptionText.text = characterDescriptions[characterIndex];
+            descriptionText.text = formattedHeader + descriptionBody;
 
             // Wymuszenie aktualizacji
             Canvas.ForceUpdateCanvases();
