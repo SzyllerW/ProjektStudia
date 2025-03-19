@@ -10,24 +10,27 @@ public class PlayerMovement : MonoBehaviour
     private float fallTime = 0f;
 
     [Header("Movement Settings")]
-    public float speed = 25f;
+    public float speed = 45f;
     public float acceleration = 30f;
     public float deceleration = 35f;
     public float airAcceleration = 15f;
     public float airDeceleration = 18f;
 
+    [Header("Jump Movement Settings")]
+    public float jumpHorizontalSpeed = 20f; // Prêdkoœæ pozioma w powietrzu, niezale¿na od biegania
+
     [Header("Jump Settings")]
     public float jumpForce = 35f;
     public float ascentSpeedMultiplier = 1.5f;
-    public float baseFallMultiplier = 5f;
-    public float maxFallMultiplier = 15f;
-    public float fallAccelerationRate = 3f;
+    public float baseFallMultiplier = 4f;
+    public float maxFallMultiplier = 30f;
+    public float fallAccelerationRate = 8f;
     public float lowJumpMultiplier = 6f;
-    public float maxFallSpeed = -50f;
-    public float coyoteTime = 0.2f;
-    public float jumpBufferTime = 0.2f;
+    public float maxFallSpeed = -80f;
+    public float coyoteTime = 0.1f;
+    public float jumpBufferTime = 0.15f;
     public float peakPauseTime = 0.1f;
-    public float peakSpeedReduction = 0.8f;
+    public float peakSpeedReduction = 0.5f;
     public float horizontalJumpReduction = 0.6f;
 
     [SerializeField] private Rigidbody2D rb;
@@ -54,12 +57,11 @@ public class PlayerMovement : MonoBehaviour
         ApplyJumpPhysics(); // Kontroluje fizykê skoku i opadania
     }
 
-    // Sprawdza wejœcie gracza dotycz¹ce skoku i stosuje mechanizmy u³atwiaj¹ce skok (coyote time, jump buffer)
     private void HandleJumpInput()
     {
         if (IsGrounded())
         {
-            coyoteTimeCounter = coyoteTime; // Resetuje czas na dodatkowy skok po zejœciu z platformy
+            coyoteTimeCounter = coyoteTime;
             isFalling = false;
             fallTime = 0f;
         }
@@ -70,8 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            jumpBufferCounter = jumpBufferTime; // Aktywuje buforowanie skoku
-            Debug.Log("Jump Buffer Activated! Timer: " + jumpBufferCounter);
+            jumpBufferCounter = jumpBufferTime;
         }
         else
         {
@@ -80,27 +81,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
         {
-            Jump(); // Wywo³uje skok
+            Jump();
             jumpBufferCounter = 0;
         }
     }
 
-    // Wykonuje skok - ustawia prêdkoœæ pionow¹ i zmniejsza poziom¹, jeœli trzeba
     private void Jump()
     {
         float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
-        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
+        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction; // Redukuje d³ugoœæ skoku
 
         rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce);
         animator.SetBool("IsJumping", true);
         coyoteTimeCounter = 0;
-
-        Debug.Log("Jump! Modified Jump Force: " + modifiedJumpForce + " | Modified Horizontal Velocity: " + modifiedHorizontalVelocity);
     }
 
     private void ApplyMovement()
     {
-        float targetSpeed = horizontal * speed;
+        float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed); // Oddzielna prêdkoœæ dla ziemi i powietrza
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
 
         if (!IsGrounded())
@@ -111,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, targetSpeed, accelerationRate * Time.fixedDeltaTime), rb.velocity.y);
     }
 
-    // Kontroluje opadanie - im d³u¿ej spadamy, tym szybciej opadamy
     private void ApplyJumpPhysics()
     {
         if (rb.velocity.y < 0)
@@ -127,11 +124,10 @@ public class PlayerMovement : MonoBehaviour
             }
 
             isFalling = true;
-            Debug.Log("Falling: " + rb.velocity.y + " | Fall Time: " + fallTime + " | Fall Multiplier: " + currentFallMultiplier);
         }
         else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
         {
-            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime; // Skraca skok jeœli gracz puœci przycisk
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
         else
         {

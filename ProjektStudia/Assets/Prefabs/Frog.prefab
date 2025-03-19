@@ -103,23 +103,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 70
-  acceleration: 30
-  deceleration: 35
-  airAcceleration: 15
-  airDeceleration: 5
-  jumpForce: 40
-  ascentSpeedMultiplier: 1.5
+  speed: 55
+  acceleration: 35
+  deceleration: 40
+  airAcceleration: 22
+  airDeceleration: 10
+  jumpHorizontalSpeed: 38
+  jumpForce: 67
+  ascentSpeedMultiplier: 1.8
   baseFallMultiplier: 4
-  maxFallMultiplier: 30
-  fallAccelerationRate: 8
+  maxFallMultiplier: 33
+  fallAccelerationRate: 9
   lowJumpMultiplier: 6
   maxFallSpeed: -80
-  coyoteTime: 0.1
-  jumpBufferTime: 0.15
-  peakPauseTime: 0.1
-  peakSpeedReduction: 0.5
-  horizontalJumpReduction: 0.6
+  coyoteTime: 0.15
+  jumpBufferTime: 0.22
+  peakPauseTime: 0.15
+  peakSpeedReduction: 0.4
+  horizontalJumpReduction: 0.75
   rb: {fileID: 6482799358026499942}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
@@ -393,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 4459225670038836037}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.88, y: 10.36, z: 0.21616174}
+  m_LocalPosition: {x: 0.88, y: 9.86, z: 0.21616174}
   m_LocalScale: {x: 0.95581, y: 0.95581, z: 0.95581}
   m_ConstrainProportionsScale: 0
   m_Children: []

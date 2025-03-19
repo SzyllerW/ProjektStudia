@@ -263,23 +263,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  acceleration: 30
-  deceleration: 35
-  airAcceleration: 15
+  speed: 40
+  acceleration: 22
+  deceleration: 30
+  airAcceleration: 10
   airDeceleration: 5
-  jumpForce: 25
-  ascentSpeedMultiplier: 1.5
-  baseFallMultiplier: 4
-  maxFallMultiplier: 30
-  fallAccelerationRate: 8
-  lowJumpMultiplier: 6
+  jumpHorizontalSpeed: 20
+  jumpForce: 43
+  ascentSpeedMultiplier: 1.3
+  baseFallMultiplier: 6.5
+  maxFallMultiplier: 35
+  fallAccelerationRate: 10
+  lowJumpMultiplier: 7
   maxFallSpeed: -80
   coyoteTime: 0.1
-  jumpBufferTime: 0.15
-  peakPauseTime: 0.1
-  peakSpeedReduction: 0.5
-  horizontalJumpReduction: 0.6
+  jumpBufferTime: 0.18
+  peakPauseTime: 0.08
+  peakSpeedReduction: 0.65
+  horizontalJumpReduction: 0.8
   rb: {fileID: 6080653459921135651}
   groundCheck: {fileID: 440415993664081664}
   groundLayer:
