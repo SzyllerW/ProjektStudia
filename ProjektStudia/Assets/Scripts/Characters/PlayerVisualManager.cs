@@ -9,7 +9,7 @@ public class PlayerVisualManager : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Abs(playerMovement.horizontal) > 0.1f)
+        if (Mathf.Abs(playerMovement.horizontal) > 0.1f | animator.GetBool("Dig"))
         {
             SetSideView();
         }

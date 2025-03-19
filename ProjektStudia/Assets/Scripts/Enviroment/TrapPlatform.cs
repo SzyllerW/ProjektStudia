@@ -7,6 +7,7 @@ public class TrapPlatform : MonoBehaviour
     [SerializeField] private GameObject redLight;
     [SerializeField] private GameObject spikes;
     [SerializeField] private float trapCycleTime = 3f;
+    [SerializeField] private Animator animator;
 
     private bool isTrapActive = false;
     private GameObject playerOnPlatform;
@@ -36,7 +37,7 @@ public class TrapPlatform : MonoBehaviour
     {
         greenLight.SetActive(!active);
         redLight.SetActive(active);
-        spikes.SetActive(active);
+        animator.SetBool("RedLight", isTrapActive);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

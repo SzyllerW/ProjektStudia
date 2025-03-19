@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 1941786693237067703}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3, y: -3.4, z: 0}
-  m_LocalScale: {x: 29.1, y: 26.11, z: 13.2}
+  m_LocalPosition: {x: -0.2552, y: -2.7715, z: 0}
+  m_LocalScale: {x: 29.190212, y: 27.366274, z: 13.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4704425990604723030}
@@ -269,6 +269,7 @@ MonoBehaviour:
   airAcceleration: 15
   airDeceleration: 5
   jumpForce: 25
+  ascentSpeedMultiplier: 1.5
   baseFallMultiplier: 4
   maxFallMultiplier: 30
   fallAccelerationRate: 8
@@ -278,6 +279,7 @@ MonoBehaviour:
   jumpBufferTime: 0.15
   peakPauseTime: 0.1
   peakSpeedReduction: 0.5
+  horizontalJumpReduction: 0.6
   rb: {fileID: 6080653459921135651}
   groundCheck: {fileID: 440415993664081664}
   groundLayer:
@@ -317,6 +319,7 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 440415993664081664}
   groundCheckRadius: 0.2
+  animator: {fileID: 4336597031928889974}
 --- !u!212 &1201959364616346854
 SpriteRenderer:
   m_ObjectHideFlags: 0
