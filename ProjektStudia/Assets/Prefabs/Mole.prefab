@@ -263,13 +263,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 40
+  speed: 45
   acceleration: 22
   deceleration: 30
   airAcceleration: 10
   airDeceleration: 5
-  jumpHorizontalSpeed: 20
-  jumpForce: 43
+  jumpHorizontalSpeed: 25
+  jumpForce: 50
   ascentSpeedMultiplier: 1.3
   baseFallMultiplier: 6.5
   maxFallMultiplier: 35

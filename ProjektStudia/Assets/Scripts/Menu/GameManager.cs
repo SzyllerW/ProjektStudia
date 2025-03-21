@@ -11,8 +11,9 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> activeCharacters = new List<GameObject>();
     private int currentCharacterIndex = 0;
-    private int usedCharactersCount = 0; 
+    private int usedCharactersCount = 0;
 
+    [SerializeField] private bool isTutorial = false;
     [SerializeField] private float switchDelay = 0.5f;
     [SerializeField] private float respawnCooldown = 1.0f; 
     [SerializeField] private string gameOverSceneName = "GameOverScene"; 
@@ -86,6 +87,12 @@ public class GameManager : MonoBehaviour
 
     public void SwitchToNextCharacter()
     {
+        if (isTutorial)
+        {
+            ActivateCharacter(0);
+            return;
+        }
+
         if (activeCharacters.Count == 0) return;
 
         StartCoroutine(SwitchCharacterWithDelay());
