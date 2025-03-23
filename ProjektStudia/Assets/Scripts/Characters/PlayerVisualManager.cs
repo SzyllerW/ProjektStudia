@@ -33,6 +33,7 @@ public class PlayerVisualManager : MonoBehaviour
 
     public void PlayerTouchedSpikes()
     {
+        animator.SetBool("Dig", false);
         SetSideView();
         animator.SetBool("IsKilledBySpikes", true);
     }
