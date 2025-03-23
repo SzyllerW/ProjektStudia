@@ -6,14 +6,30 @@ public class IceBlock : MonoBehaviour
     private bool isIceBlock = false;
 
     [SerializeField] private AudioClip iceBlockEnterSoundClip;
+    [SerializeField] private GameObject iceBlockPrefab;       // Prefab bloku lodu
+    [SerializeField] private GameObject penguinPrefab;        // Prefab pingwina
+    [SerializeField] private Transform penguinRespawnPoint;   // Punkt respawnu nowego pingwina
 
-    [SerializeField] private GameObject iceBlockPrefab; // Prefab bloku lodu
     private GameManager gameManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         gameManager = FindObjectOfType<GameManager>();
+
+        // Automatyczne wyszukanie punktu respawnu jeœli nie przypisany
+        if (penguinRespawnPoint == null)
+        {
+            GameObject found = GameObject.Find("RespawnPoint");
+            if (found != null)
+            {
+                penguinRespawnPoint = found.transform;
+            }
+            else
+            {
+                Debug.LogWarning("Nie znaleziono RespawnPoint w scenie!");
+            }
+        }
     }
 
     void Update()
@@ -35,11 +51,10 @@ public class IceBlock : MonoBehaviour
 
         if (iceBlockPrefab != null)
         {
-            // Pozycja bazuj¹ca na œrodku BoxCollider postaci i childa kostki lodu
             Vector3 spawnPosition = transform.position;
 
             BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
-            Transform iceChild = iceBlockPrefab.transform.GetChild(0); // Pobranie childa kostki lodu
+            Transform iceChild = iceBlockPrefab.transform.GetChild(0);
 
             if (playerCollider != null && iceChild != null)
             {
@@ -51,11 +66,9 @@ public class IceBlock : MonoBehaviour
                 }
             }
 
-            // Tworzenie kostki lodu z poprawn¹ pozycj¹
-            GameObject iceBlock = Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
             Debug.Log("Blok lodu utworzony na pozycji: " + spawnPosition);
 
-            //play sound FX
             SoundFXManager.instance.PlaySoundFXClip(iceBlockEnterSoundClip, transform, 1f);
         }
         else
@@ -63,7 +76,18 @@ public class IceBlock : MonoBehaviour
             Debug.LogError("Prefab bloku lodu nie jest przypisany!");
         }
 
-        // Wy³¹cz postaæ
+        // Stwórz nowego pingwina w punkcie respawnu
+        if (penguinPrefab != null && penguinRespawnPoint != null)
+        {
+            Instantiate(penguinPrefab, penguinRespawnPoint.position, Quaternion.identity);
+            Debug.Log("Nowy pingwin zrespawnowany w punkcie: " + penguinRespawnPoint.position);
+        }
+        else
+        {
+            Debug.LogWarning("Brakuje prefab-u pingwina lub punktu respawnu!");
+        }
+
+        // Wy³¹cz star¹ postaæ
         gameObject.SetActive(false);
     }
 }

@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseMenuPanel;  
+    [SerializeField] private GameObject settingsPanel;  
 
     private bool isPaused = false;
 
@@ -22,30 +23,38 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
+    public void RestartLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void PauseGame()
     {
-        PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name); // Zapisz poprzedni¹ scenê
-        PlayerPrefs.Save();
-
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f; // Pauza gry
+        pauseMenuPanel.SetActive(true);
+        settingsPanel.SetActive(false);
+        Time.timeScale = 0f;
         isPaused = true;
     }
 
     public void ResumeGame()
     {
-        pauseMenuUI.SetActive(false);
+        pauseMenuPanel.SetActive(false);
+        settingsPanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
-
-
     }
 
     public void OpenOptions()
     {
-        PlayerPrefs.SetString("PreviousScene", SceneManager.GetActiveScene().name);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Settings");
+        pauseMenuPanel.SetActive(false);
+        settingsPanel.SetActive(true);
+    }
+
+    public void CloseOptions()
+    {
+        settingsPanel.SetActive(false);
+        pauseMenuPanel.SetActive(true);
     }
 
     public void GoToMainMenu()
@@ -54,5 +63,7 @@ public class PauseMenuManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 }
+
+
 
 

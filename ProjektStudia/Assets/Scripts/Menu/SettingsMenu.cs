@@ -13,14 +13,13 @@ public class SettingsMenu : MonoBehaviour
 
             if (previousScene == SceneManager.GetActiveScene().name)
             {
-                // Nie prze³adowuj sceny, tylko zamknij menu ustawieñ i wznow grê
                 gameObject.SetActive(false);
                 Time.timeScale = 1f;
             }
             else
             {
                 SceneManager.LoadScene(previousScene);
-                Time.timeScale = 1f; // Upewnij siê, ¿e czas gry jest wznowiony
+                Time.timeScale = 1f;
             }
         }
         else

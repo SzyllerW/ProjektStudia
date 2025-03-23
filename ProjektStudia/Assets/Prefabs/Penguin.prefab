@@ -103,24 +103,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 45
-  acceleration: 30
-  deceleration: 35
-  airAcceleration: 16
-  airDeceleration: 8
-  jumpHorizontalSpeed: 25
-  jumpForce: 50
-  ascentSpeedMultiplier: 1.5
-  baseFallMultiplier: 5.5
-  maxFallMultiplier: 30
-  fallAccelerationRate: 8.5
-  lowJumpMultiplier: 5.5
+  speed: 65
+  acceleration: 75
+  deceleration: 85
+  airAcceleration: 35
+  airDeceleration: 22
+  jumpHorizontalSpeed: 42
+  jumpForce: 58
+  ascentSpeedMultiplier: 1.9
+  baseFallMultiplier: 6
+  maxFallMultiplier: 38
+  fallAccelerationRate: 10
+  lowJumpMultiplier: 7
   maxFallSpeed: -80
   coyoteTime: 0.12
-  jumpBufferTime: 0.2
-  peakPauseTime: 0.12
-  peakSpeedReduction: 0.55
-  horizontalJumpReduction: 0.7
+  jumpBufferTime: 0.18
+  peakPauseTime: 0.05
+  peakSpeedReduction: 0.4
+  horizontalJumpReduction: 0.75
   rb: {fileID: 5120900271061709305}
   groundCheck: {fileID: 7511505962762408153}
   groundLayer:

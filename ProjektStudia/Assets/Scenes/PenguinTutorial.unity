@@ -844,7 +844,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bd6302e4f35e1478723af31e94fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 0}
+  pauseMenuPanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
 --- !u!114 &245870931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,7 +991,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bd6302e4f35e1478723af31e94fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 488166660}
+  pauseMenuPanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
 --- !u!114 &260312903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2348,7 +2350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bd6302e4f35e1478723af31e94fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 488166660}
+  pauseMenuPanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
 --- !u!4 &778789948
 Transform:
   m_ObjectHideFlags: 0
@@ -3903,7 +3906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3bd6302e4f35e1478723af31e94fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuUI: {fileID: 488166660}
+  pauseMenuPanel: {fileID: 0}
+  settingsPanel: {fileID: 0}
 --- !u!114 &1457916267
 MonoBehaviour:
   m_ObjectHideFlags: 0
