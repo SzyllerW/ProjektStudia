@@ -14,11 +14,19 @@ public class CharacterSelectionManager : MonoBehaviour
     public TextMeshProUGUI selectedCountText;
     public Button confirmButton;
     public Button backButton;
+    public Button tutorialButton;
     public CharacterSpawner characterSpawner;
 
     private List<int> selectedCharacters = new List<int>();
     private int maxSelectableCharacters;
     private HashSet<int> toggledButtons = new HashSet<int>();
+    private int lastSelectedCharacterIndex = -1;
+    private Dictionary<int, string> characterSceneMap = new Dictionary<int, string>
+    {
+        { 0, "FrogTutorial" },
+        { 1, "PenguinTutorial" },
+        { 2, "MoleTutorial" }
+    };
 
     [SerializeField] private AudioClip buttonSoundClip;
 
@@ -37,6 +45,9 @@ public class CharacterSelectionManager : MonoBehaviour
 
         confirmButton.onClick.AddListener(SaveSelectionAndLoadMap);
         backButton.onClick.AddListener(BackToPreviousScreen);
+        tutorialButton.onClick.AddListener(GoToTutorialScene);
+
+        tutorialButton.gameObject.SetActive(false);
     }
 
     private void ToggleCharacterSprite(int characterIndex)
@@ -69,6 +80,7 @@ public class CharacterSelectionManager : MonoBehaviour
         else if (selectedCharacters.Count < maxSelectableCharacters)
         {
             selectedCharacters.Add(characterIndex);
+            lastSelectedCharacterIndex = characterIndex;
 
             if (alternateSprites != null && alternateSprites.Count > characterIndex)
             {
@@ -85,6 +97,12 @@ public class CharacterSelectionManager : MonoBehaviour
             {
                 Debug.LogError("CharacterSpawner nie jest przypisany w inspektorze!");
             }
+
+            //W³¹cz widocznoœæ przycisku tutorialButton
+            if (!tutorialButton.gameObject.activeSelf)
+            {
+                tutorialButton.gameObject.SetActive(true);
+            }
         }
 
         UpdateSelectionCount();
@@ -95,6 +113,16 @@ public class CharacterSelectionManager : MonoBehaviour
     private void UpdateSelectionCount()
     {
         selectedCountText.text = $"Wybrano: {selectedCharacters.Count} z {maxSelectableCharacters}";
+    }
+
+    private async void GoToTutorialScene()
+    {
+        if (characterSceneMap.TryGetValue(lastSelectedCharacterIndex, out string tutorialSceneName))
+        {
+            SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+            await Task.Delay(100);
+            SceneManager.LoadScene(tutorialSceneName);
+        }
     }
 
     private async void SaveSelectionAndLoadMap()
