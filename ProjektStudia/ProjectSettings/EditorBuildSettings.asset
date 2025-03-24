@@ -35,4 +35,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PauseSettings.unity
     guid: b9dbe7ba50ff138479c37a6bd9e84d7b
+  - enabled: 1
+    path: Assets/Scenes/FrogTutorial.unity
+    guid: 450dd12218916f34882b9c7c2a214ef1
+  - enabled: 1
+    path: Assets/Scenes/PenguinTutorial.unity
+    guid: 518650cf1a4ac9948aa8adb67d6acfe0
+  - enabled: 1
+    path: Assets/Scenes/MoleTutorial.unity
+    guid: 5df22100a9ea58f49bbd1ac70a730402
   m_configObjects: {}
