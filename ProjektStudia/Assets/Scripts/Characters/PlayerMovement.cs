@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
     private bool isFacingRight = true;
     private float fallTime = 0f;
+    private bool hasPlayedImpactAnimation = false;
+    private bool playerHasControl = true;
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -45,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!playerHasControl) return;
+
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         HandleJumpInput(); // Obs³uguje wykrywanie skoku
@@ -60,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJumpInput()
     {
+        if (!playerHasControl) return;
+
         if (IsGrounded())
         {
             coyoteTimeCounter = coyoteTime;
@@ -98,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMovement()
     {
+        if (!playerHasControl) return;
+
         float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed); // Oddzielna prêdkoœæ dla ziemi i powietrza
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
 
@@ -147,6 +155,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void PlayImpactAnimation()
+    {
+        animator.SetBool("Impact", true); // Wyzwolenie animacji uderzenia
+        playerHasControl = false; // Odbiera kontrolê gracza nad postaci¹
+    }
+
     private void Flip()
     {
         if ((horizontal < 0f && isFacingRight) || (horizontal > 0f && !isFacingRight))
@@ -158,6 +172,28 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+        if (grounded)
+        {
+            // SprawdŸ, czy prêdkoœæ spadania osi¹gnê³a maxFallSpeed i animacja nie zosta³a odtworzona
+            if (rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
+            {
+                PlayImpactAnimation(); // Wywo³aj animacjê uderzenia
+                hasPlayedImpactAnimation = true; // Ustaw zmienn¹ na true po odtworzeniu animacji
+            }
+        }
+        else
+        {
+            hasPlayedImpactAnimation = false; // Zresetuj zmienn¹, gdy postaæ opuœci ziemiê
+        }
+
+        return grounded;
+    }
+
+    public void RestoreControl()
+    {
+        animator.SetBool("Impact", false);
+        playerHasControl = true; // Przywróæ kontrolê graczowi
     }
 }

@@ -115,13 +115,12 @@ MonoBehaviour:
   maxFallMultiplier: 38
   fallAccelerationRate: 10
   lowJumpMultiplier: 7
-  maxFallSpeed: -80
+  maxFallSpeed: -110
   coyoteTime: 0.12
   jumpBufferTime: 0.18
   peakPauseTime: 0.05
   peakSpeedReduction: 0.4
   horizontalJumpReduction: 0.75
-  groundDistanceThreshold: 2.5
   rb: {fileID: 6482799358026499942}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
