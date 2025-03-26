@@ -15,8 +15,10 @@ public class MenuManager : MonoBehaviour
 
     public async void OpenOptions()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         PlayerPrefs.SetString("PreviousScene", "MainMenu");
         PlayerPrefs.Save();
+        await Task.Delay(100);
         SceneManager.LoadScene("Settings");
     }
 

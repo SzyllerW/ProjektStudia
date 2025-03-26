@@ -129,6 +129,11 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 3234283007144487377}
   trailRenderer: {fileID: 5086632712825232151}
+  walkingAudioSource: {fileID: 5441515989707216482}
+  impactSound: {fileID: 8300000, guid: 9a43a20cdea47f14491c7f437ed8163b, type: 3}
+  impactVolume: 0.5
+  jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
+  jumpVolume: 1
 --- !u!114 &1018397282838980999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,10 +254,10 @@ AudioSource:
   m_GameObject: {fileID: 1841985961319422964}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2794055133158334855, guid: d58bb04874186f14f8f49239dc791fab, type: 2}
   m_audioClip: {fileID: 8300000, guid: 271e3578a1231f34490e3fbb14dac1c1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -350,11 +355,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxJumps: 2
   doubleJumpForce: 30
-  doubleJumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  doubleJumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
+  doubleJumpVolume: 1
 --- !u!114 &1930732681635942429
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -129,6 +129,11 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 4086955653596576098}
   trailRenderer: {fileID: 4909898014616325199}
+  walkingAudioSource: {fileID: 6571674977927980426}
+  impactSound: {fileID: 8300000, guid: 9a43a20cdea47f14491c7f437ed8163b, type: 3}
+  impactVolume: 1
+  jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
+  jumpVolume: 1
 --- !u!114 &3714165534188299346
 MonoBehaviour:
   m_ObjectHideFlags: 0

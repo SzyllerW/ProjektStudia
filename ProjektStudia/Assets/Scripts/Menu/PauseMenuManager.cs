@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuPanel;  
-    [SerializeField] private GameObject settingsPanel;  
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private AudioClip buttonSoundClip;
 
     private bool isPaused = false;
 
@@ -23,42 +25,60 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
-    public void RestartLevel()
+    public async void RestartLevel()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void PauseGame()
+    public async void PauseGame()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         pauseMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
     }
 
-    public void ResumeGame()
+    public async void ResumeGame()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         pauseMenuPanel.SetActive(false);
         settingsPanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
     }
 
-    public void OpenOptions()
+    public async void OpenOptions()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         pauseMenuPanel.SetActive(false);
         settingsPanel.SetActive(true);
     }
 
-    public void CloseOptions()
+    public async void CloseOptions()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         settingsPanel.SetActive(false);
         pauseMenuPanel.SetActive(true);
     }
 
-    public void GoToMainMenu()
+    public async void GoToMainMenu()
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }

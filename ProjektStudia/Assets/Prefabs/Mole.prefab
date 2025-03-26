@@ -193,7 +193,7 @@ SpriteMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941786693237067703}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -443,6 +443,11 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 4336597031928889974}
   trailRenderer: {fileID: 5893951900070692163}
+  walkingAudioSource: {fileID: 1792568672613506511}
+  impactSound: {fileID: 8300000, guid: 9a43a20cdea47f14491c7f437ed8163b, type: 3}
+  impactVolume: 1
+  jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
+  jumpVolume: 1
 --- !u!114 &8205737369769770963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathHeight: -200
   deathSoundClip: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
+  trailRenderer: {fileID: 5893951900070692163}
 --- !u!114 &6143837852630749680
 MonoBehaviour:
   m_ObjectHideFlags: 0

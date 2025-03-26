@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 using UnityEngine;
 
 public class SoundFXManager : MonoBehaviour
 {
     public static SoundFXManager instance;
+    public AudioMixerGroup mixerGroup;
 
     [SerializeField] private AudioSource soundFXObject;
 
@@ -23,6 +25,9 @@ public class SoundFXManager : MonoBehaviour
 
         //assing the audioClip
         audioSource.clip = audioClip;
+
+        //assign group of sound
+        audioSource.outputAudioMixerGroup = mixerGroup;
 
         //assign volume
         audioSource.volume = volume;

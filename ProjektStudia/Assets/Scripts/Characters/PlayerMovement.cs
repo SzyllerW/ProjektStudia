@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private bool hasPlayedImpactAnimation = false;
     private bool playerHasControl = true;
     private float trailTargetTime = 0f;
+    private bool isPlayingWalkingSound = false;
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -41,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
     [SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] private AudioSource walkingAudioSource;
+    [SerializeField] private AudioClip impactSound;
+    [SerializeField] private float impactVolume = 1f;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private float jumpVolume = 1f;
 
     void Start()
     {
@@ -56,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         HandleJumpInput(); // Obs³uguje wykrywanie skoku
         Flip(); // Obraca postaæ w zale¿noœci od kierunku ruchu
         UpdateJumpAnimation();
+        HandleWalkingSound();
 
         // Ustawienia smugi
         if (IsGrounded())
@@ -110,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
             jumpBufferCounter = 0;
+
+            SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, jumpVolume);
         }
     }
 
@@ -179,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("Impact", true); // Wyzwolenie animacji uderzenia
         playerHasControl = false; // Odbiera kontrolê gracza nad postaci¹
+
+        SoundFXManager.instance.PlaySoundFXClip(impactSound, transform, impactVolume);
     }
 
     private void Flip()
@@ -220,5 +231,23 @@ public class PlayerMovement : MonoBehaviour
     private void ResetTrailRenderer()
     {
         trailRenderer.Clear(); // Usuñ wszystkie aktywne cz¹steczki smugi
+    }
+
+    private void HandleWalkingSound()
+    {
+        if (Mathf.Abs(horizontal) > 0.1f && IsGrounded() && !animator.GetBool("Impact"))
+        {
+            if (!walkingAudioSource.isPlaying)
+            {
+                walkingAudioSource.Play();
+            }
+        }
+        else
+        {
+            if (walkingAudioSource.isPlaying)
+            {
+                walkingAudioSource.Stop();
+            }
+        }
     }
 }
