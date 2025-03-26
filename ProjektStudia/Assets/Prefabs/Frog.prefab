@@ -80,7 +80,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 6
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -110,8 +110,8 @@ MonoBehaviour:
   airAcceleration: 35
   airDeceleration: 22
   jumpHorizontalSpeed: 42
-  jumpForce: 58
-  ascentSpeedMultiplier: 1.9
+  jumpForce: 53
+  ascentSpeedMultiplier: 1.6
   baseFallMultiplier: 6
   maxFallMultiplier: 38
   fallAccelerationRate: 10
@@ -232,7 +232,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1651335, y: 21.943499}
+  m_Offset: {x: 1, y: 21}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxJumps: 2
-  doubleJumpForce: 30
+  doubleJumpForce: 34
   groundCheck: {fileID: 2202916903179979711}
   groundLayer:
     serializedVersion: 2

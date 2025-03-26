@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float airDeceleration = 18f;
 
     [Header("Jump Movement Settings")]
-    public float jumpHorizontalSpeed = 20f; // Prêdkoœæ pozioma w powietrzu, niezale¿na od biegania
+    public float jumpHorizontalSpeed = 20f;
 
     [Header("Jump Settings")]
     public float jumpForce = 35f;
@@ -59,29 +59,19 @@ public class PlayerMovement : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        HandleJumpInput(); // Obs³uguje wykrywanie skoku
-        Flip(); // Obraca postaæ w zale¿noœci od kierunku ruchu
+        HandleJumpInput();
+        Flip();
         UpdateJumpAnimation();
         HandleWalkingSound();
 
-        // Ustawienia smugi
-        if (IsGrounded())
-        {
-            trailTargetTime = 0f;
-        }
-        else
-        {
-            trailTargetTime = 1f;
-        }
-
-        // P³ynna zmiana d³ugoœci smugi
+        trailTargetTime = IsGrounded() ? 0f : 1f;
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
     }
 
     private void FixedUpdate()
     {
-        ApplyMovement(); // Obs³uguje ruch poziomy
-        ApplyJumpPhysics(); // Kontroluje fizykê skoku i opadania
+        ApplyMovement();
+        ApplyJumpPhysics();
     }
 
     private void HandleJumpInput()
@@ -105,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (IsGrounded())
             {
-                ResetTrailRenderer(); // Wyczyszczenie smugi
+                ResetTrailRenderer();
             }
         }
         else
@@ -125,17 +115,35 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
-        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction; // Redukuje d³ugoœæ skoku
+        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
+        float platformVelocityY = GetPlatformVelocityY();
 
-        rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce);
+        rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce - platformVelocityY);
         coyoteTimeCounter = 0;
+    }
+
+    private float GetPlatformVelocityY()
+    {
+        if (IsGrounded())
+        {
+            RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.5f, groundLayer);
+            if (hit.collider != null)
+            {
+                Rigidbody2D platformRb = hit.collider.attachedRigidbody;
+                if (platformRb != null)
+                {
+                    return platformRb.velocity.y;
+                }
+            }
+        }
+        return 0f;
     }
 
     private void ApplyMovement()
     {
         if (!playerHasControl) return;
 
-        float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed); // Oddzielna prêdkoœæ dla ziemi i powietrza
+        float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed);
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
 
         if (!IsGrounded())
@@ -174,20 +182,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateJumpAnimation()
     {
-        if (IsGrounded())
-        {
-            animator.SetBool("IsJumping", false);
-        }
-        else
-        {
-            animator.SetBool("IsJumping", true);
-        }
+        animator.SetBool("IsJumping", !IsGrounded());
     }
 
     private void PlayImpactAnimation()
     {
-        animator.SetBool("Impact", true); // Wyzwolenie animacji uderzenia
-        playerHasControl = false; // Odbiera kontrolê gracza nad postaci¹
+        animator.SetBool("Impact", true);
+        playerHasControl = false;
 
         SoundFXManager.instance.PlaySoundFXClip(impactSound, transform, impactVolume);
     }
@@ -207,16 +208,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (grounded)
         {
-            // SprawdŸ, czy prêdkoœæ spadania osi¹gnê³a maxFallSpeed i animacja nie zosta³a odtworzona
             if (rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
             {
-                PlayImpactAnimation(); // Wywo³aj animacjê uderzenia
-                hasPlayedImpactAnimation = true; // Ustaw zmienn¹ na true po odtworzeniu animacji
+                PlayImpactAnimation();
+                hasPlayedImpactAnimation = true;
             }
         }
         else
         {
-            hasPlayedImpactAnimation = false; // Zresetuj zmienn¹, gdy postaæ opuœci ziemiê
+            hasPlayedImpactAnimation = false;
         }
 
         return grounded;
@@ -225,12 +225,12 @@ public class PlayerMovement : MonoBehaviour
     public void RestoreControl()
     {
         animator.SetBool("Impact", false);
-        playerHasControl = true; // Przywróæ kontrolê graczowi
+        playerHasControl = true;
     }
 
     private void ResetTrailRenderer()
     {
-        trailRenderer.Clear(); // Usuñ wszystkie aktywne cz¹steczki smugi
+        trailRenderer.Clear();
     }
 
     private void HandleWalkingSound()

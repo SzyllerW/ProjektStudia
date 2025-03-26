@@ -3,13 +3,12 @@ using UnityEngine;
 public class DoubleJumpManager : MonoBehaviour
 {
     [Header("Double Jump Settings")]
-    public int maxJumps = 2; // Iloœæ mo¿liwych skoków (1 = zwyk³y skok, 2 = podwójny skok)
-    public float doubleJumpForce = 30f; // Si³a drugiego skoku
+    public int maxJumps = 2;
+    public float doubleJumpForce = 25f;
 
     private int jumpCount = 0;
     private bool isGrounded;
     private Rigidbody2D rb;
-    private PlayerMovement playerMovement;
     private AudioSource audioSource;
 
     [SerializeField] private Transform groundCheck;
@@ -17,17 +16,23 @@ public class DoubleJumpManager : MonoBehaviour
     [SerializeField] private AudioClip doubleJumpSound;
     [SerializeField] private float doubleJumpVolume = 1f;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerMovement = GetComponent<PlayerMovement>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    void Update()
+    private void Update()
     {
         CheckGrounded();
-        HandleDoubleJump();
+
+        if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
+        {
+            if (!isGrounded)
+            {
+                PerformDoubleJump();
+            }
+        }
     }
 
     private void CheckGrounded()
@@ -35,29 +40,25 @@ public class DoubleJumpManager : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         if (isGrounded)
         {
-            jumpCount = 0; // Resetujemy iloœæ skoków po wyl¹dowaniu
+            jumpCount = 0;
         }
     }
 
-    private void HandleDoubleJump()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            if (isGrounded || jumpCount < maxJumps - 1)
-            {
-                PerformJump();
-            }
-        }
-    }
-
-    private void PerformJump()
+    private void PerformDoubleJump()
     {
         jumpCount++;
-        float jumpForce = (jumpCount == 1) ? playerMovement.jumpForce : doubleJumpForce;
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-        SoundFXManager.instance.PlaySoundFXClip(doubleJumpSound, transform, doubleJumpVolume);
+        float force = GetComponent<PlayerMovement>().jumpForce * GetComponent<PlayerMovement>().ascentSpeedMultiplier;
 
-        Debug.Log("Jump performed! Jump count: " + jumpCount);
+        rb.velocity = new Vector2(rb.velocity.x, 0f);
+        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+
+        if (doubleJumpSound && audioSource)
+        {
+            audioSource.PlayOneShot(doubleJumpSound, doubleJumpVolume);
+        }
+
     }
 }
+
+
