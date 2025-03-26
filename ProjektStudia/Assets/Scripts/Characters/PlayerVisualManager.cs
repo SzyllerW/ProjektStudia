@@ -9,7 +9,13 @@ public class PlayerVisualManager : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Abs(playerMovement.horizontal) > 0.1f | animator.GetBool("Dig"))
+        if (animator.GetBool("Impact"))
+        {
+            SetFrontView();
+            return;
+        }
+
+        if (Mathf.Abs(playerMovement.horizontal) > 0.1f || animator.GetBool("Dig") || animator.GetBool("IsJumping"))
         {
             SetSideView();
         }

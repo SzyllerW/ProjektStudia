@@ -40,8 +40,11 @@ public class MapSelectionManager : MonoBehaviour
         ResetButtonColors();
     }
 
-    public void ToggleMapSelection(int mapIndex, Button button)
+    public async void ToggleMapSelection(int mapIndex, Button button)
     {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
         if (selectedMap == mapIndex)
         {
             selectedMap = 0;

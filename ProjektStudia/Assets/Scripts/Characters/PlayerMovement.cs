@@ -8,6 +8,10 @@ public class PlayerMovement : MonoBehaviour
     private float jumpBufferCounter;
     private bool isFacingRight = true;
     private float fallTime = 0f;
+    private bool hasPlayedImpactAnimation = false;
+    private bool playerHasControl = true;
+    private float trailTargetTime = 0f;
+    private bool isPlayingWalkingSound = false;
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -37,6 +41,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
+    [SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] private AudioSource walkingAudioSource;
+    [SerializeField] private AudioClip impactSound;
+    [SerializeField] private float impactVolume = 1f;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private float jumpVolume = 1f;
 
     void Start()
     {
@@ -45,10 +55,27 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (!playerHasControl) return;
+
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         HandleJumpInput(); // Obs³uguje wykrywanie skoku
         Flip(); // Obraca postaæ w zale¿noœci od kierunku ruchu
+        UpdateJumpAnimation();
+        HandleWalkingSound();
+
+        // Ustawienia smugi
+        if (IsGrounded())
+        {
+            trailTargetTime = 0f;
+        }
+        else
+        {
+            trailTargetTime = 1f;
+        }
+
+        // P³ynna zmiana d³ugoœci smugi
+        trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
     }
 
     private void FixedUpdate()
@@ -59,6 +86,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJumpInput()
     {
+        if (!playerHasControl) return;
+
         if (IsGrounded())
         {
             coyoteTimeCounter = coyoteTime;
@@ -73,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
+
+            if (IsGrounded())
+            {
+                ResetTrailRenderer(); // Wyczyszczenie smugi
+            }
         }
         else
         {
@@ -83,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
             jumpBufferCounter = 0;
+
+            SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, jumpVolume);
         }
     }
 
@@ -92,12 +128,13 @@ public class PlayerMovement : MonoBehaviour
         float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction; // Redukuje d³ugoœæ skoku
 
         rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce);
-        animator.SetBool("IsJumping", true);
         coyoteTimeCounter = 0;
     }
 
     private void ApplyMovement()
     {
+        if (!playerHasControl) return;
+
         float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed); // Oddzielna prêdkoœæ dla ziemi i powietrza
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
 
@@ -135,6 +172,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void UpdateJumpAnimation()
+    {
+        if (IsGrounded())
+        {
+            animator.SetBool("IsJumping", false);
+        }
+        else
+        {
+            animator.SetBool("IsJumping", true);
+        }
+    }
+
+    private void PlayImpactAnimation()
+    {
+        animator.SetBool("Impact", true); // Wyzwolenie animacji uderzenia
+        playerHasControl = false; // Odbiera kontrolê gracza nad postaci¹
+
+        SoundFXManager.instance.PlaySoundFXClip(impactSound, transform, impactVolume);
+    }
+
     private void Flip()
     {
         if ((horizontal < 0f && isFacingRight) || (horizontal > 0f && !isFacingRight))
@@ -146,6 +203,51 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+
+        if (grounded)
+        {
+            // SprawdŸ, czy prêdkoœæ spadania osi¹gnê³a maxFallSpeed i animacja nie zosta³a odtworzona
+            if (rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
+            {
+                PlayImpactAnimation(); // Wywo³aj animacjê uderzenia
+                hasPlayedImpactAnimation = true; // Ustaw zmienn¹ na true po odtworzeniu animacji
+            }
+        }
+        else
+        {
+            hasPlayedImpactAnimation = false; // Zresetuj zmienn¹, gdy postaæ opuœci ziemiê
+        }
+
+        return grounded;
+    }
+
+    public void RestoreControl()
+    {
+        animator.SetBool("Impact", false);
+        playerHasControl = true; // Przywróæ kontrolê graczowi
+    }
+
+    private void ResetTrailRenderer()
+    {
+        trailRenderer.Clear(); // Usuñ wszystkie aktywne cz¹steczki smugi
+    }
+
+    private void HandleWalkingSound()
+    {
+        if (Mathf.Abs(horizontal) > 0.1f && IsGrounded() && !animator.GetBool("Impact"))
+        {
+            if (!walkingAudioSource.isPlaying)
+            {
+                walkingAudioSource.Play();
+            }
+        }
+        else
+        {
+            if (walkingAudioSource.isPlaying)
+            {
+                walkingAudioSource.Stop();
+            }
+        }
     }
 }

@@ -108,6 +108,7 @@ public class CharacterSelectionManager : MonoBehaviour
         UpdateSelectionCount();
 
         confirmButton.interactable = selectedCharacters.Count == maxSelectableCharacters;
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
     }
 
     private void UpdateSelectionCount()
