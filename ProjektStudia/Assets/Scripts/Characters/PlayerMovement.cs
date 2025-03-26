@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float fallTime = 0f;
     private bool hasPlayedImpactAnimation = false;
     private bool playerHasControl = true;
+    private float trailTargetTime = 0f;
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
+    [SerializeField] private TrailRenderer trailRenderer;
 
     void Start()
     {
@@ -54,6 +56,19 @@ public class PlayerMovement : MonoBehaviour
         HandleJumpInput(); // Obs³uguje wykrywanie skoku
         Flip(); // Obraca postaæ w zale¿noœci od kierunku ruchu
         UpdateJumpAnimation();
+
+        // Ustawienia smugi
+        if (IsGrounded())
+        {
+            trailTargetTime = 0f;
+        }
+        else
+        {
+            trailTargetTime = 1f;
+        }
+
+        // P³ynna zmiana d³ugoœci smugi
+        trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
     }
 
     private void FixedUpdate()
@@ -80,6 +95,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
+
+            if (IsGrounded())
+            {
+                ResetTrailRenderer(); // Wyczyszczenie smugi
+            }
         }
         else
         {
@@ -151,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            animator.SetBool("IsJumping", rb.velocity.y > 0);
+            animator.SetBool("IsJumping", true);
         }
     }
 
@@ -195,5 +215,10 @@ public class PlayerMovement : MonoBehaviour
     {
         animator.SetBool("Impact", false);
         playerHasControl = true; // Przywróæ kontrolê graczowi
+    }
+
+    private void ResetTrailRenderer()
+    {
+        trailRenderer.Clear(); // Usuñ wszystkie aktywne cz¹steczki smugi
     }
 }
