@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         HandleJumpInput(); // Obs³uguje wykrywanie skoku
         Flip(); // Obraca postaæ w zale¿noœci od kierunku ruchu
+        UpdateJumpAnimation();
     }
 
     private void FixedUpdate()
@@ -92,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
         float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction; // Redukuje d³ugoœæ skoku
 
         rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce);
-        animator.SetBool("IsJumping", true);
         coyoteTimeCounter = 0;
     }
 
@@ -132,6 +132,18 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             fallTime = 0f;
+        }
+    }
+
+    private void UpdateJumpAnimation()
+    {
+        if (IsGrounded())
+        {
+            animator.SetBool("IsJumping", false);
+        }
+        else
+        {
+            animator.SetBool("IsJumping", rb.velocity.y > 0);
         }
     }
 
