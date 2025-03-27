@@ -167,8 +167,8 @@ MonoBehaviour:
   - {fileID: 1886497336514422082, guid: 6230f4f3e75eedb40aeb83ac65041e5f, type: 3}
   - {fileID: 8865687083874275941, guid: cadea58fc0824134ca097350db110bac, type: 3}
   isTutorial: 0
-  switchDelay: 0.5
-  respawnCooldown: 1
+  switchDelay: 0
+  respawnCooldown: 0
   gameOverSceneName: GameOverScene
 --- !u!4 &178005464
 Transform:
@@ -476,6 +476,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2827504217806806307, guid: fe08e19030e66e84f835f2e573a0ac7a, type: 3}
+      propertyPath: deathSoundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
     - target: {fileID: 6863207613270206329, guid: fe08e19030e66e84f835f2e573a0ac7a, type: 3}
       propertyPath: m_Name
       value: Trap_platform

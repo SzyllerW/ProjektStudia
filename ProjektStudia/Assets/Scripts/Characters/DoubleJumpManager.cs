@@ -19,7 +19,6 @@ public class DoubleJumpManager : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -40,7 +39,7 @@ public class DoubleJumpManager : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         if (isGrounded)
         {
-            jumpCount = 0;
+            jumpCount = 1;
         }
     }
 
@@ -53,11 +52,10 @@ public class DoubleJumpManager : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
 
-        if (doubleJumpSound && audioSource)
+        if (doubleJumpSound && jumpCount == 2)
         {
-            audioSource.PlayOneShot(doubleJumpSound, doubleJumpVolume);
+            SoundFXManager.instance.PlaySoundFXClip(doubleJumpSound, transform, doubleJumpVolume);
         }
-
     }
 }
 

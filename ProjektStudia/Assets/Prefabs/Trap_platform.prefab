@@ -650,6 +650,7 @@ MonoBehaviour:
   spikes: {fileID: 3841189697704414716}
   trapCycleTime: 3
   animator: {fileID: 919599180034571674}
+  deathSoundClip: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
 --- !u!1 &7091373987262844381
 GameObject:
   m_ObjectHideFlags: 0

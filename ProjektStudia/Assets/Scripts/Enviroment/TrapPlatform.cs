@@ -8,6 +8,7 @@ public class TrapPlatform : MonoBehaviour
     [SerializeField] private GameObject spikes;
     [SerializeField] private float trapCycleTime = 3f;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip deathSoundClip;
 
     private bool isTrapActive = false;
     private GameObject playerOnPlatform;
@@ -63,6 +64,14 @@ public class TrapPlatform : MonoBehaviour
 
     private void KillPlayer(GameObject player)
     {
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        if (cameraFollow != null)
+        {
+            cameraFollow.ShakeBeforeFollow(1f, 10f);
+        }
+
+        SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, player.transform, 1.3f);
+
         PlayerVisualManager playerVisual = FindObjectOfType<PlayerVisualManager>();
         if (playerVisual != null)
         {

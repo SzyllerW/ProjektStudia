@@ -160,8 +160,8 @@ MonoBehaviour:
   characterPrefabs:
   - {fileID: 1841985961319422964, guid: 89e1a7dbdd7874d4a91d4d47881c4ba3, type: 3}
   isTutorial: 1
-  switchDelay: 0.5
-  respawnCooldown: 1
+  switchDelay: 0
+  respawnCooldown: 0
   gameOverSceneName: GameOverScene
 --- !u!4 &233122
 Transform:
@@ -4098,7 +4098,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 930649757}
+  m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
