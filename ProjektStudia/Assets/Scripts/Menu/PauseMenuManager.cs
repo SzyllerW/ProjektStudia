@@ -7,8 +7,14 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuPanel;  
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private AudioClip buttonSoundClip;
+    [SerializeField] private GameObject pauseButton;
 
     private bool isPaused = false;
+
+    void Start()
+    {
+        pauseButton.SetActive(true);
+    }
 
     void Update()
     {
@@ -43,6 +49,8 @@ public class PauseMenuManager : MonoBehaviour
         settingsPanel.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
+
+        pauseButton.SetActive(false);
     }
 
     public async void ResumeGame()
@@ -54,6 +62,8 @@ public class PauseMenuManager : MonoBehaviour
         settingsPanel.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+
+        pauseButton.SetActive(true);
     }
 
     public async void OpenOptions()
