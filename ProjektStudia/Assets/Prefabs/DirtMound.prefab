@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa63b7347a3816746b313eb2a873f49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouncePower: 1000
+  bouncePower: 20
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

@@ -7,56 +7,29 @@ public class MovingPlatform : MonoBehaviour
     public float speed = 2f;
 
     private bool movingToEnd = true;
+    private Rigidbody2D rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         if (startTransform != null)
         {
             transform.position = startTransform.position;
         }
-        else
-        {
-            Debug.LogError("[MovingPlatform] Start transform is not set.");
-        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (startTransform == null || endTransform == null)
-        {
-            Debug.LogError("[MovingPlatform] Start or End transform is not set.");
-            return;
-        }
+        if (startTransform == null || endTransform == null) return;
 
-        MovePlatform(startTransform.position, endTransform.position);
-    }
+        Vector3 targetPosition = movingToEnd ? endTransform.position : startTransform.position;
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
 
-    private void MovePlatform(Vector3 start, Vector3 end)
-    {
-        Vector3 targetPosition = movingToEnd ? end : start;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        rb.MovePosition(newPosition);
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
             movingToEnd = !movingToEnd;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-        {
-            Debug.Log("Player attached to platform.");
-            collision.collider.transform.SetParent(transform); 
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-        {
-            Debug.Log("Player detached from platform.");
-            collision.collider.transform.SetParent(null);
         }
     }
 }

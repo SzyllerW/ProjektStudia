@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5342093711440316757}
   m_Layer: 6
   m_Name: Moving platform
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,6 @@ MonoBehaviour:
   startTransform: {fileID: 0}
   endTransform: {fileID: 0}
   speed: 2
-  movementMode: 0
 --- !u!50 &7775483157907209428
 Rigidbody2D:
   serializedVersion: 4
@@ -138,7 +137,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553132384209061963}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

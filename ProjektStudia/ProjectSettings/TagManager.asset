@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DirtMound
   - GameMusic
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private bool playerHasControl = true;
     private float trailTargetTime = 0f;
     private bool isPlayingWalkingSound = false;
+    private bool externalJumpRequested = false;
+    private float externalJumpForce = 0f;
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -48,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private float jumpVolume = 1f;
 
+    [SerializeField] private Rigidbody2D currentPlatformRb;
+
     void Start()
     {
         rb.gravityScale = 5;
@@ -72,6 +76,16 @@ public class PlayerMovement : MonoBehaviour
     {
         ApplyMovement();
         ApplyJumpPhysics();
+
+        if (externalJumpRequested)
+        {
+            float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
+            rb.velocity = new Vector2(modifiedHorizontalVelocity, externalJumpForce);
+            animator.SetBool("IsJumping", true);
+            coyoteTimeCounter = 0;
+
+            externalJumpRequested = false;
+        }
     }
 
     private void HandleJumpInput()
@@ -92,11 +106,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
-
-            if (IsGrounded())
-            {
-                ResetTrailRenderer();
-            }
+            if (IsGrounded()) ResetTrailRenderer();
         }
         else
         {
@@ -107,36 +117,35 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
             jumpBufferCounter = 0;
-
             SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, jumpVolume);
         }
     }
 
     private void Jump()
     {
+        float platformVerticalVelocity = 0f;
+        if (currentPlatformRb != null)
+            platformVerticalVelocity = currentPlatformRb.velocity.y;
+
         float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
-        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
-        float platformVelocityY = GetPlatformVelocityY();
 
-        rb.velocity = new Vector2(modifiedHorizontalVelocity, modifiedJumpForce - platformVelocityY);
-        coyoteTimeCounter = 0;
-    }
-
-    private float GetPlatformVelocityY()
-    {
-        if (IsGrounded())
+        if (platformVerticalVelocity < -0.1f)
         {
-            RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.5f, groundLayer);
-            if (hit.collider != null)
-            {
-                Rigidbody2D platformRb = hit.collider.attachedRigidbody;
-                if (platformRb != null)
-                {
-                    return platformRb.velocity.y;
-                }
-            }
+            modifiedJumpForce = Mathf.Min(modifiedJumpForce, 25f);
         }
-        return 0f;
+
+        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
+
+        if (transform.parent != null)
+            transform.SetParent(null);
+
+        rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f); 
+        rb.velocity += Vector2.up * modifiedJumpForce;
+
+        coyoteTimeCounter = 0;
+
+        Debug.Log("Platform velocity Y: " + platformVerticalVelocity);
+        Debug.Log("Modified jump force: " + modifiedJumpForce);
     }
 
     private void ApplyMovement()
@@ -147,9 +156,7 @@ public class PlayerMovement : MonoBehaviour
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
 
         if (!IsGrounded())
-        {
             accelerationRate = Mathf.Abs(horizontal) > 0.1f ? airAcceleration : airDeceleration;
-        }
 
         rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, targetSpeed, accelerationRate * Time.fixedDeltaTime), rb.velocity.y);
     }
@@ -164,9 +171,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity += Vector2.up * Physics2D.gravity.y * (currentFallMultiplier - 1) * Time.fixedDeltaTime;
 
             if (rb.velocity.y < maxFallSpeed)
-            {
                 rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
-            }
 
             isFalling = true;
         }
@@ -185,14 +190,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsJumping", !IsGrounded());
     }
 
-    private void PlayImpactAnimation()
-    {
-        animator.SetBool("Impact", true);
-        playerHasControl = false;
-
-        SoundFXManager.instance.PlaySoundFXClip(impactSound, transform, impactVolume);
-    }
-
     private void Flip()
     {
         if ((horizontal < 0f && isFacingRight) || (horizontal > 0f && !isFacingRight))
@@ -206,20 +203,43 @@ public class PlayerMovement : MonoBehaviour
     {
         bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
-        if (grounded)
+        if (grounded && rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
         {
-            if (rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
-            {
-                PlayImpactAnimation();
-                hasPlayedImpactAnimation = true;
-            }
+            PlayImpactAnimation();
+            hasPlayedImpactAnimation = true;
         }
-        else
+        else if (!grounded)
         {
             hasPlayedImpactAnimation = false;
         }
 
         return grounded;
+    }
+
+    private void PlayImpactAnimation()
+    {
+        animator.SetBool("Impact", true);
+        playerHasControl = false;
+        SoundFXManager.instance.PlaySoundFXClip(impactSound, transform, impactVolume);
+    }
+
+    private void HandleWalkingSound()
+    {
+        if (Mathf.Abs(horizontal) > 0.1f && IsGrounded() && !animator.GetBool("Impact"))
+        {
+            if (!walkingAudioSource.isPlaying)
+                walkingAudioSource.Play();
+        }
+        else
+        {
+            if (walkingAudioSource.isPlaying)
+                walkingAudioSource.Stop();
+        }
+    }
+
+    private void ResetTrailRenderer()
+    {
+        trailRenderer.Clear();
     }
 
     public void RestoreControl()
@@ -228,26 +248,34 @@ public class PlayerMovement : MonoBehaviour
         playerHasControl = true;
     }
 
-    private void ResetTrailRenderer()
+    public void ExternalJump(float force)
     {
-        trailRenderer.Clear();
+        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
+        rb.velocity = new Vector2(modifiedHorizontalVelocity, force);
+        animator.SetBool("IsJumping", true);
+        coyoteTimeCounter = 0;
     }
 
-    private void HandleWalkingSound()
+    public void RequestExternalJump(float force)
     {
-        if (Mathf.Abs(horizontal) > 0.1f && IsGrounded() && !animator.GetBool("Impact"))
+        externalJumpRequested = true;
+        externalJumpForce = force;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("MovingPlatform"))
         {
-            if (!walkingAudioSource.isPlaying)
-            {
-                walkingAudioSource.Play();
-            }
+            currentPlatformRb = collision.rigidbody;
+            Debug.Log(" Player stepped on platform: " + currentPlatformRb.name);
         }
-        else
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("MovingPlatform"))
         {
-            if (walkingAudioSource.isPlaying)
-            {
-                walkingAudioSource.Stop();
-            }
+            currentPlatformRb = null;
         }
     }
 }
