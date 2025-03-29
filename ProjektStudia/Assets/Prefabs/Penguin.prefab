@@ -34,13 +34,13 @@ Transform:
   m_GameObject: {fileID: 1886497336514422082}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7511505962762408153}
   - {fileID: 3350036505123358514}
   - {fileID: 3376209791128402861}
-  - {fileID: 7511505962762408153}
   - {fileID: 201116727987072995}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -134,6 +134,7 @@ MonoBehaviour:
   impactVolume: 1
   jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
   jumpVolume: 1
+  currentPlatformRb: {fileID: 0}
 --- !u!114 &3714165534188299346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,8 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iceBlockEnterSoundClip: {fileID: 8300000, guid: 7b29aecf045b50240839157d7ced1d28, type: 3}
   iceBlockPrefab: {fileID: 2028806355041161890, guid: 3518f25e537ad3e4d9abe454f52c44f0, type: 3}
-  penguinPrefab: {fileID: 0}
-  penguinRespawnPoint: {fileID: 0}
 --- !u!212 &8562574370339486523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -202,8 +201,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -248,7 +247,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 3, y: 21}
+  m_Offset: {x: 2.767953, y: 22.091198}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -259,7 +258,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 21}
+  m_Size: {x: 18.713133, y: 23.437132}
   m_EdgeRadius: 0
 --- !u!82 &6571674977927980426
 AudioSource:
@@ -552,8 +551,8 @@ Transform:
   m_GameObject: {fileID: 6554799767693548473}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.1, y: 9.87, z: 0.06986442}
-  m_LocalScale: {x: 0.95580995, y: 0.95580995, z: 0.95580995}
+  m_LocalPosition: {x: 3.1, y: 10.16, z: 0.06986442}
+  m_LocalScale: {x: 0.95580995, y: 0, z: 0.95580995}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 698880616703721776}

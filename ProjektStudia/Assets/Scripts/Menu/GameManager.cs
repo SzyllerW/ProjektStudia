@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,20 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool isTutorial = false;
     [SerializeField] private float switchDelay = 0.5f;
-    [SerializeField] private float respawnCooldown = 1.0f; 
-    [SerializeField] private string gameOverSceneName = "GameOverScene"; 
+    [SerializeField] private float respawnCooldown = 1.0f;
+    [SerializeField] private string gameOverSceneName = "GameOverScene";
 
     private void Start()
     {
+        if (respawnPoint == null)
+        {
+            Debug.LogError("[GameManager] respawnPoint is NULL! Postacie bêd¹ siê pojawiaæ w miejscu starej pozycji.");
+        }
+        else
+        {
+            Debug.Log(" [GameManager] Respawn point set to: " + respawnPoint.position);
+        }
+
         Debug.Log($"[LevelManager] Character prefabs count: {characterPrefabs.Count}");
         if (characterPrefabs.Count == 0)
         {
@@ -73,16 +83,44 @@ public class GameManager : MonoBehaviour
     {
         if (index >= activeCharacters.Count)
         {
-            Debug.LogError("[LevelManager] Invalid character index to activate.");
+            Debug.LogError("[GameManager] Invalid character index to activate.");
             return;
         }
 
         currentCharacterIndex = index;
         GameObject newCharacter = activeCharacters[currentCharacterIndex];
-        ResetCharacter(newCharacter);
-        newCharacter.transform.position = respawnPoint.position;
-        newCharacter.SetActive(true);
-        Debug.Log($"[LevelManager] Activated character: {newCharacter.name}");
+
+        StartCoroutine(PrepareAndActivate(newCharacter));
+
+    }
+
+    private IEnumerator PrepareAndActivate(GameObject character)
+    {
+        // Aktywuj obiekt — ale jeszcze nie przesuwaj!
+        character.SetActive(true);
+
+        // Poczekaj 1 klatkê a¿ fizyka siê aktywuje
+        yield return new WaitForFixedUpdate();
+
+        // Dopiero TERAZ przesuñ postaæ!
+        character.transform.position = respawnPoint.position + Vector3.up * 0.05f;
+
+        // Resetuj fizykê i animacje
+        ResetCharacter(character);
+
+        // Poczekaj 1 frame na przeliczenie kolizji
+        yield return null;
+
+        var movement = character.GetComponent<PlayerMovement>();
+        if (movement != null)
+        {
+            movement.ResetAfterRespawn();
+        }
+
+        Debug.Log("[GameManager] Final respawn at: " + character.transform.position);
+
+        transform.SetParent(null);
+        transform.position = respawnPoint.position + Vector3.up * 0.05f;
     }
 
     public void SwitchToNextCharacter()
@@ -98,7 +136,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SwitchCharacterWithDelay());
     }
 
-    private System.Collections.IEnumerator SwitchCharacterWithDelay()
+    private IEnumerator SwitchCharacterWithDelay()
     {
         GameObject currentCharacter = activeCharacters[currentCharacterIndex];
         currentCharacter.SetActive(false);
@@ -125,18 +163,10 @@ public class GameManager : MonoBehaviour
         {
             if (i < activeCharacters.Count)
             {
-                if (i == currentCharacterIndex)
-                {
-                    iconSlots[i].color = Color.white;
-                }
-                else
-                {
-                    iconSlots[i].color = Color.gray; 
-                }
+                iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray;
             }
             else
             {
-
                 iconSlots[i].color = Color.clear;
             }
         }
@@ -148,6 +178,9 @@ public class GameManager : MonoBehaviour
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
+            rb.isKinematic = false;
+            rb.simulated = true;
+            rb.gravityScale = 5f;
         }
 
         Animator animator = character.GetComponent<Animator>();

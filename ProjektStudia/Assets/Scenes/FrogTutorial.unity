@@ -3421,11 +3421,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!20 &930649757 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2079287640230551914, guid: f4a8b1123c127a640907841c1047657c, type: 3}
-  m_PrefabInstance: {fileID: 1892250926835760762}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &930649758 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1306026494009986362, guid: f4a8b1123c127a640907841c1047657c, type: 3}

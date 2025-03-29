@@ -30,7 +30,6 @@ public class MoleAbility : MonoBehaviour
     private void StartAnimation()
     {
         animator.SetBool("Dig", true);
-        Debug.Log("Bool 'Dig' is true");
     }
 
     private void StartDigging()
@@ -38,10 +37,8 @@ public class MoleAbility : MonoBehaviour
         if (isDigging) return;
 
         isDigging = true;
-
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
-
         StartCoroutine(DigAndSwitch());
     }
 
@@ -50,7 +47,6 @@ public class MoleAbility : MonoBehaviour
         yield return new WaitForSeconds(diggingDelay);
 
         Instantiate(dirtMoundPrefab, transform.position, Quaternion.identity);
-
         rb.isKinematic = false;
         gameObject.SetActive(false);
 

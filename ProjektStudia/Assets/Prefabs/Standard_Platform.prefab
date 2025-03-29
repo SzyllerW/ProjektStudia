@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 229430741122477998}
   - component: {fileID: 5730843465131329782}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Panel_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4661826974142285617}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Standard_Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2858856657399475458}
   - component: {fileID: 8499533405571499469}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Panel_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4570255859859006824}
   - component: {fileID: 8497701808725965182}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Panel_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7104017040600787081}
   - component: {fileID: 6342132567878475860}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ventilation
   m_TagString: Untagged
   m_Icon: {fileID: 0}

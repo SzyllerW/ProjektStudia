@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        Debug.Log(" Jump() wywo³any!");
         float platformVerticalVelocity = 0f;
         if (currentPlatformRb != null)
             platformVerticalVelocity = currentPlatformRb.velocity.y;
@@ -202,6 +203,8 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
+        Debug.Log("Penguin IsGrounded: " + grounded);
 
         if (grounded && rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
         {
@@ -240,6 +243,7 @@ public class PlayerMovement : MonoBehaviour
     private void ResetTrailRenderer()
     {
         trailRenderer.Clear();
+
     }
 
     public void RestoreControl()
@@ -250,6 +254,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ExternalJump(float force)
     {
+        Debug.Log(" RequestExternalJump() force: " + force);
         float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
         rb.velocity = new Vector2(modifiedHorizontalVelocity, force);
         animator.SetBool("IsJumping", true);
@@ -277,5 +282,43 @@ public class PlayerMovement : MonoBehaviour
         {
             currentPlatformRb = null;
         }
+    }
+
+    public void ResetAfterRespawn()
+    {
+        Transform rp = GameObject.Find("RespawnPoint")?.transform;
+        if (rp != null)
+        {
+            transform.position = rp.position + Vector3.up * 0.05f;
+            Debug.Log(" PlayerMovement — Reset position to: " + transform.position);
+        }
+
+        // Zresetuj fizykê
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.isKinematic = false;
+        rb.simulated = true;
+        rb.gravityScale = 5;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        // Zresetuj statusy
+        trailRenderer.Clear();
+        transform.SetParent(null);
+        externalJumpRequested = false;
+        externalJumpForce = 0f;
+        isFalling = false;
+        coyoteTimeCounter = coyoteTime;
+        jumpBufferCounter = 0;
+        hasPlayedImpactAnimation = false;
+        playerHasControl = true;
+
+        // Zresetuj animator
+        animator.SetBool("IsJumping", false);
+        animator.SetBool("Impact", false);
+        animator.SetFloat("Speed", 0);
+
+        Debug.Log(" Parent = " + (transform.parent != null ? transform.parent.name : "null"));
+        Debug.Log(" localPosition = " + transform.localPosition);
+        Debug.Log(" worldPosition = " + transform.position);
     }
 }

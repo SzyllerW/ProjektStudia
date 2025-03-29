@@ -448,6 +448,7 @@ MonoBehaviour:
   impactVolume: 1
   jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
   jumpVolume: 1
+  currentPlatformRb: {fileID: 0}
 --- !u!114 &8205737369769770963
 MonoBehaviour:
   m_ObjectHideFlags: 0
