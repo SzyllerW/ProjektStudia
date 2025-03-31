@@ -159,6 +159,8 @@ MonoBehaviour:
   - {fileID: 0}
   characterPrefabs:
   - {fileID: 1841985961319422964, guid: 89e1a7dbdd7874d4a91d4d47881c4ba3, type: 3}
+  - {fileID: 1841985961319422964, guid: 89e1a7dbdd7874d4a91d4d47881c4ba3, type: 3}
+  - {fileID: 1841985961319422964, guid: 89e1a7dbdd7874d4a91d4d47881c4ba3, type: 3}
   isTutorial: 1
   switchDelay: 0
   respawnCooldown: 0
