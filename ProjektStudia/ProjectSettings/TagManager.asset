@@ -7,11 +7,12 @@ TagManager:
   - DirtMound
   - GameMusic
   - MovingPlatform
+  - Spikes
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Spikes
   - Water
   - UI
   - Ground

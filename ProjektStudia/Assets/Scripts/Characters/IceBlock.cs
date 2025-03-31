@@ -1,12 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
 public class IceBlock : MonoBehaviour
 {
     private Rigidbody2D rb;
     private bool isIceBlock = false;
+    private bool isScheduledForDestruction = false;
 
     [SerializeField] private AudioClip iceBlockEnterSoundClip;
     [SerializeField] private GameObject iceBlockPrefab;
+    [SerializeField] private float destructionDelay = 2f; // Czas w sekundach przed znikniêciem kostki
 
     private GameManager gameManager;
 
@@ -31,7 +34,7 @@ public class IceBlock : MonoBehaviour
 
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
-        rb.simulated = false; 
+        rb.simulated = false;
 
         if (iceBlockPrefab != null)
         {
@@ -55,6 +58,21 @@ public class IceBlock : MonoBehaviour
         }
 
         gameObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Spikes") && !isScheduledForDestruction)
+        {
+            isScheduledForDestruction = true;
+            StartCoroutine(DestroyAfterDelay());
+        }
+    }
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(destructionDelay);
+        Destroy(gameObject);
     }
 
     private void OnDisable()

@@ -163,6 +163,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iceBlockEnterSoundClip: {fileID: 8300000, guid: 7b29aecf045b50240839157d7ced1d28, type: 3}
   iceBlockPrefab: {fileID: 2028806355041161890, guid: 3518f25e537ad3e4d9abe454f52c44f0, type: 3}
+  spikesLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!212 &8562574370339486523
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -180,7 +180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6688949550610320558}
   - component: {fileID: 8971352266718603035}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Spikes_reflection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 3091763229996551359}
   - component: {fileID: 6976788679674930369}
   - component: {fileID: 3611868913975480958}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
