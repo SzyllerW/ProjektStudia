@@ -21,7 +21,7 @@ public class IceBlock : MonoBehaviour
 
     void Update()
     {
-        if (!isIceBlock && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             ActivateIceBlock();
             gameManager?.SwitchToNextCharacter();
