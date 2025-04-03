@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class MovingPlatform : MonoBehaviour
 {
     public Transform startTransform;
@@ -8,28 +9,39 @@ public class MovingPlatform : MonoBehaviour
 
     private bool movingToEnd = true;
     private Rigidbody2D rb;
+    private Vector2 previousPosition;
 
-    private void Start()
+    public Vector2 Velocity { get; private set; }
+
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
         if (startTransform != null)
         {
             transform.position = startTransform.position;
+            previousPosition = transform.position;
         }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (startTransform == null || endTransform == null) return;
 
-        Vector3 targetPosition = movingToEnd ? endTransform.position : startTransform.position;
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
+        Vector2 targetPosition = (movingToEnd ? endTransform : startTransform).position;
+        Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, speed * Time.fixedDeltaTime);
+
+        Velocity = (newPosition - previousPosition) / Time.fixedDeltaTime;
+        previousPosition = newPosition;
 
         rb.MovePosition(newPosition);
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+        if (Vector2.Distance(rb.position, targetPosition) < 0.01f)
         {
             movingToEnd = !movingToEnd;
         }
     }
 }
+

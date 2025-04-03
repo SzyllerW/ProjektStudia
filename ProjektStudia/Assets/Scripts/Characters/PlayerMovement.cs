@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isPlayingWalkingSound = false;
     private bool externalJumpRequested = false;
     private float externalJumpForce = 0f;
+    private PlatformVelocity currentPlatform;
+
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -70,6 +72,24 @@ public class PlayerMovement : MonoBehaviour
 
         trailTargetTime = IsGrounded() ? 0f : 1f;
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
+
+        if (IsGrounded())
+        {
+            Debug.Log(" Gracz jest na ziemi.");
+        }
+        else
+        {
+            Debug.Log(" Gracz NIE jest na ziemi.");
+        }
+
+        if (currentPlatform != null)
+        {
+            Debug.Log($" Platforma z³apana! Velocity Y: {currentPlatform.Velocity.y:F2}");
+        }
+        else
+        {
+            Debug.Log(" currentPlatform = null (gracz nie stoi na platformie)");
+        }
     }
 
     private void FixedUpdate()
@@ -85,6 +105,11 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = 0;
 
             externalJumpRequested = false;
+        }
+
+        if (IsGrounded() && currentPlatform != null && Mathf.Abs(rb.velocity.y) < 0.01f)
+        {
+            rb.position += currentPlatform.Velocity * Time.fixedDeltaTime;
         }
     }
 
@@ -123,31 +148,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log(" Jump() wywo³any!");
-        float platformVerticalVelocity = 0f;
-        if (currentPlatformRb != null)
-            platformVerticalVelocity = currentPlatformRb.velocity.y;
+        Debug.Log("Jump() wywo³any!");
 
+        float platformY = currentPlatform != null ? currentPlatform.Velocity.y : 0f;
         float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
 
-        if (platformVerticalVelocity < -0.1f)
-        {
-            modifiedJumpForce = Mathf.Min(modifiedJumpForce, 25f);
-        }
+        float correctedJump = modifiedJumpForce + Mathf.Min(platformY, 0f);
 
         float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
-
-        if (transform.parent != null)
-            transform.SetParent(null);
-
-        rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f); 
-        rb.velocity += Vector2.up * modifiedJumpForce;
+        rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f);
+        rb.velocity += Vector2.up * correctedJump;
 
         coyoteTimeCounter = 0;
 
-        Debug.Log("Platform velocity Y: " + platformVerticalVelocity);
-        Debug.Log("Modified jump force: " + modifiedJumpForce);
+        Debug.Log("Platform velocity Y: " + platformY);
+        Debug.Log("Corrected jump force: " + correctedJump);
     }
+
 
     private void ApplyMovement()
     {
@@ -271,8 +288,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.collider.CompareTag("MovingPlatform"))
         {
-            currentPlatformRb = collision.rigidbody;
-            Debug.Log(" Player stepped on platform: " + currentPlatformRb.name);
+            currentPlatform = collision.collider.GetComponent<PlatformVelocity>();
         }
     }
 
@@ -280,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.collider.CompareTag("MovingPlatform"))
         {
-            currentPlatformRb = null;
+            currentPlatform = null;
         }
     }
 
