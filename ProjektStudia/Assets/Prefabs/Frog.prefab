@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &297248450231592660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6192488522011031596}
+  m_Layer: 0
+  m_Name: AcornHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6192488522011031596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297248450231592660}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.45, y: 27.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1372311864516039239}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841985961319422964
 GameObject:
   m_ObjectHideFlags: 0
@@ -18,6 +49,7 @@ GameObject:
   - component: {fileID: 5441515989707216482}
   - component: {fileID: 8864869810093681115}
   - component: {fileID: 1930732681635942429}
+  - component: {fileID: 1321207512249879807}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Player
@@ -42,6 +74,7 @@ Transform:
   - {fileID: 7858682879161179280}
   - {fileID: 2202916903179979711}
   - {fileID: 5014244692262844479}
+  - {fileID: 6192488522011031596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3234283007144487377
@@ -134,6 +167,7 @@ MonoBehaviour:
   impactVolume: 0.5
   jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
   jumpVolume: 1
+  currentPlatformRb: {fileID: 0}
 --- !u!114 &1018397282838980999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +411,19 @@ MonoBehaviour:
   frontView: {fileID: 9063423494025626867}
   playerMovement: {fileID: 6755318869794899884}
   animator: {fileID: 3234283007144487377}
+--- !u!114 &1321207512249879807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841985961319422964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59cdd25cbb814af44a1c59bcfaf9fbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acornHolder: {fileID: 6192488522011031596}
 --- !u!1 &4459225670038836037
 GameObject:
   m_ObjectHideFlags: 0

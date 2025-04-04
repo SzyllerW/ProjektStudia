@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2882886982246733048}
   - component: {fileID: 8946518166995494123}
   - component: {fileID: 713124182910015768}
-  - component: {fileID: 8337956190828995844}
+  - component: {fileID: 1440664256763794595}
   m_Layer: 0
   m_Name: Acorn_body_sprite
   m_TagString: Untagged
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1e0797d88b8bfc14a974fe12907dfce8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -134,7 +134,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.9410586, y: 4.7965226}
   m_EdgeRadius: 0
---- !u!114 &8337956190828995844
+--- !u!114 &1440664256763794595
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,9 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3619985181364974948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c1ac7329b621c4793b6a8b0e6e1dbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 8369d0b9830ed844f96e52c555e0285c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastCheckpoint: {fileID: 0}
 --- !u!1 &4136122452558833951
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +159,7 @@ GameObject:
   - component: {fileID: 7839807163422345732}
   m_Layer: 0
   m_Name: Acorn
-  m_TagString: Untagged
+  m_TagString: Acorn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,8 +271,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c20fa72fa1298604a9826ccc77182903, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -355,7 +356,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -783246955
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c6ba1a5aef0edc94eb82c55c38a64285, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -8,6 +8,7 @@ TagManager:
   - GameMusic
   - MovingPlatform
   - Spikes
+  - Acorn
   layers:
   - Default
   - TransparentFX
