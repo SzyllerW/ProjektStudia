@@ -391,10 +391,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 8
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -418,24 +418,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 65
+  speed: 80
   acceleration: 75
   deceleration: 85
   airAcceleration: 35
   airDeceleration: 22
-  jumpHorizontalSpeed: 42
-  jumpForce: 53
+  jumpHorizontalSpeed: 65
+  jumpForce: 50
   ascentSpeedMultiplier: 1.6
-  baseFallMultiplier: 8
-  maxFallMultiplier: 45
-  fallAccelerationRate: 12
-  lowJumpMultiplier: 7
-  maxFallSpeed: -130
-  coyoteTime: 0.1
+  baseFallMultiplier: 20
+  maxFallMultiplier: 40
+  fallAccelerationRate: 20
+  lowJumpMultiplier: 10
+  maxFallSpeed: -260
+  coyoteTime: 0.12
   jumpBufferTime: 0.18
-  peakPauseTime: 0.08
-  peakSpeedReduction: 0.65
-  horizontalJumpReduction: 0.8
+  peakPauseTime: 0.05
+  peakSpeedReduction: 0.4
+  horizontalJumpReduction: 0.75
   rb: {fileID: 6080653459921135651}
   groundCheck: {fileID: 440415993664081664}
   groundLayer:
@@ -445,7 +445,7 @@ MonoBehaviour:
   trailRenderer: {fileID: 5893951900070692163}
   walkingAudioSource: {fileID: 1792568672613506511}
   impactSound: {fileID: 8300000, guid: 9a43a20cdea47f14491c7f437ed8163b, type: 3}
-  impactVolume: 1
+  impactVolume: 0.5
   jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
   jumpVolume: 1
   currentPlatformRb: {fileID: 0}

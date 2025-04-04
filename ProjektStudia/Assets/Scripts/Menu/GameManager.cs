@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
         var movement = character.GetComponent<PlayerMovement>();
         if (movement != null)
         {
+            movement.enabled = true;
             movement.ResetAfterRespawn();
         }
 
@@ -188,6 +189,13 @@ public class GameManager : MonoBehaviour
         {
             animator.SetFloat("Speed", 0f);
             animator.SetBool("IsJumping", false);
+        }
+
+        var movement = character.GetComponent<PlayerMovement>();
+        if (movement != null)
+        {
+            movement.enabled = true;
+            Debug.Log("[ResetCharacter] PlayerMovement script enabled.");
         }
     }
 

@@ -47,7 +47,10 @@ public class DoubleJumpManager : MonoBehaviour
     {
         jumpCount++;
 
-        float force = GetComponent<PlayerMovement>().jumpForce * GetComponent<PlayerMovement>().ascentSpeedMultiplier;
+        float force = doubleJumpForce;
+        
+        //Kod poni¿ej nie odzwierciedla oczekiwanej si³y skoku
+        //float force = GetComponent<PlayerMovement>().jumpForce * GetComponent<PlayerMovement>().ascentSpeedMultiplier;
 
         rb.velocity = new Vector2(rb.velocity.x, 0f);
         rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
