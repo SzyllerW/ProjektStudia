@@ -18,6 +18,7 @@ public class AcornPickup : MonoBehaviour
 
     public void RespawnAtCheckpoint()
     {
+        Debug.Log("[AcornPickup] Respawnujê ¿o³¹dŸ w: " + lastCheckpoint.position);
         transform.SetParent(null);
         transform.position = lastCheckpoint.position;
         gameObject.SetActive(true);

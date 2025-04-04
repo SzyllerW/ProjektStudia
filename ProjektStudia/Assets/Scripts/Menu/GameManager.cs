@@ -19,23 +19,37 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float respawnCooldown = 1.0f;
     [SerializeField] private string gameOverSceneName = "GameOverScene";
 
-    private void Start()
+    [Header("Warunki zwyciêstwa")]
+    [SerializeField] private int totalCollectibles = 0;
+    private int collectedCount = 0;
+
+    [SerializeField] private bool requiresAllCollectibles = false;
+    [SerializeField] private bool requiresAcornDelivery = false;
+    [SerializeField] private string levelCompleteSceneName = "LevelComplete";
+
+    [Header("Acorn Delivery")]
+    [SerializeField] private int requiredAcorns = 1;
+    private int deliveredAcorns = 0;
+
+    private void Awake()
     {
-        if (respawnPoint == null)
+        var all = FindObjectsOfType<CollectibleItem>(true); 
+        totalCollectibles = all.Length;
+
+        Debug.Log("[GameManager] ZNALAZ£EM {totalCollectibles} CollectibleItemów:");
+        foreach (var item in all)
         {
-            Debug.LogError("[GameManager] respawnPoint is NULL! Postacie bêd¹ siê pojawiaæ w miejscu starej pozycji.");
-        }
-        else
-        {
-            Debug.Log(" [GameManager] Respawn point set to: " + respawnPoint.position);
+            Debug.Log("  " + item.gameObject.name + " (Parent: " + item.transform.parent?.name + ")");
         }
 
-        Debug.Log($"[LevelManager] Character prefabs count: {characterPrefabs.Count}");
+    }
+
+    private void Start()
+    {
+        CollectibleItem.OnItemCollected += OnItemCollected;
+
         if (characterPrefabs.Count == 0)
-        {
-            Debug.LogError("[LevelManager] No prefabs assigned in the inspector.");
             return;
-        }
 
         LoadSelectedCharacters();
 
@@ -44,22 +58,18 @@ public class GameManager : MonoBehaviour
             ActivateCharacter(0);
             UpdateIcons();
         }
-        else
-        {
-            Debug.LogError("[LevelManager] No characters loaded!");
-        }
+    }
+
+    private void OnDestroy()
+    {
+        CollectibleItem.OnItemCollected -= OnItemCollected;
     }
 
     private void LoadSelectedCharacters()
     {
         string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
-        Debug.Log($"[LevelManager] Loaded Selected Characters: '{selectedCharacters}'");
-
         if (string.IsNullOrWhiteSpace(selectedCharacters))
-        {
-            Debug.LogError("[LevelManager] No characters selected or data is empty.");
             return;
-        }
 
         string[] characterIndexes = selectedCharacters.Split(',');
 
@@ -70,11 +80,6 @@ public class GameManager : MonoBehaviour
                 GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
                 character.SetActive(false);
                 activeCharacters.Add(character);
-                Debug.Log($"[LevelManager] Instantiated character: {character.name}");
-            }
-            else
-            {
-                Debug.LogError($"[LevelManager] Invalid character index or prefab not found: {index}");
             }
         }
     }
@@ -82,33 +87,21 @@ public class GameManager : MonoBehaviour
     private void ActivateCharacter(int index)
     {
         if (index >= activeCharacters.Count)
-        {
-            Debug.LogError("[GameManager] Invalid character index to activate.");
             return;
-        }
 
         currentCharacterIndex = index;
         GameObject newCharacter = activeCharacters[currentCharacterIndex];
-
         StartCoroutine(PrepareAndActivate(newCharacter));
-
     }
 
     private IEnumerator PrepareAndActivate(GameObject character)
     {
-        // Aktywuj obiekt — ale jeszcze nie przesuwaj!
         character.SetActive(true);
-
-        // Poczekaj 1 klatkê a¿ fizyka siê aktywuje
         yield return new WaitForFixedUpdate();
 
-        // Dopiero TERAZ przesuñ postaæ!
         character.transform.position = respawnPoint.position + Vector3.up * 0.05f;
-
-        // Resetuj fizykê i animacje
         ResetCharacter(character);
 
-        // Poczekaj 1 frame na przeliczenie kolizji
         yield return null;
 
         var movement = character.GetComponent<PlayerMovement>();
@@ -117,8 +110,6 @@ public class GameManager : MonoBehaviour
             movement.enabled = true;
             movement.ResetAfterRespawn();
         }
-
-        Debug.Log("[GameManager] Final respawn at: " + character.transform.position);
 
         transform.SetParent(null);
         transform.position = respawnPoint.position + Vector3.up * 0.05f;
@@ -195,12 +186,17 @@ public class GameManager : MonoBehaviour
         if (movement != null)
         {
             movement.enabled = true;
-            Debug.Log("[ResetCharacter] PlayerMovement script enabled.");
         }
     }
 
     public void CharacterFellOffMap(GameObject character)
     {
+        PlayerCarry carry = character.GetComponent<PlayerCarry>();
+        if (carry != null)
+        {
+            carry.DropAcornAtCheckpoint();
+        }
+
         character.SetActive(false);
         usedCharactersCount++;
 
@@ -216,8 +212,45 @@ public class GameManager : MonoBehaviour
 
     private void TriggerGameOver()
     {
-        Debug.Log("[LevelManager] Game Over! Switching to game over scene.");
         SceneManager.LoadScene(gameOverSceneName);
+    }
+
+    // --- ZBIERANIE ITEMÓW ---
+
+    private void OnItemCollected()
+    {
+        collectedCount++;
+        CheckWinCondition();
+    }
+
+    // --- DOSTARCZANIE ¯O£ÊDZI ---
+
+    public void AcornDelivered()
+    {
+        deliveredAcorns++;
+        CheckWinCondition();
+    }
+
+    private void CheckWinCondition()
+    {
+        bool allItemsCollected = !requiresAllCollectibles || collectedCount >= totalCollectibles;
+        bool allAcornsDelivered = !requiresAcornDelivery || deliveredAcorns >= requiredAcorns;
+
+        Debug.Log($"[CheckWinCondition] Zebrane: {collectedCount}/{totalCollectibles}, ¯o³êdzie: {deliveredAcorns}/{requiredAcorns}");
+
+        if (requiresAllCollectibles && collectedCount < totalCollectibles)
+        {
+            return;
+        }
+
+        if (requiresAcornDelivery && deliveredAcorns < requiredAcorns)
+        {
+            return; 
+        }
+
+        Debug.Log("[CheckWinCondition] WARUNKI SPE£NIONE – ³adowanie sceny zwyciêstwa");
+        SceneManager.LoadScene(levelCompleteSceneName);
+
     }
 }
 

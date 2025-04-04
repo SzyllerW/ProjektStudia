@@ -73,23 +73,7 @@ public class PlayerMovement : MonoBehaviour
         trailTargetTime = IsGrounded() ? 0f : 1f;
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
 
-        if (IsGrounded())
-        {
-            Debug.Log(" Gracz jest na ziemi.");
-        }
-        else
-        {
-            Debug.Log(" Gracz NIE jest na ziemi.");
-        }
-
-        if (currentPlatform != null)
-        {
-            Debug.Log($" Platforma z³apana! Velocity Y: {currentPlatform.Velocity.y:F2}");
-        }
-        else
-        {
-            Debug.Log(" currentPlatform = null (gracz nie stoi na platformie)");
-        }
+        
     }
 
     private void FixedUpdate()
@@ -148,7 +132,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        Debug.Log("Jump() wywo³any!");
 
         float platformY = currentPlatform != null ? currentPlatform.Velocity.y : 0f;
         float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
@@ -161,8 +144,6 @@ public class PlayerMovement : MonoBehaviour
 
         coyoteTimeCounter = 0;
 
-        Debug.Log("Platform velocity Y: " + platformY);
-        Debug.Log("Corrected jump force: " + correctedJump);
     }
 
 
@@ -222,7 +203,6 @@ public class PlayerMovement : MonoBehaviour
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         bool grounded = groundCollider != null;
         Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
-        Debug.Log("Penguin IsGrounded: " + grounded);
 
         if (grounded && rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation && (groundCollider == null || !groundCollider.CompareTag("DirtMound")))
         {
@@ -272,7 +252,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void ExternalJump(float force)
     {
-        Debug.Log(" RequestExternalJump() force: " + force);
         float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
         rb.velocity = new Vector2(modifiedHorizontalVelocity, force);
         animator.SetBool("IsJumping", true);
@@ -307,7 +286,6 @@ public class PlayerMovement : MonoBehaviour
         if (rp != null)
         {
             transform.position = rp.position + Vector3.up * 0.05f;
-            Debug.Log(" PlayerMovement — Reset position to: " + transform.position);
         }
 
         // Zresetuj fizykê
@@ -334,8 +312,5 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Impact", false);
         animator.SetFloat("Speed", 0);
 
-        Debug.Log(" Parent = " + (transform.parent != null ? transform.parent.name : "null"));
-        Debug.Log(" localPosition = " + transform.localPosition);
-        Debug.Log(" worldPosition = " + transform.position);
     }
 }

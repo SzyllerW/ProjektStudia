@@ -237,6 +237,37 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4868106058690054118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5981390145946003847}
+  m_Layer: 0
+  m_Name: AcornHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5981390145946003847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868106058690054118}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8, y: 27, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4704425990604723030}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6207852411983216607
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +317,7 @@ GameObject:
   - component: {fileID: 1201959364616346854}
   - component: {fileID: 1792568672613506511}
   - component: {fileID: 5376042123755209824}
+  - component: {fileID: 719942037184764478}
   m_Layer: 0
   m_Name: Mole
   m_TagString: Player
@@ -306,6 +338,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5981390145946003847}
   - {fileID: 440415993664081664}
   - {fileID: 2685644148989650559}
   - {fileID: 3046784388793677957}
@@ -647,6 +680,19 @@ MonoBehaviour:
   frontView: {fileID: 4215443564987670758}
   playerMovement: {fileID: 6642466150483178687}
   animator: {fileID: 4336597031928889974}
+--- !u!114 &719942037184764478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865687083874275941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59cdd25cbb814af44a1c59bcfaf9fbc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acornHolder: {fileID: 5981390145946003847}
 --- !u!1001 &3632862373791375265
 PrefabInstance:
   m_ObjectHideFlags: 0
