@@ -202,11 +202,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        bool grounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        bool grounded = groundCollider != null;
         Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
         Debug.Log("Penguin IsGrounded: " + grounded);
 
-        if (grounded && rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation)
+        if (grounded && rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation && (groundCollider == null || !groundCollider.CompareTag("DirtMound")))
         {
             PlayImpactAnimation();
             hasPlayedImpactAnimation = true;
