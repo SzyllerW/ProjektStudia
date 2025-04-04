@@ -9,7 +9,7 @@ public class PlayerVisualManager : MonoBehaviour
 
     void Update()
     {
-        if (animator.GetBool("Impact"))
+        if (animator.GetBool("Impact") && !animator.GetBool("IsKilledBySpikes"))
         {
             SetFrontView();
             return;
@@ -40,12 +40,27 @@ public class PlayerVisualManager : MonoBehaviour
     public void PlayerTouchedSpikes()
     {
         animator.SetBool("Dig", false);
+        animator.SetBool("Impact", false);
         SetSideView();
         animator.SetBool("IsKilledBySpikes", true);
     }
-    
+
     public void KilledBySpikes()
     {
-        FindObjectOfType<GameManager>().SwitchToNextCharacter();
+        gameObject.SetActive(false);
+
+        if (animator != null)
+        {
+            animator.SetBool("IsKilledBySpikes", false);
+            animator.Play("Movement", 0, 0f);
+            animator.Update(0);
+        }
+
+        // Prze³¹cz na nastêpn¹ postaæ
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.SwitchToNextCharacter();
+        }
     }
 }

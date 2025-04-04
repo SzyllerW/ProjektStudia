@@ -5,6 +5,7 @@ public class DirtMound : MonoBehaviour
     [SerializeField] private float bouncePower = 10f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float offsetAbovePlatform = 0.1f;
+    [SerializeField] private AudioClip jumpSound;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class DirtMound : MonoBehaviour
             if (playerMovement != null)
             {
                 playerMovement.RequestExternalJump(bouncePower);
+                SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, 1f);
             }
         }
     }
