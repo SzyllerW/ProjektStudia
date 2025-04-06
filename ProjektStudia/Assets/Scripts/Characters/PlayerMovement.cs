@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isPlayingWalkingSound = false;
     private bool externalJumpRequested = false;
     private float externalJumpForce = 0f;
-    private PlatformVelocity currentPlatform;
-
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -52,8 +50,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private float jumpVolume = 1f;
 
-    [SerializeField] private Rigidbody2D currentPlatformRb;
-
     void Start()
     {
         rb.gravityScale = 5;
@@ -72,8 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
         trailTargetTime = IsGrounded() ? 0f : 1f;
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
-
-        
     }
 
     private void FixedUpdate()
@@ -89,11 +83,6 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = 0;
 
             externalJumpRequested = false;
-        }
-
-        if (IsGrounded() && currentPlatform != null && Mathf.Abs(rb.velocity.y) < 0.01f)
-        {
-            rb.position += currentPlatform.Velocity * Time.fixedDeltaTime;
         }
     }
 
@@ -132,20 +121,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-
-        float platformY = currentPlatform != null ? currentPlatform.Velocity.y : 0f;
         float modifiedJumpForce = jumpForce * ascentSpeedMultiplier;
-
-        float correctedJump = modifiedJumpForce + Mathf.Min(platformY, 0f);
-
         float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
         rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f);
-        rb.velocity += Vector2.up * correctedJump;
-
+        rb.velocity += Vector2.up * modifiedJumpForce;
         coyoteTimeCounter = 0;
-
     }
-
 
     private void ApplyMovement()
     {
@@ -157,7 +138,8 @@ public class PlayerMovement : MonoBehaviour
         if (!IsGrounded())
             accelerationRate = Mathf.Abs(horizontal) > 0.1f ? airAcceleration : airDeceleration;
 
-        rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, targetSpeed, accelerationRate * Time.fixedDeltaTime), rb.velocity.y);
+        float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, accelerationRate * Time.fixedDeltaTime);
+        rb.velocity = new Vector2(newX, rb.velocity.y);
     }
 
     private void ApplyJumpPhysics()
@@ -241,7 +223,6 @@ public class PlayerMovement : MonoBehaviour
     private void ResetTrailRenderer()
     {
         trailRenderer.Clear();
-
     }
 
     public void RestoreControl()
@@ -268,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.collider.CompareTag("MovingPlatform"))
         {
-            currentPlatform = collision.collider.GetComponent<PlatformVelocity>();
+            transform.SetParent(collision.transform);
         }
     }
 
@@ -276,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.collider.CompareTag("MovingPlatform"))
         {
-            currentPlatform = null;
+            transform.SetParent(null);
         }
     }
 
@@ -288,7 +269,6 @@ public class PlayerMovement : MonoBehaviour
             transform.position = rp.position + Vector3.up * 0.05f;
         }
 
-        // Zresetuj fizykê
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
         rb.isKinematic = false;
@@ -296,7 +276,6 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 5;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        // Zresetuj statusy
         trailRenderer.Clear();
         transform.SetParent(null);
         externalJumpRequested = false;
@@ -307,10 +286,8 @@ public class PlayerMovement : MonoBehaviour
         hasPlayedImpactAnimation = false;
         playerHasControl = true;
 
-        // Zresetuj animator
         animator.SetBool("IsJumping", false);
         animator.SetBool("Impact", false);
         animator.SetFloat("Speed", 0);
-
     }
 }

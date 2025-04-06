@@ -4,8 +4,12 @@ using UnityEngine;
 public class PlatformVelocity : MonoBehaviour
 {
     public Vector2 Velocity { get; private set; }
-
     private Vector2 previousPosition;
+
+    private void Start()
+    {
+        previousPosition = transform.position;
+    }
 
     private void FixedUpdate()
     {
@@ -14,3 +18,4 @@ public class PlatformVelocity : MonoBehaviour
         previousPosition = currentPosition;
     }
 }
+

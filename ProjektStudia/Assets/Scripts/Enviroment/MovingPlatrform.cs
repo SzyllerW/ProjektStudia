@@ -3,44 +3,38 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MovingPlatform : MonoBehaviour
 {
-    public Transform startTransform;
-    public Transform endTransform;
+    [Header("Platform Points")]
+    public Transform startPoint;
+    public Transform endPoint;
+
+    [Header("Movement")]
     public float speed = 2f;
 
-    private bool movingToEnd = true;
-    private Rigidbody2D rb;
-    private Vector2 previousPosition;
+    private Vector3 target;
+    private bool goingToEnd = true;
 
-    public Vector2 Velocity { get; private set; }
-
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
-
-        if (startTransform != null)
+        if (startPoint == null || endPoint == null)
         {
-            transform.position = startTransform.position;
-            previousPosition = transform.position;
+            Debug.LogError("MovingPlatform: startPoint or endPoint not assigned.");
+            enabled = false;
+            return;
         }
+
+        transform.position = startPoint.position;
+        target = endPoint.position;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (startTransform == null || endTransform == null) return;
+        Vector3 direction = (target - transform.position).normalized;
+        transform.position += direction * speed * Time.fixedDeltaTime;
 
-        Vector2 targetPosition = (movingToEnd ? endTransform : startTransform).position;
-        Vector2 newPosition = Vector2.MoveTowards(rb.position, targetPosition, speed * Time.fixedDeltaTime);
-
-        Velocity = (newPosition - previousPosition) / Time.fixedDeltaTime;
-        previousPosition = newPosition;
-
-        rb.MovePosition(newPosition);
-
-        if (Vector2.Distance(rb.position, targetPosition) < 0.01f)
+        if (Vector2.Distance(transform.position, target) < 0.05f)
         {
-            movingToEnd = !movingToEnd;
+            goingToEnd = !goingToEnd;
+            target = goingToEnd ? endPoint.position : startPoint.position;
         }
     }
 }
