@@ -5,6 +5,8 @@ public class PlayerDeath : MonoBehaviour
     public float deathHeight = -200f; 
     private GameManager gameManager;
     private bool isDead = false;
+    private Coroutine currentRespawnRoutine;
+
 
     [SerializeField] private AudioClip deathSoundClip;
 
@@ -15,10 +17,10 @@ public class PlayerDeath : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y < deathHeight && !isDead)
+        if (transform.position.y < deathHeight && !isDead && currentRespawnRoutine == null)
         {
             isDead = true;
-            StartCoroutine(RespawnWithDelay(1f));
+            currentRespawnRoutine = StartCoroutine(RespawnWithDelay(1f));
         }
     }
 
@@ -43,5 +45,6 @@ public class PlayerDeath : MonoBehaviour
         gameManager.SwitchToNextCharacter();
 
         isDead = false;
+        currentRespawnRoutine = null;
     }
 }

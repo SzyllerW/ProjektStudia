@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Acorn
       objectReference: {fileID: 0}
+    - target: {fileID: 4874584707990649618, guid: 425e32006593b0540b4da14af7c79c7e, type: 3}
+      propertyPath: lastCheckpoint
+      value: 
+      objectReference: {fileID: 277035560}
     - target: {fileID: 6016776483602400115, guid: 425e32006593b0540b4da14af7c79c7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.77095
@@ -334,6 +338,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 229430741122477998, guid: 3d592819b7a7eaf45a2533e9a0803b31, type: 3}
   m_PrefabInstance: {fileID: 83321229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &277035560 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7925625896703284092, guid: 9d620245a964a654986be165af593593, type: 3}
+  m_PrefabInstance: {fileID: 5337519264939034084}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &458544228
 GameObject:
@@ -1296,6 +1305,10 @@ PrefabInstance:
     - target: {fileID: 1306026494009986362, guid: f4a8b1123c127a640907841c1047657c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
+      propertyPath: idleThreshold
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7487274407943178398, guid: f4a8b1123c127a640907841c1047657c, type: 3}
       propertyPath: m_Name

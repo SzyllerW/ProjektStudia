@@ -4,11 +4,22 @@ public class CameraFollow : MonoBehaviour
 {
     private Transform player;
     [SerializeField] private float smoothSpeed = 0.125f;
-    [SerializeField] private Vector2 offset = new Vector2(3f, 2f);
+    [SerializeField] private Vector2 baseOffset = new Vector2(3f, 2f);
     [SerializeField] private float stopFollowingY = -70f;
 
-    private bool isShaking = false;
+    [Header("Zoom Settings")]
+    [SerializeField] private float baseSize = 126f;
+    [SerializeField] private float jumpZoomSize = 132f;
+    [SerializeField] private float idleZoomSize = 140f;
+    [SerializeField] private float zoomOutSpeed = 0.3f;
+    [SerializeField] private float zoomInSpeed = 5f;
+
     private Vector3 lastKnownPosition;
+    private bool isShaking = false;
+
+    [SerializeField] private float idleThreshold = 2f;
+    private float idleTime = 0f;
+    private Rigidbody2D playerRb;
 
     private void Start()
     {
@@ -16,7 +27,10 @@ public class CameraFollow : MonoBehaviour
         if (player != null)
         {
             lastKnownPosition = transform.position;
+            playerRb = player.GetComponent<Rigidbody2D>();
         }
+
+        Camera.main.orthographicSize = baseSize;
     }
 
     private void LateUpdate()
@@ -33,9 +47,40 @@ public class CameraFollow : MonoBehaviour
             return;
         }
 
+        if (playerRb == null)
+            playerRb = player.GetComponent<Rigidbody2D>();
+
+        float horizontalVelocity = Mathf.Abs(playerRb.velocity.x);
+        float verticalVelocity = playerRb.velocity.y;
+
+        float targetSize = baseSize;
+
+        if (!IsGrounded() && Mathf.Abs(verticalVelocity) > 0.1f)
+        {
+            targetSize = jumpZoomSize;
+            idleTime = 0f;
+        }
+        else if (horizontalVelocity < 0.05f && Mathf.Abs(verticalVelocity) < 0.05f)
+        {
+            idleTime += Time.deltaTime;
+            if (idleTime > idleThreshold)
+            {
+                targetSize = idleZoomSize;
+            }
+        }
+        else
+        {
+            idleTime = 0f;
+        }
+
+        float currentZoom = Camera.main.orthographicSize;
+        float zoomSpeed = (targetSize > currentZoom) ? zoomOutSpeed : zoomInSpeed;
+
+        Camera.main.orthographicSize = Mathf.Lerp(currentZoom, targetSize, Time.deltaTime * zoomSpeed);
+
         Vector3 targetPosition = new Vector3(
-            player.position.x + (player.localScale.x > 0 ? offset.x : -offset.x),
-            player.position.y + offset.y,
+            player.position.x + (player.localScale.x > 0 ? baseOffset.x : -baseOffset.x),
+            player.position.y + baseOffset.y,
             transform.position.z
         );
 
@@ -81,9 +126,33 @@ public class CameraFollow : MonoBehaviour
             if (p.activeSelf && p.transform.position.y > stopFollowingY)
             {
                 player = p.transform;
+                playerRb = player.GetComponent<Rigidbody2D>();
+
+                if (player.GetComponent<PlayerMovement>() == null)
+                {
+                    Debug.LogWarning("Gracz znaleziony, ale nie ma PlayerMovement!");
+                }
+
                 return;
             }
         }
+
         player = null;
+        playerRb = null;
+    }
+
+    private bool IsGrounded()
+    {
+        if (player == null) return false;
+
+        PlayerMovement pm = player.GetComponent<PlayerMovement>();
+        if (pm == null)
+        {
+            Debug.LogWarning("Brak komponentu PlayerMovement!");
+            return false;
+        }
+
+        return pm.IsGrounded();
     }
 }
+

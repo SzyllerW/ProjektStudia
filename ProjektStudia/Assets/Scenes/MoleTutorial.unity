@@ -299,6 +299,11 @@ MonoBehaviour:
   switchDelay: 0.5
   respawnCooldown: 1
   gameOverSceneName: GameOverScene
+  totalCollectibles: 0
+  requiresAllCollectibles: 0
+  requiresAcornDelivery: 0
+  levelCompleteSceneName: LevelComplete
+  requiredAcorns: 1
 --- !u!4 &233122
 Transform:
   m_ObjectHideFlags: 0
@@ -309,64 +314,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -94.50535, y: -47.44982, z: 0.5737931}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 337774583}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &20624758
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 20624761}
-  - component: {fileID: 20624760}
-  - component: {fileID: 20624759}
-  m_Layer: 0
-  m_Name: LevelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &20624759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20624758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 539a8ada62463d640ac01b3fc7e77b50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &20624760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20624758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f0b2b4a3b248049bfb3a3c409f9c90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  victorySceneName: LevelComplete
---- !u!4 &20624761
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20624758}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -96.3849, y: -37.226574, z: -8.817227}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -715,7 +662,6 @@ Transform:
   - {fileID: 233122}
   - {fileID: 2117609979}
   - {fileID: 1615561637}
-  - {fileID: 20624761}
   - {fileID: 431364816}
   - {fileID: 376021330}
   - {fileID: 1871199241}

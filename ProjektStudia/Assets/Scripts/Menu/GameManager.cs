@@ -51,7 +51,16 @@ public class GameManager : MonoBehaviour
         if (characterPrefabs.Count == 0)
             return;
 
-        LoadSelectedCharacters();
+        if (!isTutorial)
+        {
+            LoadSelectedCharacters();
+        }
+        else
+        {
+            GameObject tutorialChar = Instantiate(characterPrefabs[0], respawnPoint.position, Quaternion.identity);
+            tutorialChar.SetActive(false);
+            activeCharacters.Add(tutorialChar);
+        }
 
         if (activeCharacters.Count > 0)
         {
