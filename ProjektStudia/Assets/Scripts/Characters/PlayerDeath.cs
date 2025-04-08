@@ -1,12 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    public float deathHeight = -200f; 
+    public float deathHeight = -200f;
     private GameManager gameManager;
     private bool isDead = false;
     private Coroutine currentRespawnRoutine;
-
+    private bool deathBlockedTemporarily = false;
 
     [SerializeField] private AudioClip deathSoundClip;
 
@@ -17,16 +18,23 @@ public class PlayerDeath : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y < deathHeight && !isDead && currentRespawnRoutine == null)
+        if (currentRespawnRoutine != null) return;
+        if (isDead || deathBlockedTemporarily) return;
+
+        if (transform.position.y < deathHeight)
         {
-            isDead = true;
+            isDead = true; 
+            Debug.Log($"[PlayerDeath] {gameObject.name} - START ŒMIERCI | pos: {transform.position}");
             currentRespawnRoutine = StartCoroutine(RespawnWithDelay(1f));
         }
     }
 
-    private System.Collections.IEnumerator RespawnWithDelay(float delay)
+    private IEnumerator RespawnWithDelay(float delay)
     {
-        SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, transform, 1.3f);
+        if (SoundFXManager.instance != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, transform, 1.3f);
+        }
 
         CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
         if (cameraFollow != null)
@@ -42,9 +50,24 @@ public class PlayerDeath : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
 
-        gameManager.SwitchToNextCharacter();
+        if (gameManager != null)
+        {
+            gameManager.SwitchToNextCharacter();
+        }
 
+    }
+
+    public void ResetDeath()
+    {
         isDead = false;
         currentRespawnRoutine = null;
+        StartCoroutine(BlockDeathBriefly());
+    }
+
+    private IEnumerator BlockDeathBriefly()
+    {
+        deathBlockedTemporarily = true;
+        yield return new WaitForSeconds(0.3f);
+        deathBlockedTemporarily = false;
     }
 }

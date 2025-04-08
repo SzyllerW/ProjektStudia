@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         if (activeCharacters.Count > 0)
         {
             ActivateCharacter(0);
-            UpdateIcons();
+            //UpdateIcons();
         }
     }
 
@@ -128,13 +128,36 @@ public class GameManager : MonoBehaviour
     {
         if (isTutorial)
         {
-            ActivateCharacter(0);
+            StartCoroutine(RespawnTutorialCharacterProperly());
             return;
         }
 
         if (activeCharacters.Count == 0) return;
 
         StartCoroutine(SwitchCharacterWithDelay());
+    }
+
+    private IEnumerator RespawnTutorialCharacterProperly()
+    {
+        yield return new WaitForSeconds(respawnCooldown);
+
+        if (activeCharacters.Count > 0)
+        {
+            Destroy(activeCharacters[0]);
+            activeCharacters.Clear();
+        }
+
+        GameObject newChar = Instantiate(characterPrefabs[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
+        newChar.SetActive(true);
+        activeCharacters.Add(newChar);
+
+        ResetCharacter(newChar);
+
+        var death = newChar.GetComponent<PlayerDeath>();
+        if (death != null)
+        {
+            death.ResetDeath();
+        }
     }
 
     private IEnumerator SwitchCharacterWithDelay()
@@ -152,26 +175,26 @@ public class GameManager : MonoBehaviour
         else
         {
             ActivateCharacter((currentCharacterIndex + 1) % activeCharacters.Count);
-            UpdateIcons();
+            //UpdateIcons();
 
             yield return new WaitForSeconds(respawnCooldown);
         }
     }
 
-    private void UpdateIcons()
-    {
-        for (int i = 0; i < iconSlots.Length; i++)
-        {
-            if (i < activeCharacters.Count)
-            {
-                iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray;
-            }
-            else
-            {
-                iconSlots[i].color = Color.clear;
-            }
-        }
-    }
+    //private void UpdateIcons()
+    //{
+    //    for (int i = 0; i < iconSlots.Length; i++)
+    //    {
+    //        if (i < activeCharacters.Count)
+    //        {
+    //            iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray;
+    //        }
+    //        else
+    //        {
+    //            iconSlots[i].color = Color.clear;
+    //        }
+    //    }
+    //}
 
     private void ResetCharacter(GameObject character)
     {
