@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1189377832586708316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8656934748059592848}
+  - component: {fileID: 7631479074039507276}
+  m_Layer: 0
+  m_Name: DescriptionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8656934748059592848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189377832586708316}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7631479074039507276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189377832586708316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe503b345687e804ba6cbc26563e7793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSprites:
+  - {fileID: 21300000, guid: f0d8fbda22e67224eb0e572cc763c277, type: 3}
+  - {fileID: 21300000, guid: 6f41ae3f7b76691409a606863449108f, type: 3}
+  - {fileID: 21300000, guid: 6e9a36bc306da8540aab4a027ab12100, type: 3}
+  parentObject: {fileID: 0}
+  descriptionPanel: {fileID: 0}
+  descriptionText: {fileID: 0}
+  characterDescriptions:
+  - "Ten niepozorny p\u0142az opanowa\u0142 zdolno\u015B\u0107 nazywan\u0105 podw\xF3jnym
+    skokiem. Latami doskonali\u0142 swoj\u0105 technik\u0119 na polach ksi\u0119\u017Cycowych,
+    po niewidocznej stronie satelity. Jego umiej\u0119tno\u015Bci\u0105 dor\xF3wnuje
+    podobno tylko apetyt."
+  - "Ten antarktyczny nielot potrafi\u0105cy przemieni\u0107 si\u0119 w blok lodu,
+    zadba o to, \u017Ceby\u015B dotar\u0142(a) bezpiecznie do celu. Chocia\u017C
+    doskonale czuje si\u0119 w zimnej pr\xF3\u017Cni, niech Ci\u0119 to nie zwiedzie,
+    jego serce roztopi najgrubsze lody.  Ten zoonauta sprawdzi si\u0119 doskonale
+    do budowania schod\xF3w i platform, uwa\u017Caj tylko, \u017Ceby si\u0119 na
+    nich nie po\u015Blizgn\u0105\u0107!"
+  - "Ten niewielki ssak niewra\u017Cliwy na \u015Bwiat\u0142o gwiazd \u017Cyje pod
+    ziemi\u0105 i kocha kopa\u0107 kopce we wszystkim, co znajdzie. U\u017Cyj kt\xF3rego\u015B
+    jako trampoliny i odbij si\u0119 do gwiazd! Je\u015Bli widzieli\u015Bcie tunele
+    na Marsie to prawdopodobnie jego sprawka.  \u015Awietnie nada si\u0119 do pomocy
+    pozosta\u0142ym cz\u0142onkom za\u0142ogi podczas przemierzania du\u017Cych dystans\xF3w
+    w powietrzu"
+  contentTransform: {fileID: 0}
+  buttonSound: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
+  characterInfographic: {fileID: 0}
+  characterInfographicSprites:
+  - {fileID: 21300000, guid: 97d13cd260f1da7439e9a085038e8b33, type: 3}
+  - {fileID: 21300000, guid: 49b5a38db05b0ba4f8c15fa277a54eac, type: 3}
+  - {fileID: 21300000, guid: dd674a2f6a57c5244a7dfdcc8f178346, type: 3}
+  characterCount: 3
