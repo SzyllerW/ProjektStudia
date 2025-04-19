@@ -6015,6 +6015,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1348689101}
     m_Modifications:
+    - target: {fileID: 3611868913975480958, guid: fe08e19030e66e84f835f2e573a0ac7a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6863207613270206329, guid: fe08e19030e66e84f835f2e573a0ac7a, type: 3}
       propertyPath: m_Name
       value: Trap_platform

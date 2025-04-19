@@ -8,10 +8,12 @@ public class IceBlock : MonoBehaviour
     private bool isScheduledForDestruction = false;
 
     [SerializeField] private AudioClip iceBlockEnterSoundClip;
+    [SerializeField] private AudioClip iceBlockCrackSoundClip;
     [SerializeField] private GameObject iceBlockPrefab;
-    [SerializeField] private float destructionDelay = 2f; // Czas w sekundach przed znikniêciem kostki
+    [SerializeField] private float destructionDelay = 2f;
 
     private GameManager gameManager;
+    private bool createdOnSpikes = false;
 
     void Start()
     {
@@ -49,15 +51,48 @@ public class IceBlock : MonoBehaviour
                 if (iceChildCollider != null)
                 {
                     float offsetY = (playerCollider.bounds.extents.y - iceChildCollider.bounds.extents.y);
-                    spawnPosition.y += offsetY;
+                    spawnPosition.y += offsetY - 0.05f;
                 }
             }
 
-            Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
+            GameObject newBlock = Instantiate(iceBlockPrefab, spawnPosition, Quaternion.identity);
+            Transform innerIce = newBlock.transform.GetChild(0);
+            BoxCollider2D iceCollider = innerIce.GetComponent<BoxCollider2D>();
+
+            if (iceCollider != null)
+            {
+                Vector2 min = (Vector2)innerIce.position + iceCollider.offset - iceCollider.size * 0.5f;
+                Vector2 max = (Vector2)innerIce.position + iceCollider.offset + iceCollider.size * 0.5f;
+
+                Collider2D[] hits = Physics2D.OverlapAreaAll(min, max);
+                foreach (var hit in hits)
+                {
+                    if (hit.CompareTag("Spikes"))
+                    {
+                        Debug.Log("[IceBlock] Detected TAGGED spike — destroying ice block!");
+                        IceBlock ice = newBlock.GetComponent<IceBlock>();
+                        if (ice != null)
+                        {
+                            ice.TriggerDelayedDestruction();
+                        }
+                        break;
+                    }
+                }
+            }
+
             SoundFXManager.instance.PlaySoundFXClip(iceBlockEnterSoundClip, transform, 1f);
         }
 
         gameObject.SetActive(false);
+    }
+
+    public void TriggerDelayedDestruction()
+    {
+        if (!isScheduledForDestruction)
+        {
+            isScheduledForDestruction = true;
+            StartCoroutine(DestroyAfterDelay());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -72,6 +107,12 @@ public class IceBlock : MonoBehaviour
     private IEnumerator DestroyAfterDelay()
     {
         yield return new WaitForSeconds(destructionDelay);
+
+        if (iceBlockCrackSoundClip != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(iceBlockCrackSoundClip, transform, 1f);
+        }
+
         Destroy(gameObject);
     }
 
@@ -94,3 +135,4 @@ public class IceBlock : MonoBehaviour
         transform.position += Vector3.up * 0.01f;
     }
 }
+
