@@ -1,7 +1,8 @@
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
 
-public class MenuManager : MonoBehaviour
+public class MainMenuSettingsManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject optionsMenuPanel;
@@ -9,22 +10,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject resolutionSettingsPanel;
     [SerializeField] private AudioClip buttonSoundClip;
 
-    public async void PlayGame()
-    {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        await Task.Delay(100);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MapSelection");
-    }
-
-    public async void OpenOptions()
+    public async void OpenOptionsMenu()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         await Task.Delay(100);
 
         mainMenuPanel.SetActive(false);
         optionsMenuPanel.SetActive(true);
-        soundSettingsPanel.SetActive(false);
-        resolutionSettingsPanel.SetActive(false);
     }
 
     public async void OpenSoundSettings()
@@ -50,9 +42,9 @@ public class MenuManager : MonoBehaviour
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         await Task.Delay(100);
 
-        optionsMenuPanel.SetActive(true);
         soundSettingsPanel.SetActive(false);
         resolutionSettingsPanel.SetActive(false);
+        optionsMenuPanel.SetActive(true);
     }
 
     public async void BackToMainMenu()
@@ -63,12 +55,5 @@ public class MenuManager : MonoBehaviour
         optionsMenuPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
     }
-
-    public async void ExitGame()
-    {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        await Task.Delay(1000);
-        Application.Quit();
-        Debug.Log("Quit game");
-    }
 }
+
