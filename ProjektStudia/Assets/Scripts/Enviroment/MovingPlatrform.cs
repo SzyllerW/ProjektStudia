@@ -29,10 +29,11 @@ public class MovingPlatform : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 direction = (target - transform.position).normalized;
-        transform.position += direction * speed * Time.fixedDeltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.fixedDeltaTime);
 
         if (Vector2.Distance(transform.position, target) < 0.05f)
         {
+            transform.position = target;
             goingToEnd = !goingToEnd;
             target = goingToEnd ? endPoint.position : startPoint.position;
         }

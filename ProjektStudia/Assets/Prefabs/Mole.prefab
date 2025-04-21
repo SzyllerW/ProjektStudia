@@ -309,7 +309,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4704425990604723030}
   - component: {fileID: 4336597031928889974}
-  - component: {fileID: 328585641481221222}
   - component: {fileID: 6080653459921135651}
   - component: {fileID: 6642466150483178687}
   - component: {fileID: 8205737369769770963}
@@ -318,6 +317,8 @@ GameObject:
   - component: {fileID: 1792568672613506511}
   - component: {fileID: 5376042123755209824}
   - component: {fileID: 719942037184764478}
+  - component: {fileID: 2247470575214685033}
+  - component: {fileID: 7736556364994958520}
   m_Layer: 0
   m_Name: Mole
   m_TagString: Player
@@ -367,51 +368,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &328585641481221222
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8865687083874275941}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1, y: 21}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 10, y: 21}
-  m_EdgeRadius: 0
 --- !u!50 &6080653459921135651
 Rigidbody2D:
   serializedVersion: 4
@@ -481,7 +437,6 @@ MonoBehaviour:
   impactVolume: 0.5
   jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
   jumpVolume: 1
-  currentPlatformRb: {fileID: 0}
 --- !u!114 &8205737369769770963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,6 +648,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acornHolder: {fileID: 5981390145946003847}
+--- !u!58 &2247470575214685033
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865687083874275941}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 19}
+  serializedVersion: 2
+  m_Radius: 8
+--- !u!58 &7736556364994958520
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865687083874275941}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 24.5}
+  serializedVersion: 2
+  m_Radius: 9
 --- !u!1001 &3632862373791375265
 PrefabInstance:
   m_ObjectHideFlags: 0
