@@ -7,19 +7,24 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector2 baseOffset = new Vector2(3f, 2f);
     [SerializeField] private float stopFollowingY = -70f;
 
-    [Header("Zoom Settings")]
     [SerializeField] private float baseSize = 126f;
     [SerializeField] private float jumpZoomSize = 132f;
     [SerializeField] private float idleZoomSize = 140f;
-    [SerializeField] private float zoomOutSpeed = 0.3f;
-    [SerializeField] private float zoomInSpeed = 5f;
+
+    [SerializeField] private float zoomInSpeed = 10f;
+    [SerializeField] private float jumpZoomOutSpeed = 6f;
+    [SerializeField] private float idleZoomOutSpeed = 2f;
+
+    [SerializeField] private float idleThreshold = 2f;
 
     private Vector3 lastKnownPosition;
     private bool isShaking = false;
-
-    [SerializeField] private float idleThreshold = 2f;
     private float idleTime = 0f;
     private Rigidbody2D playerRb;
+    private float currentTargetSize;
+
+    private enum ZoomState { Normal, Jumping, Idle }
+    private ZoomState zoomState = ZoomState.Normal;
 
     private void Start()
     {
@@ -31,6 +36,7 @@ public class CameraFollow : MonoBehaviour
         }
 
         Camera.main.orthographicSize = baseSize;
+        currentTargetSize = baseSize;
     }
 
     private void LateUpdate()
@@ -53,30 +59,50 @@ public class CameraFollow : MonoBehaviour
         float horizontalVelocity = Mathf.Abs(playerRb.velocity.x);
         float verticalVelocity = playerRb.velocity.y;
 
-        float targetSize = baseSize;
-
         if (!IsGrounded() && Mathf.Abs(verticalVelocity) > 0.1f)
         {
-            targetSize = jumpZoomSize;
-            idleTime = 0f;
+            if (zoomState != ZoomState.Jumping)
+            {
+                zoomState = ZoomState.Jumping;
+                currentTargetSize = jumpZoomSize;
+                idleTime = 0f;
+            }
         }
-        else if (horizontalVelocity < 0.05f && Mathf.Abs(verticalVelocity) < 0.05f)
+        else if (horizontalVelocity < 0.5f && Mathf.Abs(verticalVelocity) < 0.5f)
         {
             idleTime += Time.deltaTime;
-            if (idleTime > idleThreshold)
+            if (idleTime > idleThreshold && zoomState != ZoomState.Idle)
             {
-                targetSize = idleZoomSize;
+                zoomState = ZoomState.Idle;
+                currentTargetSize = idleZoomSize;
             }
         }
         else
         {
-            idleTime = 0f;
+            if (zoomState != ZoomState.Normal)
+            {
+                zoomState = ZoomState.Normal;
+                currentTargetSize = baseSize;
+                idleTime = 0f;
+            }
         }
 
-        float currentZoom = Camera.main.orthographicSize;
-        float zoomSpeed = (targetSize > currentZoom) ? zoomOutSpeed : zoomInSpeed;
+        float zoomSpeed = zoomInSpeed;
 
-        Camera.main.orthographicSize = Mathf.Lerp(currentZoom, targetSize, Time.deltaTime * zoomSpeed);
+        if (zoomState == ZoomState.Jumping)
+        {
+            zoomSpeed = jumpZoomOutSpeed;
+        }
+        else if (zoomState == ZoomState.Idle)
+        {
+            zoomSpeed = idleZoomOutSpeed;
+        }
+
+        Camera.main.orthographicSize = Mathf.MoveTowards(
+            Camera.main.orthographicSize,
+            currentTargetSize,
+            zoomSpeed * Time.deltaTime
+        );
 
         Vector3 targetPosition = new Vector3(
             player.position.x + (player.localScale.x > 0 ? baseOffset.x : -baseOffset.x),
@@ -127,12 +153,6 @@ public class CameraFollow : MonoBehaviour
             {
                 player = p.transform;
                 playerRb = player.GetComponent<Rigidbody2D>();
-
-                if (player.GetComponent<PlayerMovement>() == null)
-                {
-                    Debug.LogWarning("Gracz znaleziony, ale nie ma PlayerMovement!");
-                }
-
                 return;
             }
         }
@@ -146,13 +166,11 @@ public class CameraFollow : MonoBehaviour
         if (player == null) return false;
 
         PlayerMovement pm = player.GetComponent<PlayerMovement>();
-        if (pm == null)
-        {
-            Debug.LogWarning("Brak komponentu PlayerMovement!");
-            return false;
-        }
+        if (pm == null) return false;
 
         return pm.IsGrounded();
     }
 }
+
+
 
