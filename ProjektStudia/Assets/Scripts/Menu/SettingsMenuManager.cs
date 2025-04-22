@@ -2,34 +2,35 @@ using UnityEngine;
 
 public class SettingsMenuManager : MonoBehaviour
 {
-    public GameObject optionsMenu;
-    public GameObject soundSettingsPanel;
-    public GameObject resolutionSettingsPanel;
+    public GameObject[] panels;
+    private int currentIndex = 0;
 
     private void Start()
     {
-        ShowMainOptions();
+        ShowPanel(currentIndex);
     }
 
-    public void ShowMainOptions()
+    private void ShowPanel(int index)
     {
-        optionsMenu.SetActive(true);
-        soundSettingsPanel.SetActive(false);
-        resolutionSettingsPanel.SetActive(false);
+        for (int i = 0; i < panels.Length; i++)
+        {
+            panels[i].SetActive(i == index);
+        }
     }
 
-    public void OpenSoundSettings()
+    public void ShowNextPanel()
     {
-        optionsMenu.SetActive(false);
-        soundSettingsPanel.SetActive(true);
-        resolutionSettingsPanel.SetActive(false);
+        currentIndex = (currentIndex + 1) % panels.Length;
+        ShowPanel(currentIndex);
     }
 
-    public void OpenResolutionSettings()
+    public void ShowPreviousPanel()
     {
-        optionsMenu.SetActive(false);
-        soundSettingsPanel.SetActive(false);
-        resolutionSettingsPanel.SetActive(true);
+        currentIndex--;
+        if (currentIndex < 0)
+            currentIndex = panels.Length - 1;
+        ShowPanel(currentIndex);
     }
 }
+
 
