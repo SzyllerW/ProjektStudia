@@ -50,7 +50,6 @@ GameObject:
   - component: {fileID: 3001653704972173676}
   - component: {fileID: 4503778709844610638}
   - component: {fileID: 3838677984749164501}
-  - component: {fileID: 6087051520009478142}
   m_Layer: 0
   m_Name: Penguin
   m_TagString: Player
@@ -407,42 +406,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.8, y: 19}
-  serializedVersion: 2
-  m_Radius: 8
---- !u!58 &6087051520009478142
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886497336514422082}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 2.8, y: 24.5}
+  m_Offset: {x: 2.8, y: 20.9}
   serializedVersion: 2
   m_Radius: 9
 --- !u!1 &3835216766609544059
