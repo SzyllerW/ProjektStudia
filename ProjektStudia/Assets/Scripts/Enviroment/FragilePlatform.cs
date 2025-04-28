@@ -3,32 +3,29 @@ using System.Collections;
 
 public class FragilePlatform : MonoBehaviour
 {
-    public GameObject cracks;          
-    public float breakDelay = 0.5f;  
-    public float destroyDelay = 0.5f; 
+    public int maxSteps = 1;
+    public float fallDelay = 0.5f;
+    public float destroyDelay = 1f;
+
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody2D rb;
 
     private int stepCount = 0;
     private bool isBreaking = false;
 
-    private void Awake()
-    {
-        if (cracks != null)
-            cracks.SetActive(false); 
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+
         if (collision.gameObject.CompareTag("Player"))
         {
             stepCount++;
+            
+            //cameraFollow.ShakeBeforeFollow(0.25f, 0.5f);
 
-            if (stepCount == 1)
+            if (stepCount == maxSteps)
             {
-                if (cracks != null)
-                    cracks.SetActive(true); 
-            }
-            else if (stepCount == 2 && !isBreaking)
-            {
+                animator.SetTrigger("crack");
                 StartCoroutine(BreakPlatform());
             }
         }
@@ -38,11 +35,10 @@ public class FragilePlatform : MonoBehaviour
     {
         isBreaking = true;
 
-        yield return new WaitForSeconds(breakDelay);
-
-        yield return new WaitForSeconds(destroyDelay);
-
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(fallDelay);
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = 20f;
+        Destroy(gameObject, destroyDelay);
     }
 }
 

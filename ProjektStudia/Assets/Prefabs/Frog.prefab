@@ -50,7 +50,6 @@ GameObject:
   - component: {fileID: 1930732681635942429}
   - component: {fileID: 1321207512249879807}
   - component: {fileID: 1787093227953490840}
-  - component: {fileID: 3329226638936891911}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Player
@@ -411,42 +410,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.15, y: 19}
-  serializedVersion: 2
-  m_Radius: 8
---- !u!58 &3329226638936891911
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841985961319422964}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1.15, y: 24.5}
+  m_Offset: {x: 1.15, y: 20.7}
   serializedVersion: 2
   m_Radius: 9
 --- !u!1 &4459225670038836037
