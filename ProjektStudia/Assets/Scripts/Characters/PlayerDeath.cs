@@ -52,9 +52,8 @@ public class PlayerDeath : MonoBehaviour
 
         if (gameManager != null)
         {
-            gameManager.SwitchToNextCharacter();
+            gameManager.CharacterFellOffMap(gameObject); 
         }
-
     }
 
     public void ResetDeath()

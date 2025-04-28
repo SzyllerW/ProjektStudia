@@ -2034,7 +2034,7 @@ MonoBehaviour:
   optionsMenuPanel: {fileID: 1059656569}
   soundSettingsPanel: {fileID: 1707975572}
   resolutionSettingsPanel: {fileID: 1573850904}
-  buttonSoundClip: {fileID: 0}
+  buttonSoundClip: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
 --- !u!4 &1960370744
 Transform:
   m_ObjectHideFlags: 0

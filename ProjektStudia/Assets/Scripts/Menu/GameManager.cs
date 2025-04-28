@@ -7,12 +7,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Transform respawnPoint;
-    public Image[] iconSlots;
     public List<GameObject> characterPrefabs;
+    public Transform characterIconPanel;
+    public GameObject characterIconPrefab;
+    private List<CharacterIconButton> iconButtons = new List<CharacterIconButton>();
+    [SerializeField] private List<Sprite> characterIcons;
 
     private List<GameObject> activeCharacters = new List<GameObject>();
-    private int currentCharacterIndex = 0;
-    private int usedCharactersCount = 0;
+    private int currentCharacterIndex = -1;
+
+    private bool canSelectCharacter = true;
+    private bool tutorialCharacterSpawned = false;
 
     [SerializeField] private bool isTutorial = false;
     [SerializeField] private float switchDelay = 0.5f;
@@ -33,19 +38,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        var all = FindObjectsOfType<CollectibleItem>(true); 
+        var all = FindObjectsOfType<CollectibleItem>(true);
         totalCollectibles = all.Length;
-
-        Debug.Log("[GameManager] ZNALAZ£EM {totalCollectibles} CollectibleItemów:");
-        foreach (var item in all)
-        {
-            Debug.Log("  " + item.gameObject.name + " (Parent: " + item.transform.parent?.name + ")");
-        }
-
     }
 
     private void Start()
     {
+        PlayerPrefs.DeleteAll();
         CollectibleItem.OnItemCollected += OnItemCollected;
 
         if (characterPrefabs.Count == 0)
@@ -53,19 +52,22 @@ public class GameManager : MonoBehaviour
 
         if (!isTutorial)
         {
-            LoadSelectedCharacters();
+            string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
+
+            if (!string.IsNullOrWhiteSpace(selectedCharacters))
+            {
+                // JEŒLI MAMY WYBRANE POSTACIE WCZEŒNIEJ
+                GenerateCharacterIcons();
+            }
+            else
+            {
+                // JEŒLI NIE MAMY WYBRANYCH POSTACI
+                GenerateCharacterIcons();
+            }
         }
         else
         {
-            GameObject tutorialChar = Instantiate(characterPrefabs[0], respawnPoint.position, Quaternion.identity);
-            tutorialChar.SetActive(false);
-            activeCharacters.Add(tutorialChar);
-        }
-
-        if (activeCharacters.Count > 0)
-        {
-            ActivateCharacter(0);
-            //UpdateIcons();
+            SpawnTutorialCharacter();
         }
     }
 
@@ -93,14 +95,82 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ActivateCharacter(int index)
+    private void GenerateCharacterIcons()
     {
-        if (index >= activeCharacters.Count)
+        foreach (Transform child in characterIconPanel)
+        {
+            Destroy(child.gameObject);
+        }
+
+        iconButtons.Clear();
+
+        for (int i = 0; i < characterPrefabs.Count; i++)
+        {
+            GameObject newIcon = Instantiate(characterIconPrefab, characterIconPanel);
+            CharacterIconButton iconButton = newIcon.GetComponent<CharacterIconButton>();
+            if (iconButton != null)
+            {
+                iconButton.Setup(i);
+                iconButtons.Add(iconButton);
+            }
+
+            Image img = newIcon.GetComponent<Image>();
+            if (img != null && i < characterIcons.Count)
+            {
+                img.sprite = characterIcons[i];
+            }
+        }
+    }
+
+    private void SpawnTutorialCharacter()
+    {
+        if (characterPrefabs.Count == 0)
             return;
 
+        GameObject tutorialChar = Instantiate(characterPrefabs[0], respawnPoint.position, Quaternion.identity);
+        tutorialChar.SetActive(true);
+        activeCharacters.Add(tutorialChar);
+        currentCharacterIndex = 0;
+        StartCoroutine(PrepareAndActivate(tutorialChar));
+
+        tutorialCharacterSpawned = true;
+        canSelectCharacter = false;
+    }
+
+    public void SelectCharacter(int index)
+    {
+        if (!canSelectCharacter)
+            return;
+
+        if (index >= characterPrefabs.Count)
+            return;
+
+        if (currentCharacterIndex >= 0 && currentCharacterIndex < activeCharacters.Count)
+        {
+            activeCharacters[currentCharacterIndex].SetActive(false);
+        }
+
+        GameObject characterToActivate = null;
+        if (index < activeCharacters.Count)
+        {
+            characterToActivate = activeCharacters[index];
+        }
+
+        if (characterToActivate == null)
+        {
+            characterToActivate = Instantiate(characterPrefabs[index], respawnPoint.position, Quaternion.identity);
+            activeCharacters.Add(characterToActivate);
+        }
+
         currentCharacterIndex = index;
-        GameObject newCharacter = activeCharacters[currentCharacterIndex];
-        StartCoroutine(PrepareAndActivate(newCharacter));
+        StartCoroutine(PrepareAndActivate(characterToActivate));
+
+        canSelectCharacter = false;
+
+        if (index >= 0 && index < iconButtons.Count)
+        {
+            iconButtons[index].GetComponent<Button>().interactable = false;
+        }
     }
 
     private IEnumerator PrepareAndActivate(GameObject character)
@@ -119,82 +189,35 @@ public class GameManager : MonoBehaviour
             movement.enabled = true;
             movement.ResetAfterRespawn();
         }
-
-        transform.SetParent(null);
-        transform.position = respawnPoint.position + Vector3.up * 0.05f;
     }
 
-    public void SwitchToNextCharacter()
+    private void CheckIfNoCharactersLeft()
     {
-        if (isTutorial)
+        bool anyInteractable = false;
+
+        foreach (var button in iconButtons)
         {
-            StartCoroutine(RespawnTutorialCharacterProperly());
-            return;
+            if (button != null && button.GetComponent<Button>().interactable)
+            {
+                anyInteractable = true;
+                break;
+            }
         }
 
-        if (activeCharacters.Count == 0) return;
-
-        StartCoroutine(SwitchCharacterWithDelay());
-    }
-
-    private IEnumerator RespawnTutorialCharacterProperly()
-    {
-        yield return new WaitForSeconds(respawnCooldown);
-
-        if (activeCharacters.Count > 0)
-        {
-            Destroy(activeCharacters[0]);
-            activeCharacters.Clear();
-        }
-
-        GameObject newChar = Instantiate(characterPrefabs[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
-        newChar.SetActive(true);
-        activeCharacters.Add(newChar);
-
-        ResetCharacter(newChar);
-
-        var death = newChar.GetComponent<PlayerDeath>();
-        if (death != null)
-        {
-            death.ResetDeath();
-        }
-    }
-
-    private IEnumerator SwitchCharacterWithDelay()
-    {
-        GameObject currentCharacter = activeCharacters[currentCharacterIndex];
-        currentCharacter.SetActive(false);
-        usedCharactersCount++;
-
-        yield return new WaitForSeconds(switchDelay);
-
-        if (usedCharactersCount >= activeCharacters.Count)
+        if (!anyInteractable)
         {
             TriggerGameOver();
         }
         else
         {
-            ActivateCharacter((currentCharacterIndex + 1) % activeCharacters.Count);
-            //UpdateIcons();
-
-            yield return new WaitForSeconds(respawnCooldown);
+            UnlockCharacterSelection();
         }
     }
 
-    //private void UpdateIcons()
-    //{
-    //    for (int i = 0; i < iconSlots.Length; i++)
-    //    {
-    //        if (i < activeCharacters.Count)
-    //        {
-    //            iconSlots[i].color = (i == currentCharacterIndex) ? Color.white : Color.gray;
-    //        }
-    //        else
-    //        {
-    //            iconSlots[i].color = Color.clear;
-    //        }
-    //    }
-    //}
+    public void UnlockCharacterSelection()
+    {
+        canSelectCharacter = true;
+    }
 
     private void ResetCharacter(GameObject character)
     {
@@ -223,22 +246,47 @@ public class GameManager : MonoBehaviour
 
     public void CharacterFellOffMap(GameObject character)
     {
-        PlayerCarry carry = character.GetComponent<PlayerCarry>();
-        if (carry != null)
+        if (character != null)
         {
-            carry.DropAcornAtCheckpoint();
+            PlayerCarry carry = character.GetComponent<PlayerCarry>();
+            if (carry != null)
+            {
+                carry.DropAcornAtCheckpoint();
+            }
+
+            character.SetActive(false);
         }
 
-        character.SetActive(false);
-        usedCharactersCount++;
-
-        if (usedCharactersCount >= activeCharacters.Count)
+        if (isTutorial)
         {
-            TriggerGameOver();
+            StartCoroutine(RespawnTutorialCharacterProperly());
         }
         else
         {
-            SwitchToNextCharacter();
+            CheckIfNoCharactersLeft(); 
+        }
+    }
+
+    private IEnumerator RespawnTutorialCharacterProperly()
+    {
+        yield return new WaitForSeconds(respawnCooldown);
+
+        if (activeCharacters.Count > 0)
+        {
+            Destroy(activeCharacters[0]);
+            activeCharacters.Clear();
+        }
+
+        GameObject newChar = Instantiate(characterPrefabs[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
+        newChar.SetActive(true);
+        activeCharacters.Add(newChar);
+        currentCharacterIndex = 0;
+        StartCoroutine(PrepareAndActivate(newChar));
+
+        var death = newChar.GetComponent<PlayerDeath>();
+        if (death != null)
+        {
+            death.ResetDeath();
         }
     }
 
@@ -247,15 +295,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(gameOverSceneName);
     }
 
-    // --- ZBIERANIE ITEMÓW ---
-
     private void OnItemCollected()
     {
         collectedCount++;
         CheckWinCondition();
     }
-
-    // --- DOSTARCZANIE ¯O£ÊDZI ---
 
     public void AcornDelivered()
     {
@@ -268,21 +312,10 @@ public class GameManager : MonoBehaviour
         bool allItemsCollected = !requiresAllCollectibles || collectedCount >= totalCollectibles;
         bool allAcornsDelivered = !requiresAcornDelivery || deliveredAcorns >= requiredAcorns;
 
-        Debug.Log($"[CheckWinCondition] Zebrane: {collectedCount}/{totalCollectibles}, ¯o³êdzie: {deliveredAcorns}/{requiredAcorns}");
-
-        if (requiresAllCollectibles && collectedCount < totalCollectibles)
-        {
+        if (!allItemsCollected || !allAcornsDelivered)
             return;
-        }
 
-        if (requiresAcornDelivery && deliveredAcorns < requiredAcorns)
-        {
-            return; 
-        }
-
-        Debug.Log("[CheckWinCondition] WARUNKI SPE£NIONE – ³adowanie sceny zwyciêstwa");
         SceneManager.LoadScene(levelCompleteSceneName);
-
     }
 }
 

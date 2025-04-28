@@ -60,7 +60,8 @@ public class PlayerVisualManager : MonoBehaviour
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
         {
-            gameManager.SwitchToNextCharacter();
+            gameManager.UnlockCharacterSelection();
+
         }
     }
 }
