@@ -43,13 +43,9 @@ public class CameraFollow : MonoBehaviour
     {
         if (isShaking) return;
 
-        if (player == null || !player.gameObject.activeSelf || player.position.y <= stopFollowingY)
+        if (player == null || !player.gameObject.activeSelf)
         {
             FindPlayer();
-            if (player == null)
-            {
-                transform.position = Vector3.Lerp(transform.position, lastKnownPosition, smoothSpeed);
-            }
             return;
         }
 
@@ -88,15 +84,8 @@ public class CameraFollow : MonoBehaviour
         }
 
         float zoomSpeed = zoomInSpeed;
-
-        if (zoomState == ZoomState.Jumping)
-        {
-            zoomSpeed = jumpZoomOutSpeed;
-        }
-        else if (zoomState == ZoomState.Idle)
-        {
-            zoomSpeed = idleZoomOutSpeed;
-        }
+        if (zoomState == ZoomState.Jumping) zoomSpeed = jumpZoomOutSpeed;
+        else if (zoomState == ZoomState.Idle) zoomSpeed = idleZoomOutSpeed;
 
         Camera.main.orthographicSize = Mathf.MoveTowards(
             Camera.main.orthographicSize,
@@ -171,6 +160,7 @@ public class CameraFollow : MonoBehaviour
         return pm.IsGrounded();
     }
 }
+
 
 
 

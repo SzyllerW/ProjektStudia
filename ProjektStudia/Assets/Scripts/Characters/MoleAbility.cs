@@ -53,7 +53,8 @@ public class MoleAbility : MonoBehaviour
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
         {
-            gameManager.SwitchToNextCharacter();
+            gameManager.UnlockCharacterSelection();
+
         }
 
         isDigging = false;
