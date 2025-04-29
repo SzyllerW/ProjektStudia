@@ -1115,6 +1115,9 @@ MonoBehaviour:
   map3Button: {fileID: 1717752279}
   backButton: {fileID: 1977159874}
   confirmButton: {fileID: 2145248970}
+  frogTutorialButton: {fileID: 787101548}
+  moleTutorialButton: {fileID: 426587886}
+  penguinTutorialButton: {fileID: 200912097}
   buttonSoundClip: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
 --- !u!1 &1516888142
 GameObject:

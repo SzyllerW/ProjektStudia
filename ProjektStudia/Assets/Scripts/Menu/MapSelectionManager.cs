@@ -11,6 +11,11 @@ public class MapSelectionManager : MonoBehaviour
     public Button backButton;
     public Button confirmButton;
 
+    [Header("Przyciski do tutoriali")]
+    public Button frogTutorialButton;
+    public Button moleTutorialButton;
+    public Button penguinTutorialButton;
+
     private int selectedMap = 0;
     private Color defaultColor = Color.white;
     private Color selectedColor = Color.grey;
@@ -36,6 +41,10 @@ public class MapSelectionManager : MonoBehaviour
         map1Button.onClick.AddListener(() => ToggleMapSelection(1, map1Button));
         map2Button.onClick.AddListener(() => ToggleMapSelection(2, map2Button));
         map3Button.onClick.AddListener(() => ToggleMapSelection(3, map3Button));
+
+        frogTutorialButton.onClick.AddListener(LoadFrogTutorial);
+        moleTutorialButton.onClick.AddListener(LoadMoleTutorial);
+        penguinTutorialButton.onClick.AddListener(LoadPenguinTutorial);
 
         ResetButtonColors();
     }
@@ -105,5 +114,23 @@ public class MapSelectionManager : MonoBehaviour
         }
 
         PlayerPrefs.Save();
+    }
+
+    private void LoadFrogTutorial()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        SceneManager.LoadScene("FrogTutorial");
+    }
+
+    private void LoadMoleTutorial()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        SceneManager.LoadScene("MoleTutorial");
+    }
+
+    private void LoadPenguinTutorial()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        SceneManager.LoadScene("PenguinTutorial");
     }
 }
