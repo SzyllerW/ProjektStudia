@@ -75,7 +75,7 @@ public class MapSelectionManager : MonoBehaviour
             await Task.Delay(100);
             PlayerPrefs.SetInt("SelectedMap", selectedMap);
             PlayerPrefs.Save();
-            SceneManager.LoadScene("CharacterSelection");
+            SceneManager.LoadScene("Map" + selectedMap);
         }
     }
 

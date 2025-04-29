@@ -10,12 +10,11 @@ public class GameManager : MonoBehaviour
     public List<GameObject> characterPrefabs;
     public Transform characterIconPanel;
     public GameObject characterIconPrefab;
-    private List<CharacterIconButton> iconButtons = new List<CharacterIconButton>();
     [SerializeField] private List<Sprite> characterIcons;
 
+    private List<CharacterIconButton> iconButtons = new List<CharacterIconButton>();
     private List<GameObject> activeCharacters = new List<GameObject>();
     private int currentCharacterIndex = -1;
-
     private bool canSelectCharacter = true;
     private bool tutorialCharacterSpawned = false;
 
@@ -44,7 +43,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
         CollectibleItem.OnItemCollected += OnItemCollected;
 
         if (characterPrefabs.Count == 0)
@@ -52,18 +50,7 @@ public class GameManager : MonoBehaviour
 
         if (!isTutorial)
         {
-            string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
-
-            if (!string.IsNullOrWhiteSpace(selectedCharacters))
-            {
-                // JEŒLI MAMY WYBRANE POSTACIE WCZEŒNIEJ
-                GenerateCharacterIcons();
-            }
-            else
-            {
-                // JEŒLI NIE MAMY WYBRANYCH POSTACI
-                GenerateCharacterIcons();
-            }
+            GenerateCharacterIcons();
         }
         else
         {
@@ -74,25 +61,6 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         CollectibleItem.OnItemCollected -= OnItemCollected;
-    }
-
-    private void LoadSelectedCharacters()
-    {
-        string selectedCharacters = PlayerPrefs.GetString("SelectedCharacters", "");
-        if (string.IsNullOrWhiteSpace(selectedCharacters))
-            return;
-
-        string[] characterIndexes = selectedCharacters.Split(',');
-
-        foreach (string index in characterIndexes)
-        {
-            if (int.TryParse(index, out int characterIndex) && characterIndex < characterPrefabs.Count)
-            {
-                GameObject character = Instantiate(characterPrefabs[characterIndex], respawnPoint.position, Quaternion.identity);
-                character.SetActive(false);
-                activeCharacters.Add(character);
-            }
-        }
     }
 
     private void GenerateCharacterIcons()
@@ -139,10 +107,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectCharacter(int index)
     {
-        if (!canSelectCharacter)
-            return;
-
-        if (index >= characterPrefabs.Count)
+        if (!canSelectCharacter || index >= characterPrefabs.Count)
             return;
 
         if (currentCharacterIndex >= 0 && currentCharacterIndex < activeCharacters.Count)
@@ -191,34 +156,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckIfNoCharactersLeft()
-    {
-        bool anyInteractable = false;
-
-        foreach (var button in iconButtons)
-        {
-            if (button != null && button.GetComponent<Button>().interactable)
-            {
-                anyInteractable = true;
-                break;
-            }
-        }
-
-        if (!anyInteractable)
-        {
-            TriggerGameOver();
-        }
-        else
-        {
-            UnlockCharacterSelection();
-        }
-    }
-
-    public void UnlockCharacterSelection()
-    {
-        canSelectCharacter = true;
-    }
-
     private void ResetCharacter(GameObject character)
     {
         Rigidbody2D rb = character.GetComponent<Rigidbody2D>();
@@ -263,7 +200,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            CheckIfNoCharactersLeft(); 
+            CheckIfNoCharactersLeft();
         }
     }
 
@@ -290,9 +227,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void CheckIfNoCharactersLeft()
+    {
+        bool anyInteractable = false;
+
+        foreach (var button in iconButtons)
+        {
+            if (button != null && button.GetComponent<Button>().interactable)
+            {
+                anyInteractable = true;
+                break;
+            }
+        }
+
+        if (!anyInteractable)
+        {
+            Debug.Log("[GameManager] Wszystkie postacie zu¿yte — GAME OVER");
+            TriggerGameOver();
+        }
+        else
+        {
+            UnlockCharacterSelection();
+        }
+    }
+
     private void TriggerGameOver()
     {
         SceneManager.LoadScene(gameOverSceneName);
+    }
+
+    public void UnlockCharacterSelection()
+    {
+        canSelectCharacter = true;
     }
 
     private void OnItemCollected()
@@ -312,10 +278,11 @@ public class GameManager : MonoBehaviour
         bool allItemsCollected = !requiresAllCollectibles || collectedCount >= totalCollectibles;
         bool allAcornsDelivered = !requiresAcornDelivery || deliveredAcorns >= requiredAcorns;
 
-        if (!allItemsCollected || !allAcornsDelivered)
-            return;
-
-        SceneManager.LoadScene(levelCompleteSceneName);
+        if (allItemsCollected && allAcornsDelivered)
+        {
+            SceneManager.LoadScene(levelCompleteSceneName);
+        }
     }
 }
+
 
