@@ -9,6 +9,7 @@ public class FragilePlatform : MonoBehaviour
 
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private AudioClip breakSoundClip;
 
     private int stepCount = 0;
     private bool isBreaking = false;
@@ -34,6 +35,7 @@ public class FragilePlatform : MonoBehaviour
     private IEnumerator BreakPlatform()
     {
         isBreaking = true;
+        SoundFXManager.instance.PlaySoundFXClip(breakSoundClip, transform, 0.5f);
 
         yield return new WaitForSeconds(fallDelay);
         rb.bodyType = RigidbodyType2D.Dynamic;
