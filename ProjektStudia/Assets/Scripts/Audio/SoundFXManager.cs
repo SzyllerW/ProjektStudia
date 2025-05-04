@@ -61,6 +61,9 @@ public class SoundFXManager : MonoBehaviour
         //made audio source 3D
         audioSource.spatialBlend = 1f;
 
+        //turn off Doppler effect
+        audioSource.dopplerLevel = 0f;
+
         //change rolloff mode to custom
         audioSource.rolloffMode = AudioRolloffMode.Custom;
 
