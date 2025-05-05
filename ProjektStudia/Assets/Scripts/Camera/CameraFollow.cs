@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -13,6 +14,14 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float idleZoomOutSpeed = 2f;
     [SerializeField] private float idleThreshold = 2f;
 
+    [Header("Cinematic Presentation")]
+    [SerializeField] private bool playCinematicAtStart = true;
+    [SerializeField] private Transform[] cinematicPoints;
+    [SerializeField] private float cinematicSpeed = 40f;
+    [SerializeField] private float waitAtEachPoint = 1.5f;
+    [SerializeField] private GameObject[] objectsToEnableAfterCinematic;
+    [SerializeField] private GameObject characterSelectionUI;
+
     private Transform player;
     private Rigidbody2D playerRb;
     private Vector3 lastKnownPosition;
@@ -20,6 +29,7 @@ public class CameraFollow : MonoBehaviour
     private float currentTargetSize;
     private bool isShaking = false;
     private bool followingRespawn = false;
+    private bool isCinematicDone = false;
 
     private enum ZoomState { Normal, Jumping, Idle }
     private ZoomState zoomState = ZoomState.Normal;
@@ -29,17 +39,100 @@ public class CameraFollow : MonoBehaviour
         Camera.main.orthographicSize = baseSize;
         currentTargetSize = baseSize;
 
-        if (respawnPoint != null)
+        if (characterSelectionUI != null)
         {
-            player = respawnPoint;
-            playerRb = null;
-            followingRespawn = true;
+            characterSelectionUI.SetActive(false);
+        }
+
+        if (playCinematicAtStart && cinematicPoints.Length > 0)
+        {
+            transform.position = new Vector3(
+                cinematicPoints[0].position.x,
+                cinematicPoints[0].position.y,
+                transform.position.z
+            );
+            StartCoroutine(StartCinematic());
+        }
+        else
+        {
+            if (respawnPoint != null)
+            {
+                player = respawnPoint;
+                playerRb = null;
+                followingRespawn = true;
+                isCinematicDone = true;
+
+                if (characterSelectionUI != null)
+                {
+                    characterSelectionUI.SetActive(true);
+                }
+            }
+        }
+    }
+
+    private IEnumerator StartCinematic()
+    {
+        isCinematicDone = false;
+        isShaking = true;
+
+        foreach (Transform point in cinematicPoints)
+        {
+            Vector3 target = new Vector3(point.position.x, point.position.y, transform.position.z);
+            Vector3 startPos = transform.position;
+
+            float distance = Vector3.Distance(startPos, target);
+            float duration = Mathf.Max(distance / cinematicSpeed, 0.2f);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+                transform.position = Vector3.Lerp(startPos, target, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = target;
+            yield return new WaitForSeconds(waitAtEachPoint);
+        }
+
+        // Return to starting point
+        Transform startPoint = cinematicPoints[0];
+        Vector3 returnTarget = new Vector3(startPoint.position.x, startPoint.position.y, transform.position.z);
+        Vector3 returnStart = transform.position;
+        float returnDistance = Vector3.Distance(returnStart, returnTarget);
+        float returnDuration = Mathf.Max(returnDistance / cinematicSpeed, 0.2f);
+        float returnElapsed = 0f;
+
+        while (returnElapsed < returnDuration)
+        {
+            float t = Mathf.SmoothStep(0f, 1f, returnElapsed / returnDuration);
+            transform.position = Vector3.Lerp(returnStart, returnTarget, t);
+            returnElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = returnTarget;
+
+        isCinematicDone = true;
+        isShaking = false;
+
+        FindPlayerByTag();
+
+        foreach (var obj in objectsToEnableAfterCinematic)
+        {
+            obj.SetActive(true);
+        }
+
+        if (characterSelectionUI != null)
+        {
+            characterSelectionUI.SetActive(true);
         }
     }
 
     private void LateUpdate()
     {
-        if (isShaking) return;
+        if (isShaking || !isCinematicDone) return;
 
         if (player == null || !player.gameObject.activeSelf || followingRespawn)
         {
@@ -145,7 +238,7 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator Shake(float duration, float magnitude)
+    private IEnumerator Shake(float duration, float magnitude)
     {
         isShaking = true;
         Vector3 originalPosition = lastKnownPosition;
@@ -166,7 +259,6 @@ public class CameraFollow : MonoBehaviour
         isShaking = false;
     }
 }
-
 
 
 
