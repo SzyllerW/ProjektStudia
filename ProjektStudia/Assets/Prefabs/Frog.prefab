@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 1930732681635942429}
   - component: {fileID: 1321207512249879807}
   - component: {fileID: 1787093227953490840}
+  - component: {fileID: 954334942969835275}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Player
@@ -413,6 +414,18 @@ CircleCollider2D:
   m_Offset: {x: 1.15, y: 20.7}
   serializedVersion: 2
   m_Radius: 9
+--- !u!114 &954334942969835275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841985961319422964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee99b656cb0fad74fbdafbba348bbe16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4459225670038836037
 GameObject:
   m_ObjectHideFlags: 0

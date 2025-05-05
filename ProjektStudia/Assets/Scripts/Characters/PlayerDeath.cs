@@ -18,19 +18,21 @@ public class PlayerDeath : MonoBehaviour
 
     private void Update()
     {
-        if (currentRespawnRoutine != null) return;
-        if (isDead || deathBlockedTemporarily) return;
+        if (currentRespawnRoutine != null || isDead || deathBlockedTemporarily)
+            return;
 
         if (transform.position.y < deathHeight)
         {
-            isDead = true; 
-            Debug.Log($"[PlayerDeath] {gameObject.name} - START ŒMIERCI | pos: {transform.position}");
-            currentRespawnRoutine = StartCoroutine(RespawnWithDelay(1f));
+            Kill();
         }
     }
 
-    private IEnumerator RespawnWithDelay(float delay)
+    public void Kill()
     {
+        if (isDead || currentRespawnRoutine != null) return;
+
+        isDead = true;
+
         if (SoundFXManager.instance != null)
         {
             SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, transform, 1.3f);
@@ -48,12 +50,17 @@ public class PlayerDeath : MonoBehaviour
             carry.DropAcornAtCheckpoint();
         }
 
-        yield return new WaitForSeconds(delay);
-
         if (gameManager != null)
         {
-            gameManager.CharacterFellOffMap(gameObject); 
+            gameManager.CharacterFellOffMap(gameObject);
         }
+
+        currentRespawnRoutine = StartCoroutine(RespawnWithDelay(1f));
+    }
+
+    private IEnumerator RespawnWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
     }
 
     public void ResetDeath()
@@ -70,3 +77,4 @@ public class PlayerDeath : MonoBehaviour
         deathBlockedTemporarily = false;
     }
 }
+

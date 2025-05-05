@@ -16,11 +16,7 @@ public class TrapPlatform : MonoBehaviour
     private bool isTrapActive = false;
     private GameObject playerOnPlatform;
 
-    //variable response for playing audio clip when player or camera are near by.
-    //Connected with SoundZoneManager.cs
     [HideInInspector] public bool playSound = false;
-
-    //within this zone audio clip is audible
     public float soundZoneRadius;
 
     private void Start()
@@ -50,7 +46,7 @@ public class TrapPlatform : MonoBehaviour
         redLight.SetActive(active);
         animator.SetBool("RedLight", isTrapActive);
 
-        if (playSound == true)
+        if (playSound)
         {
             SoundFXManager.instance.PlaySoundFXClip3D(spikesSoundCLip, transform, spikesSoundVolume, 0f, soundZoneRadius);
         }
@@ -97,6 +93,12 @@ public class TrapPlatform : MonoBehaviour
         if (playerMovement != null)
         {
             playerMovement.enabled = false;
+        }
+
+        PlayerDeath death = player.GetComponent<PlayerDeath>();
+        if (death != null)
+        {
+            death.Kill();
         }
     }
 

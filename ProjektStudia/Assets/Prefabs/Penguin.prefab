@@ -50,6 +50,7 @@ GameObject:
   - component: {fileID: 3001653704972173676}
   - component: {fileID: 4503778709844610638}
   - component: {fileID: 3838677984749164501}
+  - component: {fileID: 983495908250571123}
   m_Layer: 0
   m_Name: Penguin
   m_TagString: Player
@@ -409,6 +410,18 @@ CircleCollider2D:
   m_Offset: {x: 2.8, y: 20.9}
   serializedVersion: 2
   m_Radius: 9
+--- !u!114 &983495908250571123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886497336514422082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee99b656cb0fad74fbdafbba348bbe16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3835216766609544059
 GameObject:
   m_ObjectHideFlags: 0

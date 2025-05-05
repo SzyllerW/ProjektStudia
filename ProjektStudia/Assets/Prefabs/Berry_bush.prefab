@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -783246955
-  m_SortingLayer: 1
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 97a4effdb3cc8514eab288104cbcda9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -783246955
-  m_SortingLayer: 1
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 97a4effdb3cc8514eab288104cbcda9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,6 +178,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3726068155904793180}
   - component: {fileID: 278550680936202748}
+  - component: {fileID: 1715989092877424798}
+  - component: {fileID: 5485005466383974453}
   m_Layer: 0
   m_Name: Berry_bush
   m_TagString: Untagged
@@ -222,6 +224,69 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &1715989092877424798
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739747100298519466}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -5.8495455, y: -7.416164}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.6745872, y: 5.6240473}
+  m_EdgeRadius: 0
+--- !u!114 &5485005466383974453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2739747100298519466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc6165bdd7df5d4ba19807ead362e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  berries:
+  - {fileID: 330853195556938712}
+  - {fileID: 3111684432892509411}
+  - {fileID: 1377046889568125414}
+  - {fileID: 6601054074705105459}
+  maxBerries: 4
 --- !u!1 &3111684432892509411
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,8 +357,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -783246955
-  m_SortingLayer: 1
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 97a4effdb3cc8514eab288104cbcda9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -376,8 +441,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9db28c0d1d39ced49976a4adcb686f83, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -460,8 +525,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -783246955
-  m_SortingLayer: 1
+  m_SortingLayerID: 1198856117
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 97a4effdb3cc8514eab288104cbcda9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -483,8 +548,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 908736146352902579}
-  - component: {fileID: 7959919225114379722}
-  - component: {fileID: 7847979062839966351}
   m_Layer: 0
   m_Name: Berry_bush_parts
   m_TagString: Untagged
@@ -512,60 +575,3 @@ Transform:
   - {fileID: 8556051479941557197}
   m_Father: {fileID: 3726068155904793180}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7959919225114379722
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8921834416082114559}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -1.6536493, y: -3.5112617}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.308525, y: 4.547506}
-  m_EdgeRadius: 0
---- !u!114 &7847979062839966351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8921834416082114559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c1ac7329b621c4793b6a8b0e6e1dbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -4,7 +4,6 @@ using UnityEngine;
 public class IceBlock : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private bool isIceBlock = false;
     private bool isScheduledForDestruction = false;
 
     [SerializeField] private AudioClip iceBlockEnterSoundClip;
@@ -12,29 +11,27 @@ public class IceBlock : MonoBehaviour
     [SerializeField] private GameObject iceBlockPrefab;
     [SerializeField] private float destructionDelay = 2f;
 
-    private GameManager gameManager;
-    private bool createdOnSpikes = false;
-
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        gameManager = FindObjectOfType<GameManager>();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            ActivateIceBlock();
-            gameManager?.UnlockCharacterSelection();
+            GameManager gm = FindObjectOfType<GameManager>();
+            if (gm != null)
+            {
+                gm.CharacterFellOffMap(gameObject);
+            }
 
+            ActivateIceBlock();
         }
     }
 
     private void ActivateIceBlock()
     {
-        isIceBlock = true;
-
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
         rb.simulated = false;
@@ -70,7 +67,6 @@ public class IceBlock : MonoBehaviour
                 {
                     if (hit.CompareTag("Spikes"))
                     {
-                        Debug.Log("[IceBlock] Detected TAGGED spike — destroying ice block!");
                         IceBlock ice = newBlock.GetComponent<IceBlock>();
                         if (ice != null)
                         {
@@ -96,15 +92,6 @@ public class IceBlock : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Spikes") && !isScheduledForDestruction)
-        {
-            isScheduledForDestruction = true;
-            StartCoroutine(DestroyAfterDelay());
-        }
-    }
-
     private IEnumerator DestroyAfterDelay()
     {
         yield return new WaitForSeconds(destructionDelay);
@@ -116,24 +103,8 @@ public class IceBlock : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-    private void OnDisable()
-    {
-        if (rb != null)
-        {
-            rb.simulated = true;
-            rb.isKinematic = false;
-            rb.gravityScale = 5f;
-            rb.velocity = Vector2.zero;
-        }
-
-        var col = GetComponent<Collider2D>();
-        if (col != null)
-        {
-            col.enabled = true;
-        }
-
-        transform.position += Vector3.up * 0.01f;
-    }
 }
+
+
+
 

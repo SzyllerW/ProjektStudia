@@ -47,16 +47,15 @@ public class MoleAbility : MonoBehaviour
         yield return new WaitForSeconds(diggingDelay);
 
         Instantiate(dirtMoundPrefab, transform.position, Quaternion.identity);
-        rb.isKinematic = false;
-        gameObject.SetActive(false);
 
-        GameManager gameManager = FindObjectOfType<GameManager>();
-        if (gameManager != null)
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm != null)
         {
-            gameManager.UnlockCharacterSelection();
-
+            gm.CharacterFellOffMap(gameObject);
         }
 
+        rb.isKinematic = false;
+        gameObject.SetActive(false);
         isDigging = false;
     }
 
@@ -65,3 +64,4 @@ public class MoleAbility : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 }
+

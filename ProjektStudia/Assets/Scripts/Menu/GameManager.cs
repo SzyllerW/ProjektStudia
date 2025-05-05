@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     public Transform respawnPoint;
     public List<GameObject> characterPrefabs;
     public Transform characterIconPanel;
@@ -35,8 +37,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int requiredAcorns = 1;
     private int deliveredAcorns = 0;
 
+    [Header("Berry Collectibles")]
+    [SerializeField] private int totalBerries = 0;
+    private int collectedBerries = 0;
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         var all = FindObjectsOfType<CollectibleItem>(true);
         totalCollectibles = all.Length;
     }
@@ -44,23 +59,28 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         CollectibleItem.OnItemCollected += OnItemCollected;
+        totalBerries = CountTotalBerries();
 
-        if (characterPrefabs.Count == 0)
-            return;
+        if (characterPrefabs.Count == 0) return;
 
-        if (!isTutorial)
-        {
-            GenerateCharacterIcons();
-        }
-        else
-        {
-            SpawnTutorialCharacter();
-        }
+        if (!isTutorial) GenerateCharacterIcons();
+        else SpawnTutorialCharacter();
     }
 
     private void OnDestroy()
     {
         CollectibleItem.OnItemCollected -= OnItemCollected;
+    }
+
+    private int CountTotalBerries()
+    {
+        int count = 0;
+        foreach (var bush in FindObjectsOfType<BerryBush>())
+        {
+            count += bush.Berries.Count;
+
+        }
+        return count;
     }
 
     private void GenerateCharacterIcons()
@@ -92,8 +112,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnTutorialCharacter()
     {
-        if (characterPrefabs.Count == 0)
-            return;
+        if (characterPrefabs.Count == 0) return;
 
         GameObject tutorialChar = Instantiate(characterPrefabs[0], respawnPoint.position, Quaternion.identity);
         tutorialChar.SetActive(true);
@@ -107,8 +126,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectCharacter(int index)
     {
-        if (!canSelectCharacter || index >= characterPrefabs.Count)
-            return;
+        if (!canSelectCharacter || index >= characterPrefabs.Count) return;
 
         if (currentCharacterIndex >= 0 && currentCharacterIndex < activeCharacters.Count)
         {
@@ -146,13 +164,17 @@ public class GameManager : MonoBehaviour
         character.transform.position = respawnPoint.position + Vector3.up * 0.05f;
         ResetCharacter(character);
 
-        yield return null;
-
         var movement = character.GetComponent<PlayerMovement>();
         if (movement != null)
         {
             movement.enabled = true;
             movement.ResetAfterRespawn();
+        }
+
+        var berryCollector = character.GetComponent<PlayerBerryCollector>();
+        if (berryCollector != null)
+        {
+            berryCollector.ResetCollector();
         }
     }
 
@@ -173,12 +195,6 @@ public class GameManager : MonoBehaviour
             animator.SetFloat("Speed", 0f);
             animator.SetBool("IsJumping", false);
         }
-
-        var movement = character.GetComponent<PlayerMovement>();
-        if (movement != null)
-        {
-            movement.enabled = true;
-        }
     }
 
     public void CharacterFellOffMap(GameObject character)
@@ -192,16 +208,11 @@ public class GameManager : MonoBehaviour
             }
 
             character.SetActive(false);
+            activeCharacters.Remove(character);
         }
 
-        if (isTutorial)
-        {
-            StartCoroutine(RespawnTutorialCharacterProperly());
-        }
-        else
-        {
-            CheckIfNoCharactersLeft();
-        }
+        if (isTutorial) StartCoroutine(RespawnTutorialCharacterProperly());
+        else StartCoroutine(FinalDeathCheck());
     }
 
     private IEnumerator RespawnTutorialCharacterProperly()
@@ -227,7 +238,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckIfNoCharactersLeft()
+    private IEnumerator FinalDeathCheck()
+    {
+        yield return new WaitForEndOfFrame();
+        UnlockCharacterSelection();
+        CheckIfNoCharactersLeft();
+    }
+
+    public void UnlockCharacterSelection()
+    {
+        canSelectCharacter = true;
+    }
+
+    public void OnItemCollected()
+    {
+        collectedCount++;
+        CheckWinCondition();
+    }
+
+    public void AcornDelivered()
+    {
+        deliveredAcorns++;
+        CheckWinCondition();
+    }
+
+    public void BerryCollected()
+    {
+        collectedBerries++;
+        CheckWinCondition();
+    }
+
+    public void CheckIfNoCharactersLeft()
     {
         bool anyInteractable = false;
 
@@ -240,12 +281,21 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!anyInteractable)
+        bool anyCharacterActive = false;
+        foreach (var character in activeCharacters)
         {
-            Debug.Log("[GameManager] Wszystkie postacie zu¿yte — GAME OVER");
+            if (character != null && character.activeSelf)
+            {
+                anyCharacterActive = true;
+                break;
+            }
+        }
+
+        if (!anyInteractable && !anyCharacterActive)
+        {
             TriggerGameOver();
         }
-        else
+        else if (anyInteractable && !anyCharacterActive)
         {
             UnlockCharacterSelection();
         }
@@ -253,36 +303,34 @@ public class GameManager : MonoBehaviour
 
     private void TriggerGameOver()
     {
+        StartCoroutine(GameOverSequence());
+    }
+
+    private IEnumerator GameOverSequence()
+    {
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        if (cameraFollow != null)
+        {
+            cameraFollow.ShakeBeforeFollow(1f, 8f);
+        }
+
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(gameOverSceneName);
-    }
-
-    public void UnlockCharacterSelection()
-    {
-        canSelectCharacter = true;
-    }
-
-    private void OnItemCollected()
-    {
-        collectedCount++;
-        CheckWinCondition();
-    }
-
-    public void AcornDelivered()
-    {
-        deliveredAcorns++;
-        CheckWinCondition();
     }
 
     private void CheckWinCondition()
     {
         bool allItemsCollected = !requiresAllCollectibles || collectedCount >= totalCollectibles;
         bool allAcornsDelivered = !requiresAcornDelivery || deliveredAcorns >= requiredAcorns;
+        bool allBerriesCollected = collectedBerries >= totalBerries;
 
-        if (allItemsCollected && allAcornsDelivered)
+        if (allItemsCollected && allAcornsDelivered && allBerriesCollected)
         {
             SceneManager.LoadScene(levelCompleteSceneName);
         }
     }
 }
+
+
 
 
