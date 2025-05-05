@@ -4456,7 +4456,7 @@ PrefabInstance:
       objectReference: {fileID: 594134865}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: requiresAllCollectibles
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterIcons.Array.size
