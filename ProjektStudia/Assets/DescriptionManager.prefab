@@ -67,7 +67,7 @@ MonoBehaviour:
     jako trampoliny i odbij si\u0119 do gwiazd! Je\u015Bli widzieli\u015Bcie tunele
     na Marsie to prawdopodobnie jego sprawka.  \u015Awietnie nada si\u0119 do pomocy
     pozosta\u0142ym cz\u0142onkom za\u0142ogi podczas przemierzania du\u017Cych dystans\xF3w
-    w powietrzu"
+    w powietrzu."
   contentTransform: {fileID: 0}
   buttonSound: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
   characterInfographic: {fileID: 0}

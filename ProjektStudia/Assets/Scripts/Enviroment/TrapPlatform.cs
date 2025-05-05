@@ -9,9 +9,19 @@ public class TrapPlatform : MonoBehaviour
     [SerializeField] private float trapCycleTime = 3f;
     [SerializeField] private Animator animator;
     [SerializeField] private AudioClip deathSoundClip;
+    [SerializeField] private float deathSoundVolume = 1.3f;
+    [SerializeField] private AudioClip spikesSoundCLip;
+    [SerializeField] private float spikesSoundVolume = 0.5f;
 
     private bool isTrapActive = false;
     private GameObject playerOnPlatform;
+
+    //variable response for playing audio clip when player or camera are near by.
+    //Connected with SoundZoneManager.cs
+    [HideInInspector] public bool playSound = false;
+
+    //within this zone audio clip is audible
+    public float soundZoneRadius;
 
     private void Start()
     {
@@ -39,6 +49,11 @@ public class TrapPlatform : MonoBehaviour
         greenLight.SetActive(!active);
         redLight.SetActive(active);
         animator.SetBool("RedLight", isTrapActive);
+
+        if (playSound == true)
+        {
+            SoundFXManager.instance.PlaySoundFXClip3D(spikesSoundCLip, transform, spikesSoundVolume, 0f, soundZoneRadius);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -70,7 +85,7 @@ public class TrapPlatform : MonoBehaviour
             cameraFollow.ShakeBeforeFollow(1f, 10f);
         }
 
-        SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, player.transform, 1.3f);
+        SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, player.transform, deathSoundVolume);
 
         PlayerVisualManager playerVisual = FindObjectOfType<PlayerVisualManager>();
         if (playerVisual != null)

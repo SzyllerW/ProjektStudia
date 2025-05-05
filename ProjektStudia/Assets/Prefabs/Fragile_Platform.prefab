@@ -1099,3 +1099,4 @@ MonoBehaviour:
   destroyDelay: 1
   animator: {fileID: 6187484884198379380}
   rb: {fileID: 7405957697631360737}
+  breakSoundClip: {fileID: 8300000, guid: c17e590d7ef649f4c83d5452b32ce429, type: 3}

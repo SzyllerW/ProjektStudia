@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class AcornGoal : MonoBehaviour
 {
+    [SerializeField] Animator animator;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -10,7 +12,8 @@ public class AcornGoal : MonoBehaviour
             if (player != null && player.CanDeliverAcorn())
             {
                 player.DropAcornAtGoal();
-                FindObjectOfType<GameManager>()?.AcornDelivered(); 
+                FindObjectOfType<GameManager>()?.AcornDelivered();
+                animator.enabled = true;
             }
         }
     }

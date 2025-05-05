@@ -243,7 +243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OPCJE
+  m_text: "G\u0141O\u015ANO\u015A\u0106"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6de45d90f520be4d9b453c55c387139, type: 2}
   m_sharedMaterial: {fileID: -8641269881963600713, guid: c6de45d90f520be4d9b453c55c387139, type: 2}
@@ -270,8 +270,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62
-  m_fontSizeBase: 62
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2440,6 +2440,9 @@ MonoBehaviour:
   map3Button: {fileID: 0}
   backButton: {fileID: 0}
   confirmButton: {fileID: 0}
+  frogTutorialButton: {fileID: 0}
+  moleTutorialButton: {fileID: 0}
+  penguinTutorialButton: {fileID: 0}
   buttonSoundClip: {fileID: 0}
 --- !u!114 &7209162421434493964
 MonoBehaviour:
