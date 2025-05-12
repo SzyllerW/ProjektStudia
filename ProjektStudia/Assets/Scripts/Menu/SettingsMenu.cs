@@ -4,13 +4,11 @@ using System.Threading.Tasks;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [SerializeField] private AudioClip buttonSoundClip;
+    [SerializeField] AudioClip buttonSoundClip;
     
     public async void BackToPreviousScene()
     {
         string previousScene = PlayerPrefs.GetString("PreviousScene", "");
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        await Task.Delay(100);
 
         if (!string.IsNullOrEmpty(previousScene))
         {
@@ -23,6 +21,8 @@ public class SettingsMenu : MonoBehaviour
             }
             else
             {
+                SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+                await Task.Delay(100);
                 SceneManager.LoadScene(previousScene);
                 Time.timeScale = 1f;
             }
