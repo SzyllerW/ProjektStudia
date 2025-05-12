@@ -5548,9 +5548,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: dd4311fc70b08fe459e71092e5241ffc, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: characterIcons.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 82c903d64e0bb0b4baddaf648b2b6d41, type: 3}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 1838652355643301366, guid: c891f202b35bf134b885238002a6b54a, type: 3}
+      objectReference: {fileID: 851687536131307135, guid: 6516d6ece8b108841ad817d0d7119183, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterPrefabs.Array.data[1]
       value: 

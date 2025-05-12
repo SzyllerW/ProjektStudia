@@ -290,4 +290,9 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Impact", false);
         animator.SetFloat("Speed", 0);
     }
+
+    public void ResetCoyoteTime()
+    {
+        coyoteTimeCounter = coyoteTime;
+    }
 }

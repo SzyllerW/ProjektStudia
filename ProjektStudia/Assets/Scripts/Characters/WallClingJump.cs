@@ -5,7 +5,6 @@ public class WallClingJump : MonoBehaviour
     [Header("Wall Cling Settings")]
     public LayerMask wallLayer;
     public float wallCheckDistance = 0.3f;
-    public float maxClingTime = 1.5f;
     public float slideSpeed = 2.5f;
     public float slideAcceleration = 3f;
     public float wallJumpForceX = 10f;
@@ -16,9 +15,7 @@ public class WallClingJump : MonoBehaviour
 
     private bool isTouchingWall;
     private bool isClinging;
-    private float clingTimer;
     private Vector2 wallNormal;
-    private bool canCling = true;
     private bool canWallJump = true;
 
     void Start()
@@ -36,13 +33,15 @@ public class WallClingJump : MonoBehaviour
         bool wantsToCling = Input.GetAxisRaw("Horizontal") != 0 && Mathf.Sign(Input.GetAxisRaw("Horizontal")) == Mathf.Sign(direction.x);
         bool isGrounded = playerMovement.IsGrounded();
 
-        if (isTouchingWall && !isGrounded && wantsToCling && canCling)
+        if (isTouchingWall && !isGrounded && wantsToCling)
         {
             if (!isClinging)
             {
                 wallNormal = hit.normal;
                 isClinging = true;
-                clingTimer = 0f;
+                canWallJump = true;
+
+                playerMovement.ResetCoyoteTime();
             }
         }
         else
@@ -52,51 +51,30 @@ public class WallClingJump : MonoBehaviour
 
         if (isClinging)
         {
-            clingTimer += Time.deltaTime;
-
-            if (clingTimer > maxClingTime)
-            {
-                float newY = Mathf.MoveTowards(rb.velocity.y, -slideSpeed, slideAcceleration * Time.deltaTime);
-                rb.velocity = new Vector2(rb.velocity.x, newY);
-            }
-            else
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 0f);
-            }
+            float newY = Mathf.MoveTowards(rb.velocity.y, -slideSpeed, slideAcceleration * Time.deltaTime);
+            rb.velocity = new Vector2(rb.velocity.x, newY);
 
             if (Input.GetButtonDown("Jump") && canWallJump)
             {
                 Vector2 jumpDir = new Vector2(-wallNormal.x * wallJumpForceX, wallJumpForceY);
                 playerMovement.RequestExternalJump(jumpDir.y);
                 rb.velocity = new Vector2(jumpDir.x, rb.velocity.y);
-                isClinging = false;
-                canCling = false;
-                canWallJump = false;
 
-                Invoke(nameof(ResetCling), 0.2f);
-                Invoke(nameof(ResetWallJump), 0.1f);
+                isClinging = false;
+                canWallJump = false;
             }
 
-            if (Mathf.Sign(Input.GetAxisRaw("Horizontal")) == -Mathf.Sign(wallNormal.x))
+            float inputDir = Input.GetAxisRaw("Horizontal");
+            if (Mathf.Sign(inputDir) == -Mathf.Sign(wallNormal.x) || inputDir == 0)
             {
                 isClinging = false;
             }
         }
     }
 
-    void ResetCling()
-    {
-        canCling = true;
-    }
-
-    void ResetWallJump()
-    {
-        canWallJump = true;
-    }
-
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallCheckDistance);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.left * wallCheckDistance);
     }
