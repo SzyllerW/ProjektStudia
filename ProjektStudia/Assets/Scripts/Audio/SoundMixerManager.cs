@@ -28,6 +28,7 @@ public class SoundMixerManager : MonoBehaviour
         audioMixer.SetFloat("soundFXVolume", Mathf.Log10(level) * 20f);
         PlayerPrefs.SetFloat("soundFXVolume", level);
         PlayerPrefs.Save();
+
     }
 
     public void SetMusicVolume(float level)
