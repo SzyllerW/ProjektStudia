@@ -44,4 +44,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MoleTutorial.unity
     guid: 5df22100a9ea58f49bbd1ac70a730402
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 7debb58d7ef48d546bad74e407752432, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: efb4d2327ede2f34fbc126837343c428, type: 2}

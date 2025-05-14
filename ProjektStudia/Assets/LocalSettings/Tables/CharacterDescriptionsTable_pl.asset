@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: CharacterDescriptionsTable_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: feaeaa94d7a1b7a40ad1aeb68aafa550, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 14862131200
+    m_Localized: "Ten niepozorny p\u0142az opanowa\u0142 zdolno\u015B\u0107 nazywan\u0105
+      podw\xF3jnym skokiem. Latami doskonali\u0142 swoj\u0105 technik\u0119 na polach
+      ksi\u0119\u017Cycowych, po niewidocznej stronie satelity. Jego umiej\u0119tno\u015Bci\u0105
+      dor\xF3wnuje podobno tylko apetyt.\n\nDoskonale sprawdzi si\u0119 we wspinaczce
+      i skokach na odleg\u0142o\u015B\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258513444864
+    m_Localized: "Ten antarktyczny nielot potrafi\u0105cy przemieni\u0107 si\u0119
+      w blok lodu, zadba o to, \u017Ceby\u015B dotar\u0142(a) bezpiecznie do celu.
+      Chocia\u017C doskonale czuje si\u0119 w zimnej pr\xF3\u017Cni, niech Ci\u0119
+      to nie zwiedzie, jego serce roztopi najgrubsze lody.\n\nTen zoonauta sprawdzi
+      si\u0119 doskonale do budowania schod\xF3w i platform, uwa\u017Caj tylko, \u017Ceby
+      si\u0119 na nich nie po\u015Blizgn\u0105\u0107!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 449865981952
+    m_Localized: "Ten niewielki ssak niewra\u017Cliwy na \u015Bwiat\u0142o gwiazd
+      \u017Cyje pod ziemi\u0105 i kocha kopa\u0107 kopce we wszystkim, co znajdzie.
+      U\u017Cyj kt\xF3rego\u015B jako trampoliny i odbij si\u0119 do gwiazd! Je\u015Bli
+      widzieli\u015Bcie tunele na Marsie to prawdopodobnie jego sprawka.\n\n\u015Awietnie
+      nada si\u0119 do pomocy pozosta\u0142ym cz\u0142onkom za\u0142ogi podczas przemierzania
+      du\u017Cych dystans\xF3w w powietrzu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 559274401792
+    m_Localized: "Ten pomara\u0144czowy amator kocimi\u0119tki jest prawdziwym mistrzem
+      wspinaczki. Potrafi chwyta\u0107 si\u0119 i skaka\u0107 po \u015Bcianach, co
+      pozwala mu dociera\u0107 w miejsca niedost\u0119pne dla innych. Zanim zaprosisz
+      go do ekipy, upewnij si\u0119 tylko, \u017Ce nie masz w niej psa.\n\nPoradzi
+      sobie bez problemu w sytuacjach, gdzie trzeba wspi\u0105\u0107 si\u0119 wysoko
+      bez pomocy poziomych platform."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
