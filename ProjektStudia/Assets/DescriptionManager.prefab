@@ -48,6 +48,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f0d8fbda22e67224eb0e572cc763c277, type: 3}
   - {fileID: 21300000, guid: 6f41ae3f7b76691409a606863449108f, type: 3}
   - {fileID: 21300000, guid: 6e9a36bc306da8540aab4a027ab12100, type: 3}
+  - {fileID: 21300000, guid: d8dfc9e8d13fd8f448c8feb23c66b883, type: 3}
   parentObject: {fileID: 0}
   descriptionPanel: {fileID: 0}
   descriptionText: {fileID: 0}
@@ -68,6 +69,11 @@ MonoBehaviour:
     na Marsie to prawdopodobnie jego sprawka.  \u015Awietnie nada si\u0119 do pomocy
     pozosta\u0142ym cz\u0142onkom za\u0142ogi podczas przemierzania du\u017Cych dystans\xF3w
     w powietrzu."
+  - "Ten pomara\u0144czowy amator kocimi\u0119tki jest prawdziwym mistrzem wspinaczki.
+    Potrafi chwyta\u0107 si\u0119 i skaka\u0107 po \u015Bcianach, co pozwala mu dociera\u0107
+    w miejsca niedost\u0119pne dla innych. Zanim zaprosisz go do ekipy, upewnij si\u0119
+    tylko, \u017Ce nie masz w niej psa.  Poradzi sobie bez problemu w sytuacjach,
+    gdzie trzeba wspi\u0105\u0107 si\u0119 wysoko bez pomocy poziomych platform."
   contentTransform: {fileID: 0}
   buttonSound: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
   characterInfographic: {fileID: 0}
@@ -75,4 +81,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 97d13cd260f1da7439e9a085038e8b33, type: 3}
   - {fileID: 21300000, guid: 49b5a38db05b0ba4f8c15fa277a54eac, type: 3}
   - {fileID: 21300000, guid: dd674a2f6a57c5244a7dfdcc8f178346, type: 3}
-  characterCount: 3
+  - {fileID: 21300000, guid: 245c947cde8832e41afdc6bef30d628e, type: 3}
+  characterCount: 4

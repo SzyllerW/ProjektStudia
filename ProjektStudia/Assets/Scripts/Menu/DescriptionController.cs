@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class DescriptionController : MonoBehaviour
 {
@@ -12,7 +14,6 @@ public class DescriptionController : MonoBehaviour
     [Header("UI for Descriptions")]
     [SerializeField] private GameObject descriptionPanel;
     [SerializeField] private TextMeshProUGUI descriptionText;
-    [SerializeField] private string[] characterDescriptions;
     [SerializeField] private RectTransform contentTransform;
     [SerializeField] private AudioClip buttonSound;
 
@@ -20,9 +21,13 @@ public class DescriptionController : MonoBehaviour
     [SerializeField] private Image characterInfographic;
     [SerializeField] private Sprite[] characterInfographicSprites;
 
+    [Header("Localization")]
+    [SerializeField] private LocalizedString characterNameLocalized;
+    [SerializeField] private LocalizedString characterClassLocalized;
+    [SerializeField] private LocalizedString characterDescriptionLocalized;
+
     [Header("Avaible Characters")]
     public int characterCount;
-
     private int characterIndex;
 
     void Start()
@@ -35,16 +40,7 @@ public class DescriptionController : MonoBehaviour
     public void IncrementationIndex()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSound, transform, 1f);
-
-        if (characterIndex == characterCount)
-        {
-            characterIndex = 0;
-        }
-        else
-        {
-            characterIndex +=1;
-        }
-
+        characterIndex = (characterIndex + 1) % (characterCount + 1);
         ShowDescription(characterIndex);
         SpawnImage(characterIndex);
     }
@@ -52,16 +48,7 @@ public class DescriptionController : MonoBehaviour
     public void DecrementationIndex()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSound, transform, 1f);
-
-        if (characterIndex == 0)
-        {
-            characterIndex = characterCount;
-        }
-        else
-        {
-            characterIndex -=1;
-        }
-
+        characterIndex = (characterIndex - 1 + (characterCount + 1)) % (characterCount + 1);
         ShowDescription(characterIndex);
         SpawnImage(characterIndex);
     }
@@ -81,98 +68,70 @@ public class DescriptionController : MonoBehaviour
             Destroy(spawnedImage.gameObject);
         }
 
-        // Utwórz nowy obiekt na scenie
-        GameObject newImageObject = new GameObject("SpawnedImage");
-
-        // Przypisz pozycjê w hierarchii sceny
-        if (parentObject != null)
-        {
-            newImageObject.transform.SetParent(parentObject, false);
-        }
-
-        // Dodaj komponent Image i popierz sprite z listy
-        spawnedImage = newImageObject.AddComponent<Image>();
+        // Stwórz now¹ postaæ
+        spawnedImage = Instantiate(new GameObject("SpawnedImage"), parentObject).AddComponent<Image>();
         spawnedImage.sprite = characterSprites[characterIndex];
 
-        // Zmieñ wymiary obiektu
-        RectTransform rectTransform = newImageObject.GetComponent<RectTransform>();
+        // Zmieñ po³o¿enie i wymiary postaci
+        RectTransform rectTransform = spawnedImage.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(694f, 694f);
     }
-    
+
     private void ShowDescription(int characterIndex)
     {
-        if (descriptionPanel != null && descriptionText != null && characterDescriptions.Length > characterIndex)
+        if (descriptionPanel != null && descriptionText != null)
         {
-            // W³¹cz obiekt opis, jeœli jest wy³¹czony
-            if (!descriptionPanel.activeSelf)
+            descriptionPanel.SetActive(true);
+
+            // Ustawienie kluczy dla lokalizacji
+            characterNameLocalized.SetReference("CharacterNamesTable", $"character_{characterIndex}_name");
+            characterClassLocalized.SetReference("CharacterClassesTable", $"character_{characterIndex}_class");
+            characterDescriptionLocalized.SetReference("CharacterDescriptionsTable", $"character_{characterIndex}_description");
+
+            characterNameLocalized.StringChanged += (name) => UpdateHeader(name, characterClassLocalized.GetLocalizedString());
+            characterClassLocalized.StringChanged += (className) => UpdateHeader(characterNameLocalized.GetLocalizedString(), className);
+            characterDescriptionLocalized.StringChanged += (desc) => UpdateDescription(desc);
+        }
+    }
+
+    private void UpdateHeader(string characterName, string characterClass)
+    {
+        string formattedHeader = $"<size=150%>{characterName} (klasa: <color=#FF8F52>{characterClass}</color>)</size>\n";
+        descriptionText.text = formattedHeader + descriptionText.text;
+    }
+
+    private void UpdateDescription(string descriptionBody)
+    {
+        descriptionText.text = "";
+        string name = characterNameLocalized.GetLocalizedString();
+        string className = characterClassLocalized.GetLocalizedString();
+        descriptionText.text = $"<size=150%>{name} (klasa: <color=#FF8F52>{className}</color>)</size>\n{descriptionBody}";
+
+        Canvas.ForceUpdateCanvases();
+
+        float textHeight = descriptionText.preferredHeight;
+        float viewportHeight = contentTransform.parent.GetComponent<RectTransform>().rect.height;
+        contentTransform.sizeDelta = new Vector2(contentTransform.sizeDelta.x, Mathf.Max(textHeight, viewportHeight));
+
+        ScrollRect scrollRect = contentTransform.parent.parent.GetComponent<ScrollRect>();
+        if (scrollRect != null)
+        {
+            float contentHeight = contentTransform.sizeDelta.y;
+            float viewportHeightAdjusted = contentTransform.parent.GetComponent<RectTransform>().rect.height;
+
+            if (contentHeight > viewportHeightAdjusted)
             {
-                descriptionPanel.SetActive(true);
+                scrollRect.verticalNormalizedPosition = 1f;
             }
+        }
 
-            // Podzia³ opisu na nag³ówki
-            string characterName = string.Empty;
-            string characterClass = string.Empty;
-            string descriptionBody = characterDescriptions[characterIndex];
-
-            if (characterIndex == 0)
-            {
-                characterName = "¯ABA";
-                characterClass = "kaskader";
-            }
-            else if (characterIndex == 1)
-            {
-                characterName = "PINGWIN";
-                characterClass = "pomocnik";
-            }
-            else if (characterIndex == 2)
-            {
-                characterName = "KRET";
-                characterClass = "inicjator";
-            }
-
-            // Zmiana formatowania nag³ówków
-            string formattedHeader = $"<size=150%>{characterName} (klasa: <color=#FF8F52>{characterClass}</color>)</size>\n";
-
-            // Aktualizacja opisu
-            descriptionText.text = formattedHeader + descriptionBody;
-
-            // Wymuszenie aktualizacji
-            Canvas.ForceUpdateCanvases();
-
-            // Dynamiczne dostosowanie wysokoœci Content
-            if (contentTransform != null)
-            {
-                float textHeight = descriptionText.preferredHeight;
-                float viewportHeight = contentTransform.parent.GetComponent<RectTransform>().rect.height;
-                contentTransform.sizeDelta = new Vector2(contentTransform.sizeDelta.x, Mathf.Max(textHeight, viewportHeight));
-            }
-
-            // Reset pozycji przewijania na górê
-            ScrollRect scrollRect = contentTransform.parent.parent.GetComponent<ScrollRect>();
-            if (scrollRect != null)
-            {
-                float contentHeight = contentTransform.sizeDelta.y;
-                float viewportHeight = contentTransform.parent.GetComponent<RectTransform>().rect.height;
-
-                if (contentHeight > viewportHeight)
-                {
-                    scrollRect.verticalNormalizedPosition = 1f;
-                }
-            }
-
-            // Aktualizacja infografiki
-            if (characterInfographic != null && characterInfographicSprites.Length > characterIndex)
-            {
-                characterInfographic.sprite = characterInfographicSprites[characterIndex];
-            }
-            else
-            {
-                Debug.LogWarning($"Nie przypisano infografiki dla postaci o indeksie {characterIndex}!");
-            }
+        if (characterInfographic != null && characterInfographicSprites.Length > characterIndex)
+        {
+            characterInfographic.sprite = characterInfographicSprites[characterIndex];
         }
         else
         {
-            Debug.LogWarning($"Nie mo¿na wyœwietliæ opisu dla postaci {characterIndex}. Brak danych lub komponentów.");
+            Debug.LogWarning($"Nie przypisano infografiki dla postaci o indeksie {characterIndex}!");
         }
     }
 }
