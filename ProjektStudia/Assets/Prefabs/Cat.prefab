@@ -168,7 +168,7 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 7945440085018971450}
   trailRenderer: {fileID: 3626882246992908512}
-  walkingAudioSource: {fileID: 0}
+  walkingAudioSource: {fileID: 4839463052715627125}
   impactSound: {fileID: 8300000, guid: 9a43a20cdea47f14491c7f437ed8163b, type: 3}
   impactVolume: 0.5
   jumpSound: {fileID: 8300000, guid: 87db7305795af534798a2520a28389b6, type: 3}
@@ -349,6 +349,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sideView: {fileID: 9161979309900391825}
   frontView: {fileID: 8578357438680946517}
+  climbView: {fileID: 6077981298152061780}
+  supportsClimbView: 1
   playerMovement: {fileID: 4730393447017292843}
   animator: {fileID: 7945440085018971450}
 --- !u!114 &684247362513148513
@@ -366,9 +368,8 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  wallCheckDistance: 0.3
+  wallCheckDistance: 4
   slideSpeed: 2.5
-  slideAcceleration: 3
   wallJumpForceX: 10
   wallJumpForceY: 14
 --- !u!114 &1561788176230409661
@@ -820,6 +821,11 @@ PrefabInstance:
 --- !u!4 &4940811755008385847 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: e06436a4f4d600945bd4aead418e5c99, type: 3}
+  m_PrefabInstance: {fileID: 6034432169182272233}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6077981298152061780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: e06436a4f4d600945bd4aead418e5c99, type: 3}
   m_PrefabInstance: {fileID: 6034432169182272233}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8136805493029402344

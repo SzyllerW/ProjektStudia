@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class PlayerVisualManager : MonoBehaviour
 {
-    [SerializeField] private GameObject sideView; 
-    [SerializeField] private GameObject frontView; 
+    [SerializeField] private GameObject sideView;
+    [SerializeField] private GameObject frontView;
+    [SerializeField] private GameObject climbView; 
+    [SerializeField] private bool supportsClimbView = false;
+
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Animator animator;
 
@@ -15,7 +18,11 @@ public class PlayerVisualManager : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(playerMovement.horizontal) > 0.1f || animator.GetBool("Dig") || animator.GetBool("IsJumping"))
+        if (supportsClimbView && animator.GetBool("IsHoldingWall"))
+        {
+            SetClimbView();
+        }
+        else if (Mathf.Abs(playerMovement.horizontal) > 0.1f || animator.GetBool("Dig") || animator.GetBool("IsJumping"))
         {
             SetSideView();
         }
@@ -29,12 +36,21 @@ public class PlayerVisualManager : MonoBehaviour
     {
         sideView.SetActive(true);
         frontView.SetActive(false);
+        if (climbView != null) climbView.SetActive(false);
     }
 
     private void SetFrontView()
     {
         sideView.SetActive(false);
         frontView.SetActive(true);
+        if (climbView != null) climbView.SetActive(false);
+    }
+
+    private void SetClimbView()
+    {
+        sideView.SetActive(false);
+        frontView.SetActive(false);
+        if (climbView != null) climbView.SetActive(true);
     }
 
     public void PlayerTouchedSpikes()
@@ -56,12 +72,11 @@ public class PlayerVisualManager : MonoBehaviour
             animator.Update(0);
         }
 
-        // Prze³¹cz na nastêpn¹ postaæ
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
         {
             gameManager.UnlockCharacterSelection();
-
         }
     }
 }
+
