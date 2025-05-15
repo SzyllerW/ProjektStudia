@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UserInterfaceTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: d01cb545aac3c704995724400ddebbfa, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42150273024
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165689685581824
+    m_Localized: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165850331619328
+    m_Localized: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338585682845696
+    m_Localized: CONFIRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338811026022400
+    m_Localized: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340378949132288
+    m_Localized: VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340939035516928
+    m_Localized: MASTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341281781456896
+    m_Localized: MUSIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341731180158976
+    m_Localized: SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342147057983488
+    m_Localized: RESOLUTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342522972479488
+    m_Localized: LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342805001674752
+    m_Localized: ENGLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342868818010112
+    m_Localized: POLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352318589116416
+    m_Localized: YOU LOOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399384749154304
+    m_Localized: PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399788144730112
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400250466082816
+    m_Localized: RESTART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 407714733367296
+    m_Localized: YOU WON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 408141226975232
+    m_Localized: NEXT
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

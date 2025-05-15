@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
-  m_Name: LocalTable
+  m_Name: FrogTutorialTable
   m_EditorClassIdentifier: 
-  m_SharedTableData: {fileID: 11400000, guid: d01cb545aac3c704995724400ddebbfa, type: 2}
+  m_SharedTableData: {fileID: 11400000, guid: b98ec3d3f0111a94faf871918476cc31, type: 2}
   m_Tables:
-  - {fileID: 11400000, guid: 951ef147d7b76c24abef727c2e3cb857, type: 2}
-  - {fileID: 11400000, guid: a9105db3d843ff8438f9e7c7fe7dba55, type: 2}
+  - {fileID: 11400000, guid: 7d22ac8d69f4315429342a237c07dadd, type: 2}
+  - {fileID: 11400000, guid: 6eeffd0e13f59a84d8b78adea8222fdd, type: 2}
   m_Extensions: []
   m_Group: String Table
   references:

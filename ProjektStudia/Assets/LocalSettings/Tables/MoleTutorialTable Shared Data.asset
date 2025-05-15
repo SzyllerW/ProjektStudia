@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: MoleTutorialTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: MoleTutorialTable
+  m_TableCollectionNameGuidString: 1d751cf051e559d49953acaea2979cbc
+  m_Entries:
+  - m_Id: 31333163008
+    m_Key: AbilityKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 696461697024
+    m_Key: PressKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1244732727296
+    m_Key: StartDiggingKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1911346044928
+    m_Key: JumpPadKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3017778274304
+    m_Key: MovingPlatformKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4120091697152
+    m_Key: StartDig2Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4678903013376
+    m_Key: OnTrapKey
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6644880181489303566
+  references:
+    version: 2
+    RefIds:
+    - rid: 6644880181489303566
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1747311146558

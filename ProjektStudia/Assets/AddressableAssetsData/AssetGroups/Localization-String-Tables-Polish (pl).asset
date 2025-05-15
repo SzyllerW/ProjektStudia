@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 9732ff66d00c7954db3afad15cc8d330
   m_SerializeEntries:
   - m_GUID: a9105db3d843ff8438f9e7c7fe7dba55
-    m_Address: LocalTable_pl
+    m_Address: UserInterfaceTable_pl
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-pl
@@ -38,6 +38,24 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc5727c0a0ae661409bcd06477855fca
     m_Address: CharacterDescriptionsTable_pl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6eeffd0e13f59a84d8b78adea8222fdd
+    m_Address: FrogTutorialTable_pl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2cfd1898c7d1358419e2d039b52544e1
+    m_Address: MoleTutorialTable_pl
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pl
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1bf72e5282ffbfd4dbf51f4ed3260693
+    m_Address: PenguinTutorialTable_pl
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-pl

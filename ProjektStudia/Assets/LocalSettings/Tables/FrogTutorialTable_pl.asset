@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: FrogTutorialTable_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: b98ec3d3f0111a94faf871918476cc31, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 164854636544
+    m_Localized: "U\u017Cywaj klawiszy"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 851491561472
+    m_Localized: do chodzenia.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5564517720064
+    m_Localized: ", \u017Ceby skoczy\u0107."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5922933579776
+    m_Localized: "Wci\u015Bnij"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57279979855872
+    m_Localized: Przytrzymaj
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57813113643008
+    m_Localized: ','
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58750200848384
+    m_Localized: "\u017Ceby skoczy\u0107 wy\u017Cej."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59573261705216
+    m_Localized: "Umiej\u0119tno\u015B\u0107"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60302441455616
+    m_Localized: "pozwala \u017Cabie wykona\u0107 jeden dodatkowy skok w powietrzu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61329429372928
+    m_Localized: "Zbierz wszystkie przedmioty, \u017Ceby uko\u0144czy\u0107 poziom."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

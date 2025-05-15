@@ -96,7 +96,7 @@ public class DescriptionController : MonoBehaviour
 
     private void UpdateHeader(string characterName, string characterClass)
     {
-        string formattedHeader = $"<size=150%>{characterName} (klasa: <color=#FF8F52>{characterClass}</color>)</size>\n";
+        string formattedHeader = $"<size=150%>{characterName} <color=#FF8F52>({characterClass})</color></size>\n";
         descriptionText.text = formattedHeader + descriptionText.text;
     }
 
@@ -105,7 +105,7 @@ public class DescriptionController : MonoBehaviour
         descriptionText.text = "";
         string name = characterNameLocalized.GetLocalizedString();
         string className = characterClassLocalized.GetLocalizedString();
-        descriptionText.text = $"<size=150%>{name} (klasa: <color=#FF8F52>{className}</color>)</size>\n{descriptionBody}";
+        descriptionText.text = $"<size=150%>{name} <color=#FF8F52>({className})</color></size>\n{descriptionBody}";
 
         Canvas.ForceUpdateCanvases();
 
