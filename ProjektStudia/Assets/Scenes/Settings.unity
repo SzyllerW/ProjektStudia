@@ -487,6 +487,18 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5837674714394570273, guid: f6fb590afb113574d9acfeaed8aeb7d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 438450217}
+    - target: {fileID: 5837674714394570273, guid: f6fb590afb113574d9acfeaed8aeb7d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToPreviousScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5837674714394570273, guid: f6fb590afb113574d9acfeaed8aeb7d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6249511292538289420, guid: f6fb590afb113574d9acfeaed8aeb7d2, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -570,6 +582,17 @@ MonoBehaviour:
 --- !u!114 &438450216 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6545648105110436488, guid: f6fb590afb113574d9acfeaed8aeb7d2, type: 3}
+  m_PrefabInstance: {fileID: 438450214}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c30f33479969314d931c94a6cdb79cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &438450217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5880156591852087634, guid: f6fb590afb113574d9acfeaed8aeb7d2, type: 3}
   m_PrefabInstance: {fileID: 438450214}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

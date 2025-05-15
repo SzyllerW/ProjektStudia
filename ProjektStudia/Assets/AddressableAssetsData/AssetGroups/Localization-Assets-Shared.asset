@@ -37,6 +37,21 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b98ec3d3f0111a94faf871918476cc31
+    m_Address: Assets/LocalSettings/Tables/FrogTutorialTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1d751cf051e559d49953acaea2979cbc
+    m_Address: Assets/LocalSettings/Tables/MoleTutrialTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1664de42285dd94190acfd898201631
+    m_Address: Assets/LocalSettings/Tables/PenguinTutorialTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: ea9dd42fb67902348a242cf8f110ee79, type: 2}
   m_SchemaSet:

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: PenguinTutorialTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: PenguinTutorialTable
+  m_TableCollectionNameGuidString: f1664de42285dd94190acfd898201631
+  m_Entries:
+  - m_Id: 8302239744
+    m_Key: PenguinHasKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 204742467584
+    m_Key: PressKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 742783590400
+    m_Key: MiddleAirKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1170833285120
+    m_Key: UseCubeKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1927888379904
+    m_Key: MorphKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2119366746112
+    m_Key: CommaKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2570858405888
+    m_Key: ToReachKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705782542336
+    m_Key: IfYouKey
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6644880181489303568
+  references:
+    version: 2
+    RefIds:
+    - rid: 6644880181489303568
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1747312408176

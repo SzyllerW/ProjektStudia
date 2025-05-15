@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PenguinTutorialTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: f1664de42285dd94190acfd898201631, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8302239744
+    m_Localized: Penguin has an
+    m_Metadata:
+      m_Items: []
+  - m_Id: 204742467584
+    m_Localized: Press
+    m_Metadata:
+      m_Items: []
+  - m_Id: 742783590400
+    m_Localized: in the middle air to morph.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1170833285120
+    m_Localized: Use the ice cube to jump over the abyss.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1927888379904
+    m_Localized: Morph into the
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2119366746112
+    m_Localized: ' '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2570858405888
+    m_Localized: to reach the platform.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3705782542336
+    m_Localized: If you morph above trap platform, spikes will destroy the ice cube.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UserInterfaceTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UserInterfaceTable
+  m_TableCollectionNameGuidString: d01cb545aac3c704995724400ddebbfa
+  m_Entries:
+  - m_Id: 42150273024
+    m_Key: OptionsKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165689685581824
+    m_Key: StartKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165850331619328
+    m_Key: ExitKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338585682845696
+    m_Key: ConfirmKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338811026022400
+    m_Key: BackKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340378949132288
+    m_Key: VolumeKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340939035516928
+    m_Key: MasterKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341281781456896
+    m_Key: MusicKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341731180158976
+    m_Key: SFXKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342147057983488
+    m_Key: ResolutionKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342522972479488
+    m_Key: ChooseLangKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342805001674752
+    m_Key: ENGKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342868818010112
+    m_Key: PLKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352318589116416
+    m_Key: YouLooseKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399384749154304
+    m_Key: PauseKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399788144730112
+    m_Key: ContinueKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400250466082816
+    m_Key: RestartKet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 407714733367296
+    m_Key: YouWonKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 408141226975232
+    m_Key: NextKey
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6644880156354412568
+  references:
+    version: 2
+    RefIds:
+    - rid: 6644880156354412568
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1747213497975

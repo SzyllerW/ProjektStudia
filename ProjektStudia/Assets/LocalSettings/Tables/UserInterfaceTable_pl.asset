@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UserInterfaceTable_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: d01cb545aac3c704995724400ddebbfa, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42150273024
+    m_Localized: OPCJE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165689685581824
+    m_Localized: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165850331619328
+    m_Localized: "WYJD\u0179"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338585682845696
+    m_Localized: "ZATWIERD\u0179"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338811026022400
+    m_Localized: "POWR\xD3T"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340378949132288
+    m_Localized: "G\u0141O\u015ANO\u015A\u0106"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340939035516928
+    m_Localized: "D\u0179WI\u0118K"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341281781456896
+    m_Localized: MUZYKA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341731180158976
+    m_Localized: EFEKTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342147057983488
+    m_Localized: "ROZDZIELCZO\u015A\u0106"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342522972479488
+    m_Localized: "WYBIERZ J\u0118ZYK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342805001674752
+    m_Localized: ANGIELSKI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 342868818010112
+    m_Localized: POLSKI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 352318589116416
+    m_Localized: "PORA\u017BKA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399384749154304
+    m_Localized: PAUZA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399788144730112
+    m_Localized: KONTYNUUJ
+    m_Metadata:
+      m_Items: []
+  - m_Id: 400250466082816
+    m_Localized: "POWT\xD3RZ"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 407714733367296
+    m_Localized: WYGRANA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 408141226975232
+    m_Localized: DALEJ
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
