@@ -11,6 +11,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private GameObject pauseButton;
 
     private bool isPaused = false;
+    private int pressCount = 0;
 
     void Start()
     {
@@ -21,6 +22,17 @@ public class PauseMenuManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            pressCount++;
+            if (pressCount == 2)
+            {
+                RestartLevel();
+                pressCount = 0;
+            }
+            Invoke("ResetPressCount", 0.3f);
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (descriptionPanel.activeSelf && isPaused)
@@ -122,6 +134,11 @@ public class PauseMenuManager : MonoBehaviour
             descriptionPanel.SetActive(false);
             pauseMenuPanel.SetActive(true);
         }
+    }
+
+    private void ResetPressCount()
+    {
+        pressCount = 0;
     }
 }
 
