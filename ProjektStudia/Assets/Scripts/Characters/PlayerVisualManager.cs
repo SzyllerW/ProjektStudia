@@ -22,13 +22,16 @@ public class PlayerVisualManager : MonoBehaviour
         {
             SetClimbView();
         }
-        else if (Mathf.Abs(playerMovement.horizontal) > 0.1f || animator.GetBool("Dig") || animator.GetBool("IsJumping"))
-        {
-            SetSideView();
-        }
         else if (!animator.GetBool("IsKilledBySpikes"))
         {
-            SetFrontView();
+            if (Mathf.Abs(playerMovement.horizontal) > 0.1f || animator.GetBool("Dig") || animator.GetBool("IsJumping"))
+            {
+                SetSideView();
+            }
+            else
+            {
+                SetFrontView();
+            }
         }
     }
 
@@ -48,6 +51,7 @@ public class PlayerVisualManager : MonoBehaviour
 
     private void SetClimbView()
     {
+        Debug.Log("[Visual] ClimbView aktywowane");
         sideView.SetActive(false);
         frontView.SetActive(false);
         if (climbView != null) climbView.SetActive(true);

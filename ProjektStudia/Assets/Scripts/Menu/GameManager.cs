@@ -168,7 +168,6 @@ public class GameManager : MonoBehaviour
         if (movement != null)
         {
             movement.enabled = true;
-            movement.ResetAfterRespawn();
         }
 
         var berryCollector = character.GetComponent<PlayerBerryCollector>();

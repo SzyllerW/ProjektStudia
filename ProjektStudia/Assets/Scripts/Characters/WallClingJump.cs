@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WallClingJump : MonoBehaviour
 {
     [Header("Wall Cling Settings")]
     public LayerMask wallLayer;
-    public float wallCheckDistance = 0.5f;
+    public float wallCheckDistance = 20f;
     public float slideSpeed = 2.5f;
     public float wallJumpForceX = 10f;
     public float wallJumpForceY = 14f;
@@ -15,8 +15,6 @@ public class WallClingJump : MonoBehaviour
     private PlayerMovement playerMovement;
     private Animator animator;
 
-    private bool canWallJump = true;
-    private bool canCling = true;
     private Vector2 wallNormal;
 
     void Start()
@@ -29,7 +27,6 @@ public class WallClingJump : MonoBehaviour
     void Update()
     {
         bool isGrounded = playerMovement.IsGrounded();
-
         Vector2 origin = (Vector2)transform.position + new Vector2(0f, 0.5f);
 
         RaycastHit2D hitLeft = Physics2D.Raycast(origin, Vector2.left, wallCheckDistance, wallLayer);
@@ -41,29 +38,23 @@ public class WallClingJump : MonoBehaviour
         bool pressingLeft = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
         bool pressingRight = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
 
-        bool pressingTowardsWall = (touchingLeft && pressingLeft) || (touchingRight && pressingRight);
+        bool pressingTowardsWall =
+            (touchingLeft && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))) ||
+            (touchingRight && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)));
+
         bool isTouchingWall = touchingLeft || touchingRight;
 
-        Debug.DrawRay(origin, Vector2.left * wallCheckDistance, Color.red);
-        Debug.DrawRay(origin, Vector2.right * wallCheckDistance, Color.green);
-        Debug.Log($"[CLING DEBUG] TouchingWall: {isTouchingWall}, Grounded: {isGrounded}, VelocityY: {rb.velocity.y}");
+        Debug.Log($"[CLING] IsClinging={IsClinging} | isTouchingWall={isTouchingWall} | pressingTowardsWall={pressingTowardsWall} | isGrounded={isGrounded} | velY={rb.velocity.y} | canWallJump=True");
 
-        if (!canCling)
-        {
-            StopClinging();
-            return;
-        }
-
-        if (pressingTowardsWall && !isGrounded && rb.velocity.y < 0)
+        if (pressingTowardsWall && isTouchingWall && !isGrounded && rb.velocity.y <= 0.05f)
         {
             if (!IsClinging)
             {
                 wallNormal = touchingLeft ? hitLeft.normal : hitRight.normal;
                 IsClinging = true;
-                canWallJump = true;
                 playerMovement.ResetCoyoteTime();
-                if (animator != null) animator.SetBool("IsJumping", false); 
-                Debug.Log("Started Clinging");
+                animator.SetBool("IsJumping", false);
+                Debug.Log("[CLING] Started Clinging");
             }
         }
         else
@@ -71,48 +62,36 @@ public class WallClingJump : MonoBehaviour
             if (IsClinging)
             {
                 StopClinging();
-                Debug.Log("Stopped Clinging");
+                Debug.Log("[CLING] Stopped Clinging");
             }
         }
 
         if (IsClinging)
         {
             rb.velocity = new Vector2(rb.velocity.x, -slideSpeed);
+            animator.SetBool("IsHoldingWall", true);
+            animator.SetBool("IsJumping", false);
 
-            if (animator != null)
-            {
-                animator.SetBool("IsHoldingWall", true);
-                animator.SetBool("IsJumping", false);
-            }
-
-            if (Input.GetButtonDown("Jump") && canWallJump)
+            if (Input.GetButtonDown("Jump"))
             {
                 Vector2 jumpDir = new Vector2(-wallNormal.x * wallJumpForceX, wallJumpForceY);
                 playerMovement.RequestExternalJump(jumpDir.y);
                 rb.velocity = new Vector2(jumpDir.x, rb.velocity.y);
-
-                canWallJump = false;
-                canCling = false;
-
                 StopClinging();
-                Invoke(nameof(EnableCling), 0.2f);
-                Debug.Log("Wall Jump Executed");
+                Debug.Log("[CLING] Wall Jump Executed");
             }
+        }
+
+        if (!IsClinging && animator != null)
+        {
+            animator.SetBool("IsHoldingWall", false);
         }
     }
 
     void StopClinging()
     {
         IsClinging = false;
-        if (animator != null)
-        {
-            animator.SetBool("IsHoldingWall", false);
-        }
-    }
-
-    void EnableCling()
-    {
-        canCling = true;
+        animator.SetBool("IsHoldingWall", false);
     }
 
     void OnDrawGizmosSelected()

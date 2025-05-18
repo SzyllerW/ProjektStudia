@@ -366,11 +366,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3971a365e6e36fb4b9df8d712e4a2c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallCheck: {fileID: 5526344051157284881}
-  wallCheckRadius: 0.2
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
+  wallCheckDistance: 20
   slideSpeed: 2.5
   wallJumpForceX: 10
   wallJumpForceY: 14

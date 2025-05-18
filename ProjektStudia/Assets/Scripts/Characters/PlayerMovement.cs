@@ -64,12 +64,11 @@ public class PlayerMovement : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        animator.SetBool("IsGrounded", IsGrounded());
 
         HandleJumpInput();
         Flip();
         UpdateJumpAnimation();
-        HandleWalkingSound();
+        animator.SetBool("IsGrounded", IsGrounded());
 
         trailTargetTime = IsGrounded() ? 0f : 1f;
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
@@ -78,17 +77,18 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyMovement();
-        ApplyJumpPhysics();
 
         if (externalJumpRequested)
         {
             float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
             rb.velocity = new Vector2(modifiedHorizontalVelocity, externalJumpForce);
-            animator.SetBool("IsJumping", true);
             coyoteTimeCounter = 0;
-
             externalJumpRequested = false;
+            Debug.Log("[FIXEDUPDATE] External jump executed.");
+            return;
         }
+
+        ApplyJumpPhysics();
     }
 
     private void HandleJumpInput()
@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
+            Debug.Log("[INPUT] Jump button pressed");
             if (IsGrounded()) ResetTrailRenderer();
         }
         else
@@ -118,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (jumpBufferCounter > 0 && (coyoteTimeCounter > 0 || (wallClingJump != null && wallClingJump.IsClinging)))
         {
+            Debug.Log("[JUMP] Conditions met: Coyote=" + coyoteTimeCounter + ", Clinging=" + wallClingJump?.IsClinging);
             Jump();
             jumpBufferCounter = 0;
             SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, jumpVolume);
@@ -131,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f);
         rb.velocity += Vector2.up * modifiedJumpForce;
         coyoteTimeCounter = 0;
+        Debug.Log("[JUMP] Jump executed");
     }
 
     private void ApplyMovement()
@@ -149,10 +152,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyJumpPhysics()
     {
-        if (wallClingJump != null && wallClingJump.IsClinging)
-        {
-            return;
-        }
+        if (wallClingJump != null && wallClingJump.IsClinging) return;
 
         if (rb.velocity.y < 0)
         {
@@ -179,7 +179,14 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateJumpAnimation()
     {
         bool isClinging = wallClingJump != null && wallClingJump.IsClinging;
-        animator.SetBool("IsJumping", !IsGrounded() && !isClinging);
+        bool grounded = IsGrounded();
+
+        if (isClinging)
+        {
+            return;
+        }
+
+        animator.SetBool("IsJumping", !grounded);
     }
 
     private void Flip()
@@ -196,39 +203,7 @@ public class PlayerMovement : MonoBehaviour
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         bool grounded = groundCollider != null;
         Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
-
-        if (grounded && rb.velocity.y <= maxFallSpeed && !hasPlayedImpactAnimation && (groundCollider == null || !groundCollider.CompareTag("DirtMound")))
-        {
-            PlayImpactAnimation();
-            hasPlayedImpactAnimation = true;
-        }
-        else if (!grounded)
-        {
-            hasPlayedImpactAnimation = false;
-        }
-
         return grounded;
-    }
-
-    private void PlayImpactAnimation()
-    {
-        animator.SetBool("Impact", true);
-        playerHasControl = false;
-        SoundFXManager.instance.PlaySoundFXClip(impactSound, transform, impactVolume);
-    }
-
-    private void HandleWalkingSound()
-    {
-        if (Mathf.Abs(horizontal) > 0.1f && IsGrounded() && !animator.GetBool("Impact"))
-        {
-            if (!walkingAudioSource.isPlaying)
-                walkingAudioSource.Play();
-        }
-        else
-        {
-            if (walkingAudioSource.isPlaying)
-                walkingAudioSource.Stop();
-        }
     }
 
     private void ResetTrailRenderer()
@@ -236,75 +211,15 @@ public class PlayerMovement : MonoBehaviour
         trailRenderer.Clear();
     }
 
-    public void RestoreControl()
+    public void ResetCoyoteTime()
     {
-        animator.SetBool("Impact", false);
-        playerHasControl = true;
-    }
-
-    public void ExternalJump(float force)
-    {
-        float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
-        rb.velocity = new Vector2(modifiedHorizontalVelocity, force);
-        animator.SetBool("IsJumping", true);
-        coyoteTimeCounter = 0;
+        coyoteTimeCounter = coyoteTime;
     }
 
     public void RequestExternalJump(float force)
     {
         externalJumpRequested = true;
         externalJumpForce = force;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("MovingPlatform"))
-        {
-            transform.SetParent(collision.transform);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("MovingPlatform"))
-        {
-            transform.SetParent(null);
-        }
-    }
-
-    public void ResetAfterRespawn()
-    {
-        Transform rp = GameObject.Find("RespawnPoint")?.transform;
-        if (rp != null)
-        {
-            transform.position = rp.position + Vector3.up * 0.05f;
-        }
-
-        rb.velocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-        rb.isKinematic = false;
-        rb.simulated = true;
-        rb.gravityScale = 5;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        trailRenderer.Clear();
-        transform.SetParent(null);
-        externalJumpRequested = false;
-        externalJumpForce = 0f;
-        isFalling = false;
-        coyoteTimeCounter = coyoteTime;
-        jumpBufferCounter = 0;
-        hasPlayedImpactAnimation = false;
-        playerHasControl = true;
-
-        animator.SetBool("IsJumping", false);
-        animator.SetBool("Impact", false);
-        animator.SetFloat("Speed", 0);
-        animator.SetBool("IsGrounded", true);
-    }
-
-    public void ResetCoyoteTime()
-    {
-        coyoteTimeCounter = coyoteTime;
+        Debug.Log("[REQUEST JUMP] Requested external jump with force: " + force);
     }
 }
