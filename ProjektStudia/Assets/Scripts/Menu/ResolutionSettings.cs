@@ -2,34 +2,40 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class ResolutionSettings : MonoBehaviour
 {
     public TMP_Dropdown resolutionDropdown;
+    private Resolution[] resolutions;
+    private int SelectedResolution;
+    private List<Resolution> SelectedResolutionList = new List<Resolution>();
+    private bool wasExpanded = false;
+
     [SerializeField] private GameObject dropdown;
     [SerializeField] private Image img;
     [SerializeField] private AudioClip buttonSoundClip;
-    private Resolution[] resolutions;
-    private bool wasExpanded = false;
 
     void Start()
     {
         img.enabled = false;
         resolutions = Screen.resolutions.OrderByDescending(r => r.width * r.height).ToArray();
         resolutionDropdown.ClearOptions();
-
-        var options = new System.Collections.Generic.List<string>();
+        List<string> options = new List<string>();
         int currentResolutionIndex = 0;
+        string newRes;
 
-        for (int i = 0; i < resolutions.Length; i++)
+        foreach (Resolution res in resolutions)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            newRes = res.width.ToString() + "x" + res.height.ToString();
+            if (!options.Contains(newRes))
             {
-                currentResolutionIndex = i;
+                options.Add(newRes);
+                SelectedResolutionList.Add(res);
+            }
+            if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = options.Count - 1;
             }
         }
 
@@ -56,10 +62,10 @@ public class ResolutionSettings : MonoBehaviour
         wasExpanded = isExpanded;
     }
 
-    public void SetResolution(int resolutionIndex)
+    public void SetResolution()
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        SelectedResolution = resolutionDropdown.value;
+        Screen.SetResolution(SelectedResolutionList[SelectedResolution].width, SelectedResolutionList[SelectedResolution].height, true);
     }
 
     private void ShowImage()
