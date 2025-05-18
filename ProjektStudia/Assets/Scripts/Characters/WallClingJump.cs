@@ -2,49 +2,76 @@ using UnityEngine;
 
 public class WallClingJump : MonoBehaviour
 {
-    public Transform wallCheck;
-    public float wallCheckRadius = 0.2f;
+    [Header("Wall Cling Settings")]
     public LayerMask wallLayer;
+    public float wallCheckDistance = 20f;
     public float slideSpeed = 2.5f;
     public float wallJumpForceX = 10f;
     public float wallJumpForceY = 14f;
 
     private Rigidbody2D rb;
     private PlayerMovement playerMovement;
+    private Animator animator;
 
-    private bool isTouchingWall;
-    private bool isGrounded;
-    private bool canWallJump = true;
+    private bool isClinging = false;
+    private bool canWallJump = false;
+    private Vector2 wallNormal = Vector2.zero;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        isGrounded = playerMovement.IsGrounded();
-        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, wallLayer);
+        Vector2 origin = transform.position;
+        Vector2 direction = playerMovement.horizontal > 0 ? Vector2.right : Vector2.left;
 
-        Debug.DrawRay(wallCheck.position, Vector2.left * wallCheckRadius, Color.red);
-        Debug.DrawRay(wallCheck.position, Vector2.right * wallCheckRadius, Color.green);
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, wallCheckDistance, wallLayer);
+        Debug.DrawRay(origin, direction * wallCheckDistance, hit.collider != null ? Color.green : Color.red);
 
-        Debug.Log($"[DEBUG] TouchingWall: {isTouchingWall}, Grounded: {isGrounded}, Horizontal: {playerMovement.horizontal}, VelocityY: {rb.velocity.y}");
+        bool isGrounded = playerMovement.IsGrounded();
+        bool isTouchingWall = hit.collider != null;
 
-        if (isTouchingWall && !isGrounded && rb.velocity.y <= 0f && Mathf.Abs(playerMovement.horizontal) > 0.1f)
+        if (isTouchingWall && !isGrounded && Mathf.Abs(playerMovement.horizontal) > 0.1f)
         {
+            if (!isClinging)
+            {
+                wallNormal = hit.normal;
+                isClinging = true;
+                canWallJump = true;
+                Debug.Log("Started Clinging");
+            }
+        }
+        else
+        {
+            if (isClinging)
+            {
+                isClinging = false;
+                Debug.Log("Stopped Clinging");
+            }
+        }
+
+        if (isClinging)
+        {
+            // Zsuwanie
             rb.velocity = new Vector2(rb.velocity.x, -slideSpeed);
-            canWallJump = true;
-            Debug.Log("[CLING] Zsuwanie po œcianie");
+            animator.SetBool("IsHoldingWall", true);
 
             if (Input.GetButtonDown("Jump") && canWallJump)
             {
-                float jumpDir = playerMovement.horizontal > 0 ? -1f : 1f;
-                rb.velocity = new Vector2(jumpDir * wallJumpForceX, wallJumpForceY);
+                rb.velocity = new Vector2(-wallNormal.x * wallJumpForceX, wallJumpForceY);
+                isClinging = false;
                 canWallJump = false;
-                Debug.Log("[CLING] Wykonano wall jump");
+                playerMovement.ResetCoyoteTime();
+                Debug.Log("Wall Jump");
             }
+        }
+        else
+        {
+            animator.SetBool("IsHoldingWall", false);
         }
 
         if (isGrounded)
@@ -52,15 +79,8 @@ public class WallClingJump : MonoBehaviour
             canWallJump = true;
         }
     }
-
-    void OnDrawGizmosSelected()
-    {
-        if (wallCheck != null)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(wallCheck.position, wallCheckRadius);
-        }
-    }
 }
+
+
 
 
