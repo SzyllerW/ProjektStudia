@@ -1601,6 +1601,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
+      propertyPath: respawnPoint
+      value: 
+      objectReference: {fileID: 10008203}
+    - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
       propertyPath: idleThreshold
       value: 1
       objectReference: {fileID: 0}

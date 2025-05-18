@@ -50,9 +50,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private float jumpVolume = 1f;
 
+    private WallClingJump wallClingJump;
+
     void Start()
     {
         rb.gravityScale = 5;
+        wallClingJump = GetComponent<WallClingJump>();
     }
 
     void Update()
@@ -61,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
         horizontal = Input.GetAxisRaw("Horizontal");
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        animator.SetBool("IsGrounded", IsGrounded());
+
         HandleJumpInput();
         Flip();
         UpdateJumpAnimation();
@@ -111,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
-        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
+        if (jumpBufferCounter > 0 && (coyoteTimeCounter > 0 || (wallClingJump != null && wallClingJump.IsClinging)))
         {
             Jump();
             jumpBufferCounter = 0;
@@ -144,6 +149,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyJumpPhysics()
     {
+        if (wallClingJump != null && wallClingJump.IsClinging)
+        {
+            return;
+        }
+
         if (rb.velocity.y < 0)
         {
             fallTime += Time.fixedDeltaTime;
@@ -168,7 +178,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateJumpAnimation()
     {
-        animator.SetBool("IsJumping", !IsGrounded());
+        bool isClinging = wallClingJump != null && wallClingJump.IsClinging;
+        animator.SetBool("IsJumping", !IsGrounded() && !isClinging);
     }
 
     private void Flip()
@@ -289,6 +300,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsJumping", false);
         animator.SetBool("Impact", false);
         animator.SetFloat("Speed", 0);
+        animator.SetBool("IsGrounded", true);
     }
 
     public void ResetCoyoteTime()
