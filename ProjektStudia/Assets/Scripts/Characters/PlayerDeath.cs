@@ -34,28 +34,18 @@ public class PlayerDeath : MonoBehaviour
         isDead = true;
 
         if (SoundFXManager.instance != null)
-        {
             SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, transform, 1.3f);
-        }
 
         CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
         if (cameraFollow != null)
-        {
             cameraFollow.ShakeBeforeFollow(1f, 5f);
-        }
 
         PlayerCarry carry = GetComponent<PlayerCarry>();
         if (carry != null)
-        {
             carry.DropAcornAtCheckpoint();
-        }
 
         if (gameManager != null)
-        {
             gameManager.CharacterFellOffMap(gameObject);
-        }
-
-        currentRespawnRoutine = StartCoroutine(RespawnWithDelay(1f));
     }
 
     private IEnumerator RespawnWithDelay(float delay)
