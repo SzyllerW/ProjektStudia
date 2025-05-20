@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isPlayingWalkingSound = false;
     private bool externalJumpRequested = false;
     private float externalJumpForce = 0f;
+    private Vector2 platformVelocity = Vector2.zero;
+
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -147,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
             accelerationRate = Mathf.Abs(horizontal) > 0.1f ? airAcceleration : airDeceleration;
 
         float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, accelerationRate * Time.fixedDeltaTime);
-        rb.velocity = new Vector2(newX, rb.velocity.y);
+        rb.velocity = new Vector2(newX + platformVelocity.x, rb.velocity.y);
     }
 
     private void ApplyJumpPhysics()
@@ -203,6 +205,20 @@ public class PlayerMovement : MonoBehaviour
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         bool grounded = groundCollider != null;
         Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
+
+        if (grounded)
+        {
+            PlatformVelocity pv = groundCollider.GetComponentInParent<PlatformVelocity>();
+            if (pv != null)
+                platformVelocity = pv.Velocity;
+            else
+                platformVelocity = Vector2.zero;
+        }
+        else
+        {
+            platformVelocity = Vector2.zero;
+        }
+
         return grounded;
     }
 
