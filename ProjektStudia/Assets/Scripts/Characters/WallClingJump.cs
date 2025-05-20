@@ -15,6 +15,8 @@ public class WallClingJump : MonoBehaviour
     private PlayerMovement playerMovement;
     private Animator animator;
 
+    private bool canWallJump = true;
+    private bool canCling = true;
     private Vector2 wallNormal;
 
     void Start()
@@ -34,27 +36,29 @@ public class WallClingJump : MonoBehaviour
 
         bool touchingLeft = hitLeft.collider != null;
         bool touchingRight = hitRight.collider != null;
+        bool isTouchingWall = touchingLeft || touchingRight;
 
         bool pressingLeft = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
         bool pressingRight = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
+        bool pressingTowardsWall = (touchingLeft && pressingLeft) || (touchingRight && pressingRight);
 
-        bool pressingTowardsWall =
-            (touchingLeft && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))) ||
-            (touchingRight && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)));
 
-        bool isTouchingWall = touchingLeft || touchingRight;
+        if (!canCling || !pressingTowardsWall)
+        {
+            StopClinging();
+            return;
+        }
 
-        Debug.Log($"[CLING] IsClinging={IsClinging} | isTouchingWall={isTouchingWall} | pressingTowardsWall={pressingTowardsWall} | isGrounded={isGrounded} | velY={rb.velocity.y} | canWallJump=True");
 
-        if (pressingTowardsWall && isTouchingWall && !isGrounded && rb.velocity.y <= 0.05f)
+        if (pressingTowardsWall && !isGrounded && rb.velocity.y < 0)
         {
             if (!IsClinging)
             {
                 wallNormal = touchingLeft ? hitLeft.normal : hitRight.normal;
                 IsClinging = true;
+                canWallJump = true;
                 playerMovement.ResetCoyoteTime();
                 animator.SetBool("IsJumping", false);
-                Debug.Log("[CLING] Started Clinging");
             }
         }
         else
@@ -62,7 +66,6 @@ public class WallClingJump : MonoBehaviour
             if (IsClinging)
             {
                 StopClinging();
-                Debug.Log("[CLING] Stopped Clinging");
             }
         }
 
@@ -72,19 +75,23 @@ public class WallClingJump : MonoBehaviour
             animator.SetBool("IsHoldingWall", true);
             animator.SetBool("IsJumping", false);
 
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && canWallJump)
             {
                 Vector2 jumpDir = new Vector2(-wallNormal.x * wallJumpForceX, wallJumpForceY);
                 playerMovement.RequestExternalJump(jumpDir.y);
                 rb.velocity = new Vector2(jumpDir.x, rb.velocity.y);
+
+                canWallJump = false;
+                canCling = false;
+
                 StopClinging();
-                Debug.Log("[CLING] Wall Jump Executed");
+                Invoke(nameof(EnableCling), 0.2f);
             }
         }
 
-        if (!IsClinging && animator != null)
+        if (animator != null)
         {
-            animator.SetBool("IsHoldingWall", false);
+            animator.SetBool("IsHoldingWall", IsClinging);
         }
     }
 
@@ -94,11 +101,9 @@ public class WallClingJump : MonoBehaviour
         animator.SetBool("IsHoldingWall", false);
     }
 
-    void OnDrawGizmosSelected()
+    void EnableCling()
     {
-        Vector2 origin = Application.isPlaying ? (Vector2)transform.position + new Vector2(0f, 0.5f) : (Vector2)transform.position;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(origin, origin + Vector2.left * wallCheckDistance);
-        Gizmos.DrawLine(origin, origin + Vector2.right * wallCheckDistance);
+        canCling = true;
     }
+
 }
