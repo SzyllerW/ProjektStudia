@@ -1507,21 +1507,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
-      propertyPath: zoomInSpeed
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 164409113}
-    - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
-      propertyPath: idleZoomOutSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5599102190343597998, guid: f4a8b1123c127a640907841c1047657c, type: 3}
-      propertyPath: jumpZoomOutSpeed
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 7487274407943178398, guid: f4a8b1123c127a640907841c1047657c, type: 3}
       propertyPath: m_Name
       value: Main Camera

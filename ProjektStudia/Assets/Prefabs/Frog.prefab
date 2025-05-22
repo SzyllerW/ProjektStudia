@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d220a2d87e0c38478a3409bd4470368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathHeight: -200
+  deathHeight: -300
   deathSoundClip: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
 --- !u!212 &8648044253487501700
 SpriteRenderer:
@@ -364,6 +364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sideView: {fileID: 5368540112597320643}
   frontView: {fileID: 9063423494025626867}
+  climbView: {fileID: 0}
+  supportsClimbView: 0
   playerMovement: {fileID: 6755318869794899884}
   animator: {fileID: 3234283007144487377}
 --- !u!114 &1321207512249879807

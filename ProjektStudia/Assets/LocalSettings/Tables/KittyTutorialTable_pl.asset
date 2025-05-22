@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: KittyTutorialTable_pl
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pl
+  m_SharedData: {fileID: 11400000, guid: 7a7245f114fec4048bafa5f1d87fea2f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 93362724864
+    m_Localized: "Podnie\u015B \u017Co\u0142\u0105d\u017A z tlenem i dostarcz go
+      do gazoci\u0105gu na ko\u0144cu poziomu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695790608384
+    m_Localized: "Przytrzymaj, \u017Ceby chwyci\u0107 si\u0119 \u015Bciany i u\u017Cyj
+      skoku."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1577475252224
+    m_Localized: "Ustaw \u017Co\u0142\u0105d\u017A na jego miejscu."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
