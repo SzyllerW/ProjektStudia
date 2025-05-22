@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private float externalJumpForce = 0f;
     private Vector2 platformVelocity = Vector2.zero;
 
+    [HideInInspector] public bool wasLaunchedFromMound = false;
+    private bool ignoreJumpRelease = false;
 
     [Header("Movement Settings")]
     public float speed = 45f;
@@ -74,6 +76,11 @@ public class PlayerMovement : MonoBehaviour
 
         trailTargetTime = IsGrounded() ? 0f : 1f;
         trailRenderer.time = Mathf.Lerp(trailRenderer.time, trailTargetTime, Time.deltaTime * 2f);
+
+        if (IsGrounded() && wasLaunchedFromMound)
+        {
+            wasLaunchedFromMound = false;
+        }
     }
 
     private void FixedUpdate()
@@ -83,9 +90,11 @@ public class PlayerMovement : MonoBehaviour
         if (externalJumpRequested)
         {
             float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
-            rb.velocity = new Vector2(modifiedHorizontalVelocity, externalJumpForce);
+            rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f); // wyczyœæ pionow¹ prêdkoœæ
+            rb.velocity += Vector2.up * externalJumpForce;
             coyoteTimeCounter = 0;
             externalJumpRequested = false;
+            ignoreJumpRelease = true; // zablokuj trzymanie spacji
             Debug.Log("[FIXEDUPDATE] External jump executed.");
             return;
         }
@@ -119,7 +128,9 @@ public class PlayerMovement : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
-        if (jumpBufferCounter > 0 && (coyoteTimeCounter > 0 || (wallClingJump != null && wallClingJump.IsClinging)))
+        if (jumpBufferCounter > 0 &&
+            (coyoteTimeCounter > 0 || (wallClingJump != null && wallClingJump.IsClinging)) &&
+            !wasLaunchedFromMound)
         {
             Debug.Log("[JUMP] Conditions met: Coyote=" + coyoteTimeCounter + ", Clinging=" + wallClingJump?.IsClinging);
             Jump();
@@ -158,6 +169,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (rb.velocity.y < 0)
         {
+            ignoreJumpRelease = false; // reset po rozpoczêciu spadania
+
             fallTime += Time.fixedDeltaTime;
             float currentFallMultiplier = Mathf.Clamp(baseFallMultiplier + (fallTime * fallAccelerationRate), baseFallMultiplier, maxFallMultiplier);
 
@@ -168,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
             isFalling = true;
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+        else if (rb.velocity.y > 0 && !Input.GetButton("Jump") && !ignoreJumpRelease)
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
         }
@@ -183,10 +196,7 @@ public class PlayerMovement : MonoBehaviour
         bool isClinging = wallClingJump != null && wallClingJump.IsClinging;
         bool grounded = IsGrounded();
 
-        if (isClinging)
-        {
-            return;
-        }
+        if (isClinging) return;
 
         animator.SetBool("IsJumping", !grounded);
     }
@@ -236,6 +246,8 @@ public class PlayerMovement : MonoBehaviour
     {
         externalJumpRequested = true;
         externalJumpForce = force;
+        ignoreJumpRelease = true;
         Debug.Log("[REQUEST JUMP] Requested external jump with force: " + force);
     }
 }
+
