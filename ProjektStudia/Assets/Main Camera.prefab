@@ -150,12 +150,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0fa4d13d0080c429c60e5c1e9ccdbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnPoint: {fileID: 0}
   smoothSpeed: 0.04
   baseOffset: {x: 0, y: 30}
-  stopFollowingY: -70
-  baseSize: 90
-  jumpZoomSize: 140
-  idleZoomSize: 140
-  zoomOutSpeed: 2
-  zoomInSpeed: 4
+  baseSize: 80
+  jumpZoomSize: 130
+  idleZoomSize: 160
+  zoomInSpeed: 60
+  jumpZoomOutSpeed: 60
+  idleZoomOutSpeed: 8
   idleThreshold: 1
+  playCinematicAtStart: 1
+  cinematicPoints: []
+  cinematicSpeed: 40
+  waitAtEachPoint: 1.5
+  objectsToEnableAfterCinematic: []
+  characterSelectionUI: {fileID: 0}

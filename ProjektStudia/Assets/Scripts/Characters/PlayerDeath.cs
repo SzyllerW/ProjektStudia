@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerDeath : MonoBehaviour
 {
-    public float deathHeight = -200f;
+    public float deathHeight = -300f;
     private GameManager gameManager;
     private bool isDead = false;
     private Coroutine currentRespawnRoutine;
