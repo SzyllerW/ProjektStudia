@@ -30,6 +30,7 @@ public class CameraFollow : MonoBehaviour
     private bool isShaking = false;
     private bool followingRespawn = false;
     private bool isCinematicDone = false;
+    private bool isFocused = false;
 
     private enum ZoomState { Normal, Jumping, Idle }
     private ZoomState zoomState = ZoomState.Normal;
@@ -149,13 +150,22 @@ public class CameraFollow : MonoBehaviour
             float hVel = Mathf.Abs(playerRb.velocity.x);
             float vVel = playerRb.velocity.y;
 
-            if (!IsGrounded() && Mathf.Abs(vVel) > 0.1f)
+            if (isFocused)
             {
-                if (zoomState != ZoomState.Jumping)
+                currentTargetSize = baseSize * 0.8f;
+            }
+            else if (!IsGrounded() && Mathf.Abs(vVel) > 0.1f)
+            {
+                if (zoomState != ZoomState.Jumping || !isFocused)
                 {
                     zoomState = ZoomState.Jumping;
-                    currentTargetSize = jumpZoomSize;
                     idleTime = 0f;
+
+                    if (!isFocused)
+                    {
+                        zoomState = ZoomState.Normal;
+                        currentTargetSize = jumpZoomSize;
+                    }
                 }
             }
             else if (hVel < 0.5f && Mathf.Abs(vVel) < 0.5f)
@@ -257,6 +267,11 @@ public class CameraFollow : MonoBehaviour
 
         transform.position = originalPosition;
         isShaking = false;
+    }
+
+    public void focusOnPortal(bool inRange)
+    {
+        isFocused = inRange;
     }
 }
 
