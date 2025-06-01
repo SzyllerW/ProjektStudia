@@ -11,6 +11,10 @@ public class MoleAbility : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip diggingSound;
+    [SerializeField] private float diggingVolume = 1f;
+    [SerializeField] private AudioClip moundPopSound;
+    [SerializeField] private float moundPopVolume = 1f;
 
     private bool isDigging = false;
 
@@ -30,6 +34,7 @@ public class MoleAbility : MonoBehaviour
     private void StartAnimation()
     {
         animator.SetBool("Dig", true);
+        SoundFXManager.instance.PlaySoundFXClip(diggingSound, transform, diggingVolume);
     }
 
     private void StartDigging()
@@ -47,6 +52,7 @@ public class MoleAbility : MonoBehaviour
         yield return new WaitForSeconds(diggingDelay);
 
         Instantiate(dirtMoundPrefab, transform.position, Quaternion.identity);
+        SoundFXManager.instance.PlaySoundFXClip(moundPopSound, transform, moundPopVolume);
 
         GameManager gm = FindObjectOfType<GameManager>();
         if (gm != null)
