@@ -407,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802374c9c7c3553448c24ca8b7f03d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wasLaunchedFromMound: 0
   speed: 80
   acceleration: 75
   deceleration: 85
@@ -464,13 +465,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirtMoundPrefab: {fileID: 8120809946743615725, guid: dd67a84141d917a4bac7016e825c7d5a, type: 3}
-  diggingDelay: 1
+  diggingDelay: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 440415993664081664}
   groundCheckRadius: 0.2
   animator: {fileID: 4336597031928889974}
+  diggingSound: {fileID: 8300000, guid: 181199c5d3e98b84f86eceffb516fe84, type: 3}
+  diggingVolume: 1
+  moundPopSound: {fileID: 8300000, guid: f2900608acd7e2741ac4a40dbdba1021, type: 3}
+  moundPopVolume: 1.5
 --- !u!212 &1201959364616346854
 SpriteRenderer:
   m_ObjectHideFlags: 0

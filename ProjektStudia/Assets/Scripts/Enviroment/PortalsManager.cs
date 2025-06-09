@@ -15,7 +15,12 @@ public class PortalsManager : MonoBehaviour
     [SerializeField] private float offsetY;
     [SerializeField] private Material buttonShaderMaterial;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource audioSource;
+
     private GameObject popUpInstance;
+    private RectTransform popUpRectTransform;
+    private Vector3 popUpScale;
     private float fillAmount = 0f;
     private bool isAnimationStarted = false;
     private GameObject activePortal;
@@ -38,8 +43,9 @@ public class PortalsManager : MonoBehaviour
         player = playerObject;
 
         popUpInstance = Instantiate(popUpPrefab, portalCanvas.transform);
-        RectTransform rectTransform = popUpInstance.GetComponent<RectTransform>();
-        rectTransform.position = activePortal.transform.position + new Vector3(0, offsetY, 0);
+        popUpRectTransform = popUpInstance.GetComponent<RectTransform>();
+        popUpScale = popUpRectTransform.localScale;
+        popUpRectTransform.position = activePortal.transform.position + new Vector3(0, offsetY, 0);
 
         cameraFollow.focusOnPortal(true);
     }
@@ -63,12 +69,19 @@ public class PortalsManager : MonoBehaviour
         {
             if (Input.GetKey(interactionKey))
             {
+                popUpRectTransform.localScale = popUpScale * 0.8f;
                 fillAmount += Time.deltaTime / 1f;
                 fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
                 buttonShaderMaterial.SetFloat("_FillAmount", fillAmount);
 
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+
                 if (fillAmount >= 1f && !isAnimationStarted)
                 {
+                    audioSource.Stop();
                     isAnimationStarted = true;
                     StartCoroutine(PlayerAnimation());
                     Destroy(popUpInstance);
@@ -76,6 +89,8 @@ public class PortalsManager : MonoBehaviour
             }
             else
             {
+                audioSource.Stop();
+                popUpRectTransform.localScale = popUpScale;
                 fillAmount = 0f;
                 buttonShaderMaterial.SetFloat("_FillAmount", fillAmount);
                 isAnimationStarted = false;
@@ -132,9 +147,6 @@ public class PortalsManager : MonoBehaviour
 
     private void LoadTargetScene()
     {
-        if (!string.IsNullOrEmpty(targetScene))
-        {
-            SceneManager.LoadScene(targetScene);
-        }
+        StartCoroutine(TransitionsManager.instance.fadeExit(targetScene));
     }
 }
