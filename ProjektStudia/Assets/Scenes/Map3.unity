@@ -644,6 +644,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1828342185}
     m_Modifications:
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: d8bba97ec9d764a4a92dfe097322563d, type: 2}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: respawnPoint
       value: 
       objectReference: {fileID: 164409113}
@@ -655,6 +659,10 @@ PrefabInstance:
       propertyPath: requiredAcorns
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: characterDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 092ddd8889d0057488d550e31e8049bb, type: 2}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: totalCollectibles
       value: 3

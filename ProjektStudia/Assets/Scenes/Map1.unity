@@ -3007,7 +3007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7755410699785608810, guid: f71c27075baab3640af4d0942b56a355, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 340.9
+      value: -66
       objectReference: {fileID: 0}
     - target: {fileID: 7755410699785608810, guid: f71c27075baab3640af4d0942b56a355, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3464,6 +3464,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: levelConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: a7fde2e6da5b6f74483cdd96bdf30010, type: 2}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: switchDelay
       value: 0
       objectReference: {fileID: 0}
@@ -3475,6 +3479,10 @@ PrefabInstance:
       propertyPath: respawnCooldown
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: characterDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 092ddd8889d0057488d550e31e8049bb, type: 2}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: totalCollectibles
       value: 3
