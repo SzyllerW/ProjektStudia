@@ -371,9 +371,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   wallCheckDistance: 17
-  slideSpeed: 27
+  slideSpeed: 20
   wallJumpForceX: 12
-  wallJumpForceY: 20
+  wallJumpForceY: 100
 --- !u!114 &1561788176230409661
 MonoBehaviour:
   m_ObjectHideFlags: 0

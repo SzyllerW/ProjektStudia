@@ -90,12 +90,14 @@ public class PlayerMovement : MonoBehaviour
         if (externalJumpRequested)
         {
             float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
-            rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f); // wyczyœæ pionow¹ prêdkoœæ
+
+            rb.velocity = new Vector2(modifiedHorizontalVelocity, rb.velocity.y);
             rb.velocity += Vector2.up * externalJumpForce;
+
+            Debug.Log($"[FIXEDUPDATE] External jump executed. New Velocity: {rb.velocity}");
+
             coyoteTimeCounter = 0;
             externalJumpRequested = false;
-            ignoreJumpRelease = true; // zablokuj trzymanie spacji
-            Debug.Log("[FIXEDUPDATE] External jump executed.");
             return;
         }
 
@@ -151,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        if (!playerHasControl) return;
+        if (!playerHasControl || (wallClingJump != null && wallClingJump.IsClinging)) return;
 
         float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed);
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
@@ -242,11 +244,11 @@ public class PlayerMovement : MonoBehaviour
         coyoteTimeCounter = coyoteTime;
     }
 
-    public void RequestExternalJump(float force)
+    public void RequestExternalJump(float force, bool allowHold)
     {
         externalJumpRequested = true;
         externalJumpForce = force;
-        ignoreJumpRelease = true;
+        ignoreJumpRelease = !allowHold;
         Debug.Log("[REQUEST JUMP] Requested external jump with force: " + force);
     }
 }
