@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Video;
 
 public class DescriptionController : MonoBehaviour
 {
@@ -17,9 +18,9 @@ public class DescriptionController : MonoBehaviour
     [SerializeField] private RectTransform contentTransform;
     [SerializeField] private AudioClip buttonSound;
 
-    [Header("Infographic System")]
-    [SerializeField] private Image characterInfographic;
-    [SerializeField] private Sprite[] characterInfographicSprites;
+    [Header("Video Tutorials")]
+    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private VideoClip[] videoClips;
 
     [Header("Localization")]
     [SerializeField] private LocalizedString characterNameLocalized;
@@ -125,13 +126,14 @@ public class DescriptionController : MonoBehaviour
             }
         }
 
-        if (characterInfographic != null && characterInfographicSprites.Length > characterIndex)
+        if (videoPlayer != null && videoClips.Length > characterIndex)
         {
-            characterInfographic.sprite = characterInfographicSprites[characterIndex];
+            videoPlayer.clip = videoClips[characterIndex];
+            videoPlayer.Play();
         }
         else
         {
-            Debug.LogWarning($"Nie przypisano infografiki dla postaci o indeksie {characterIndex}!");
+            Debug.LogWarning($"Nie przypisano nagranego tutorialu dla postaci o indeksie {characterIndex}!");
         }
     }
 }
