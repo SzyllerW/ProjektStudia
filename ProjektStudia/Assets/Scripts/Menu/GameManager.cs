@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool isTutorial = false;
     [SerializeField] private float switchDelay = 0.5f;
     [SerializeField] private float respawnCooldown = 1.0f;
-    [SerializeField] private string gameOverSceneName = "GameOverScene";
+    [SerializeField] private GameObject lossScreen;
+    [SerializeField] private AudioClip lossAudioClip;
+    [SerializeField] private float lossVolume = 0.1f;
 
     [Header("Warunki zwyciêstwa")]
     [SerializeField] private int totalCollectibles = 0;
@@ -31,7 +33,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool requiresAllCollectibles = false;
     [SerializeField] private bool requiresAcornDelivery = false;
-    [SerializeField] private string levelCompleteSceneName = "LevelComplete";
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private AudioClip winAudioClip;
+    [SerializeField] private float winVolume = 0.1f;
 
     [Header("Acorn Delivery")]
     [SerializeField] private int requiredAcorns = 1;
@@ -307,14 +311,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameOverSequence()
     {
-        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        /*CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
         if (cameraFollow != null)
         {
             cameraFollow.ShakeBeforeFollow(1f, 8f);
-        }
+        }*/
 
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(gameOverSceneName);
+        lossScreen.SetActive(true);
+        SoundFXManager.instance.PlaySoundFXClip(lossAudioClip, transform, lossVolume);
     }
 
     private void CheckWinCondition()
@@ -325,8 +330,15 @@ public class GameManager : MonoBehaviour
 
         if (allItemsCollected && allAcornsDelivered && allBerriesCollected)
         {
-            SceneManager.LoadScene(levelCompleteSceneName);
+            StartCoroutine(WinSequence());
         }
+    }
+
+    private IEnumerator WinSequence()
+    {
+        yield return new WaitForSeconds(0.5f);
+        winScreen.SetActive(true);
+        SoundFXManager.instance.PlaySoundFXClip(winAudioClip, transform, winVolume);
     }
 }
 

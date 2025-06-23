@@ -8,6 +8,11 @@ public class MapSelectionManager : MonoBehaviour
     public Button map1Button;
     public Button map2Button;
     public Button map3Button;
+    public Button map4Button;
+    public Button map5Button;
+    public Button map6Button;
+    public Button map7Button;
+    public Button map8Button;
     public Button backButton;
     public Button confirmButton;
 
@@ -15,6 +20,7 @@ public class MapSelectionManager : MonoBehaviour
     public Button frogTutorialButton;
     public Button moleTutorialButton;
     public Button penguinTutorialButton;
+    public Button catTutorialButton;
 
     private int selectedMap = 0;
     private Color defaultColor = Color.white;
@@ -33,6 +39,11 @@ public class MapSelectionManager : MonoBehaviour
         map1Button.interactable = true;
         map2Button.interactable = true;
         map3Button.interactable = true;
+        map4Button.interactable = true;
+        map5Button.interactable = true;
+        map6Button.interactable = true;
+        map7Button.interactable = true;
+        map8Button.interactable = true;
 
         backButton.onClick.AddListener(BackToMainMenu);
         confirmButton.onClick.AddListener(ConfirmSelection);
@@ -41,10 +52,16 @@ public class MapSelectionManager : MonoBehaviour
         map1Button.onClick.AddListener(() => ToggleMapSelection(1, map1Button));
         map2Button.onClick.AddListener(() => ToggleMapSelection(2, map2Button));
         map3Button.onClick.AddListener(() => ToggleMapSelection(3, map3Button));
+        map4Button.onClick.AddListener(() => ToggleMapSelection(4, map4Button));
+        map5Button.onClick.AddListener(() => ToggleMapSelection(5, map5Button));
+        map6Button.onClick.AddListener(() => ToggleMapSelection(6, map6Button));
+        map7Button.onClick.AddListener(() => ToggleMapSelection(7, map7Button));
+        map8Button.onClick.AddListener(() => ToggleMapSelection(8, map8Button));
 
         frogTutorialButton.onClick.AddListener(LoadFrogTutorial);
         moleTutorialButton.onClick.AddListener(LoadMoleTutorial);
         penguinTutorialButton.onClick.AddListener(LoadPenguinTutorial);
+        catTutorialButton.onClick.AddListener(LoadCatTutorial);
 
         ResetButtonColors();
     }
@@ -74,6 +91,11 @@ public class MapSelectionManager : MonoBehaviour
         map1Button.GetComponent<Image>().color = defaultColor;
         map2Button.GetComponent<Image>().color = defaultColor;
         map3Button.GetComponent<Image>().color = defaultColor;
+        map4Button.GetComponent<Image>().color = defaultColor;
+        map5Button.GetComponent<Image>().color = defaultColor;
+        map6Button.GetComponent<Image>().color = defaultColor;
+        map7Button.GetComponent<Image>().color = defaultColor;
+        map8Button.GetComponent<Image>().color = defaultColor;
     }
 
     private async void ConfirmSelection()
@@ -132,5 +154,11 @@ public class MapSelectionManager : MonoBehaviour
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         SceneManager.LoadScene("PenguinTutorial");
+    }
+
+    private void LoadCatTutorial()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        SceneManager.LoadScene("KittyTutorial");
     }
 }

@@ -140,5 +140,13 @@ public class PauseMenuManager : MonoBehaviour
     {
         pressCount = 0;
     }
+
+    public async void BackToMapSelection()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        await Task.Delay(100);
+
+        SceneManager.LoadScene("MapSelection");
+    }
 }
 

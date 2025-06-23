@@ -55,9 +55,14 @@ MonoBehaviour:
   isTutorial: 0
   switchDelay: 0.5
   respawnCooldown: 1
-  gameOverSceneName: GameOverScene
+  lossScreen: {fileID: 0}
+  lossAudioClip: {fileID: 8300000, guid: e2f01cea10c6f2b4cacf4284d53d1906, type: 3}
+  lossVolume: 0.1
   totalCollectibles: 0
   requiresAllCollectibles: 0
   requiresAcornDelivery: 0
-  levelCompleteSceneName: LevelComplete
+  winScreen: {fileID: 0}
+  winAudioClip: {fileID: 8300000, guid: e6271f74ba74b5442abdba685d42d29d, type: 3}
+  winVolume: 0.1
   requiredAcorns: 1
+  totalBerries: 0

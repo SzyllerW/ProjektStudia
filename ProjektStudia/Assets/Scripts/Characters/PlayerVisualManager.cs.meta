@@ -3,7 +3,13 @@ guid: 4721c6091066ebc458a1d17365c50b88
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sideView: {instanceID: 0}
+  - frontView: {instanceID: 0}
+  - climbView: {instanceID: 0}
+  - playerMovement: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - deathSoundClip: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

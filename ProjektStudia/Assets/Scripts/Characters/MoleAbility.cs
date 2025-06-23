@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MoleAbility : MonoBehaviour
 {
@@ -11,12 +12,21 @@ public class MoleAbility : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private Animator animator;
+    [SerializeField] private Transform parentObject;
 
+    private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     private bool isDigging = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (parentObject == null)
+        {
+            return;
+        }
+
+        spriteRenderers.AddRange(parentObject.GetComponentsInChildren<SpriteRenderer>());
     }
 
     void Update()
@@ -30,6 +40,12 @@ public class MoleAbility : MonoBehaviour
     private void StartAnimation()
     {
         animator.SetBool("Dig", true);
+
+        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.removeControl = true;
+        }
     }
 
     private void StartDigging()
@@ -62,6 +78,14 @@ public class MoleAbility : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+    }
+
+    public void SetVisibleOutsideMask()
+    {
+        foreach (var sr in spriteRenderers)
+        {
+            sr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        }
     }
 }
 

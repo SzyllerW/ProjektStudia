@@ -8,6 +8,7 @@ public class PlayerDeath : MonoBehaviour
     private bool isDead = false;
     private Coroutine currentRespawnRoutine;
     private bool deathBlockedTemporarily = false;
+    private bool killWithShaking = true;
 
     [SerializeField] private AudioClip deathSoundClip;
 
@@ -33,12 +34,15 @@ public class PlayerDeath : MonoBehaviour
 
         isDead = true;
 
-        if (SoundFXManager.instance != null)
-            SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, transform, 1.3f);
+        if (killWithShaking)
+        {
+            if (SoundFXManager.instance != null)
+                SoundFXManager.instance.PlaySoundFXClip(deathSoundClip, transform, 1.3f);
 
-        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
-        if (cameraFollow != null)
-            cameraFollow.ShakeBeforeFollow(1f, 5f);
+            CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+            if (cameraFollow != null)
+                cameraFollow.ShakeBeforeFollow(1f, 5f);
+        }
 
         PlayerCarry carry = GetComponent<PlayerCarry>();
         if (carry != null)
@@ -57,6 +61,7 @@ public class PlayerDeath : MonoBehaviour
     {
         isDead = false;
         currentRespawnRoutine = null;
+        killWithShaking = true;
         StartCoroutine(BlockDeathBriefly());
     }
 
@@ -65,6 +70,12 @@ public class PlayerDeath : MonoBehaviour
         deathBlockedTemporarily = true;
         yield return new WaitForSeconds(0.3f);
         deathBlockedTemporarily = false;
+    }
+
+    public void KillWithoutShaking()
+    {
+        killWithShaking = false;
+        Kill();
     }
 }
 

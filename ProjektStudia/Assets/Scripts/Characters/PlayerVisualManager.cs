@@ -67,14 +67,14 @@ public class PlayerVisualManager : MonoBehaviour
 
     public void KilledBySpikes()
     {
-        gameObject.SetActive(false);
-
         if (animator != null)
         {
             animator.SetBool("IsKilledBySpikes", false);
             animator.Play("Movement", 0, 0f);
             animator.Update(0);
         }
+
+        FindObjectOfType<PlayerDeath>().KillWithoutShaking();
 
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager != null)
