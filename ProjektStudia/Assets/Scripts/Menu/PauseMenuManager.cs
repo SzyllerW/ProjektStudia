@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class PauseMenuManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private GameObject descriptionPanel;
     [SerializeField] private AudioClip buttonSoundClip;
     [SerializeField] private GameObject pauseButton;
+    [SerializeField] private VideoPlayer videoPlayer;
 
     private bool isPaused = false;
     private int pressCount = 0;
@@ -125,6 +127,7 @@ public class PauseMenuManager : MonoBehaviour
         {
             pauseMenuPanel.SetActive(false);
             descriptionPanel.SetActive(true);
+            videoPlayer.Play();
 
             Time.timeScale = 0f;
             isPaused = true;
@@ -133,6 +136,7 @@ public class PauseMenuManager : MonoBehaviour
         {
             descriptionPanel.SetActive(false);
             pauseMenuPanel.SetActive(true);
+            videoPlayer.Stop();
         }
     }
 

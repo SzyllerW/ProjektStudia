@@ -6,6 +6,8 @@ public class BerryBush : MonoBehaviour
     [SerializeField] private List<GameObject> berries = new List<GameObject>();
     public List<GameObject> Berries => berries;
     [SerializeField] private int maxBerries = 4;
+    [SerializeField] private AudioClip pickUpItemClip;
+    [SerializeField] private float pickUpItemVolume = 1f;
 
     private HashSet<GameObject> playersThatCollected = new HashSet<GameObject>();
     private int berriesCollected = 0;
@@ -42,6 +44,7 @@ public class BerryBush : MonoBehaviour
 
                 berriesCollected++;
                 playersThatCollected.Add(other.gameObject);
+                SoundFXManager.instance.PlaySoundFXClip(pickUpItemClip, transform, pickUpItemVolume);
 
                 if (GameManager.Instance != null)
                 {

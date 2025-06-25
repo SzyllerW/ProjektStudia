@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dirtMoundPrefab: {fileID: 8120809946743615725, guid: dd67a84141d917a4bac7016e825c7d5a, type: 3}
-  diggingDelay: 1
+  diggingDelay: 0.5
   groundLayer:
     serializedVersion: 2
     m_Bits: 64

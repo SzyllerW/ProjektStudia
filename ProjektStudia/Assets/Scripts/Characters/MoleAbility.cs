@@ -13,7 +13,6 @@ public class MoleAbility : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private Animator animator;
     [SerializeField] private Transform parentObject;
-
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     private bool isDigging = false;
 
@@ -63,6 +62,7 @@ public class MoleAbility : MonoBehaviour
         yield return new WaitForSeconds(diggingDelay);
 
         Instantiate(dirtMoundPrefab, transform.position, Quaternion.identity);
+        SoundFXManager.instance.PlaySoundFXClip(moundPopSound, transform, moundPopVolume);
 
         GameManager gm = FindObjectOfType<GameManager>();
         if (gm != null)

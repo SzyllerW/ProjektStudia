@@ -52,34 +52,42 @@ MonoBehaviour:
   parentObject: {fileID: 0}
   descriptionPanel: {fileID: 0}
   descriptionText: {fileID: 0}
-  characterDescriptions:
-  - "Ten niepozorny p\u0142az opanowa\u0142 zdolno\u015B\u0107 nazywan\u0105 podw\xF3jnym
-    skokiem. Latami doskonali\u0142 swoj\u0105 technik\u0119 na polach ksi\u0119\u017Cycowych,
-    po niewidocznej stronie satelity. Jego umiej\u0119tno\u015Bci\u0105 dor\xF3wnuje
-    podobno tylko apetyt."
-  - "Ten antarktyczny nielot potrafi\u0105cy przemieni\u0107 si\u0119 w blok lodu,
-    zadba o to, \u017Ceby\u015B dotar\u0142(a) bezpiecznie do celu. Chocia\u017C
-    doskonale czuje si\u0119 w zimnej pr\xF3\u017Cni, niech Ci\u0119 to nie zwiedzie,
-    jego serce roztopi najgrubsze lody.  Ten zoonauta sprawdzi si\u0119 doskonale
-    do budowania schod\xF3w i platform, uwa\u017Caj tylko, \u017Ceby si\u0119 na
-    nich nie po\u015Blizgn\u0105\u0107!"
-  - "Ten niewielki ssak niewra\u017Cliwy na \u015Bwiat\u0142o gwiazd \u017Cyje pod
-    ziemi\u0105 i kocha kopa\u0107 kopce we wszystkim, co znajdzie. U\u017Cyj kt\xF3rego\u015B
-    jako trampoliny i odbij si\u0119 do gwiazd! Je\u015Bli widzieli\u015Bcie tunele
-    na Marsie to prawdopodobnie jego sprawka.  \u015Awietnie nada si\u0119 do pomocy
-    pozosta\u0142ym cz\u0142onkom za\u0142ogi podczas przemierzania du\u017Cych dystans\xF3w
-    w powietrzu."
-  - "Ten pomara\u0144czowy amator kocimi\u0119tki jest prawdziwym mistrzem wspinaczki.
-    Potrafi chwyta\u0107 si\u0119 i skaka\u0107 po \u015Bcianach, co pozwala mu dociera\u0107
-    w miejsca niedost\u0119pne dla innych. Zanim zaprosisz go do ekipy, upewnij si\u0119
-    tylko, \u017Ce nie masz w niej psa.  Poradzi sobie bez problemu w sytuacjach,
-    gdzie trzeba wspi\u0105\u0107 si\u0119 wysoko bez pomocy poziomych platform."
   contentTransform: {fileID: 0}
   buttonSound: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
-  characterInfographic: {fileID: 0}
-  characterInfographicSprites:
-  - {fileID: 21300000, guid: 97d13cd260f1da7439e9a085038e8b33, type: 3}
-  - {fileID: 21300000, guid: 49b5a38db05b0ba4f8c15fa277a54eac, type: 3}
-  - {fileID: 21300000, guid: dd674a2f6a57c5244a7dfdcc8f178346, type: 3}
-  - {fileID: 21300000, guid: 245c947cde8832e41afdc6bef30d628e, type: 3}
+  videoPlayer: {fileID: 0}
+  videoClips:
+  - {fileID: 32900000, guid: b7c6a5a53602b624ab460ce8cb526c87, type: 3}
+  - {fileID: 32900000, guid: 2c88a834fbdcf424fbb60a2cc51a13bb, type: 3}
+  - {fileID: 32900000, guid: 5b215dc7aa966b247ae4819896f8a538, type: 3}
+  - {fileID: 32900000, guid: 013209acdada97a44b6acddfaead4d6f, type: 3}
+  characterNameLocalized:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  characterClassLocalized:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  characterDescriptionLocalized:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   characterCount: 4
+  references:
+    version: 2
+    RefIds: []

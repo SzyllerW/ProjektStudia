@@ -287,6 +287,8 @@ MonoBehaviour:
   - {fileID: 1377046889568125414}
   - {fileID: 6601054074705105459}
   maxBerries: 4
+  pickUpItemClip: {fileID: 8300000, guid: 74da1c5d321e9ab4fbb5a9d077939ff5, type: 3}
+  pickUpItemVolume: 1
 --- !u!1 &3111684432892509411
 GameObject:
   m_ObjectHideFlags: 0

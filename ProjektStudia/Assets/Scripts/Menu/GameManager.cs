@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public Transform respawnPoint;
-    public List<GameObject> characterPrefabs;
+    public CharacterDatabase characterDatabase;
     public Transform characterIconPanel;
     public GameObject characterIconPrefab;
-    [SerializeField] private List<Sprite> characterIcons;
+    public List<Sprite> characterIcons;
 
     private List<CharacterIconButton> iconButtons = new List<CharacterIconButton>();
     private List<GameObject> activeCharacters = new List<GameObject>();
@@ -27,26 +27,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip lossAudioClip;
     [SerializeField] private float lossVolume = 0.1f;
 
-    [Header("Warunki zwyciêstwa")]
-    [SerializeField] private int totalCollectibles = 0;
-    private int collectedCount = 0;
-
+    [Header("Warunki zwyciÃªstwa")]
     [SerializeField] private bool requiresAllCollectibles = false;
     [SerializeField] private bool requiresAcornDelivery = false;
     [SerializeField] private GameObject winScreen;
     [SerializeField] private AudioClip winAudioClip;
     [SerializeField] private float winVolume = 0.1f;
 
-    [Header("Acorn Delivery")]
-    [SerializeField] private int requiredAcorns = 1;
+    private int totalCollectibles = 0;
+    private int collectedCount = 0;
+    private int requiredAcorns = 1;
     private int deliveredAcorns = 0;
-
-    [Header("Berry Collectibles")]
-    [SerializeField] private int totalBerries = 0;
+    private int totalBerries = 0;
     private int collectedBerries = 0;
+
+    [SerializeField] private LevelConfig levelConfig;
 
     private void Awake()
     {
+        SaveSystem.Load();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -55,17 +54,17 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        var all = FindObjectsOfType<CollectibleItem>(true);
-        totalCollectibles = all.Length;
+        totalCollectibles = FindObjectsOfType<CollectibleItem>(true).Length;
     }
 
     private void Start()
     {
+        Debug.Log("ODBLOKOWANE POSTACIE: " + string.Join(",", SaveSystem.GetUnlockedCharacters()));
+
         CollectibleItem.OnItemCollected += OnItemCollected;
         totalBerries = CountTotalBerries();
 
-        if (characterPrefabs.Count == 0) return;
+        if (characterDatabase == null || characterDatabase.allCharacters.Count == 0) return;
 
         if (!isTutorial) GenerateCharacterIcons();
         else SpawnTutorialCharacter();
@@ -82,7 +81,6 @@ public class GameManager : MonoBehaviour
         foreach (var bush in FindObjectsOfType<BerryBush>())
         {
             count += bush.Berries.Count;
-
         }
         return count;
     }
@@ -93,11 +91,14 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
         iconButtons.Clear();
 
-        for (int i = 0; i < characterPrefabs.Count; i++)
+        List<int> unlocked = SaveSystem.GetUnlockedCharacters();
+
+        for (int i = 0; i < characterDatabase.allCharacters.Count; i++)
         {
+            if (!unlocked.Contains(i)) continue;
+
             GameObject newIcon = Instantiate(characterIconPrefab, characterIconPanel);
             CharacterIconButton iconButton = newIcon.GetComponent<CharacterIconButton>();
             if (iconButton != null)
@@ -116,9 +117,9 @@ public class GameManager : MonoBehaviour
 
     private void SpawnTutorialCharacter()
     {
-        if (characterPrefabs.Count == 0) return;
+        if (characterDatabase.allCharacters.Count == 0) return;
 
-        GameObject tutorialChar = Instantiate(characterPrefabs[0], respawnPoint.position, Quaternion.identity);
+        GameObject tutorialChar = Instantiate(characterDatabase.allCharacters[0], respawnPoint.position, Quaternion.identity);
         tutorialChar.SetActive(true);
         activeCharacters.Add(tutorialChar);
         currentCharacterIndex = 0;
@@ -130,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectCharacter(int index)
     {
-        if (!canSelectCharacter || index >= characterPrefabs.Count) return;
+        if (!canSelectCharacter || index >= characterDatabase.allCharacters.Count) return;
 
         if (currentCharacterIndex >= 0 && currentCharacterIndex < activeCharacters.Count)
         {
@@ -145,13 +146,12 @@ public class GameManager : MonoBehaviour
 
         if (characterToActivate == null)
         {
-            characterToActivate = Instantiate(characterPrefabs[index], respawnPoint.position, Quaternion.identity);
+            characterToActivate = Instantiate(characterDatabase.allCharacters[index], respawnPoint.position, Quaternion.identity);
             activeCharacters.Add(characterToActivate);
         }
 
         currentCharacterIndex = index;
         StartCoroutine(PrepareAndActivate(characterToActivate));
-
         canSelectCharacter = false;
 
         if (index >= 0 && index < iconButtons.Count)
@@ -209,7 +209,6 @@ public class GameManager : MonoBehaviour
             {
                 carry.DropAcornAtCheckpoint();
             }
-
             character.SetActive(false);
             activeCharacters.Remove(character);
         }
@@ -228,7 +227,7 @@ public class GameManager : MonoBehaviour
             activeCharacters.Clear();
         }
 
-        GameObject newChar = Instantiate(characterPrefabs[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
+        GameObject newChar = Instantiate(characterDatabase.allCharacters[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
         newChar.SetActive(true);
         activeCharacters.Add(newChar);
         currentCharacterIndex = 0;
@@ -274,7 +273,6 @@ public class GameManager : MonoBehaviour
     public void CheckIfNoCharactersLeft()
     {
         bool anyInteractable = false;
-
         foreach (var button in iconButtons)
         {
             if (button != null && button.GetComponent<Button>().interactable)
@@ -341,6 +339,7 @@ public class GameManager : MonoBehaviour
         SoundFXManager.instance.PlaySoundFXClip(winAudioClip, transform, winVolume);
     }
 }
+
 
 
 
