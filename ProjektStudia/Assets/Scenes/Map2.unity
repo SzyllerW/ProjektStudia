@@ -2763,6 +2763,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 316231120}
     - target: {fileID: 5793196589981225707, guid: ad2478b0c800f1547a58bb1a0a9453ff, type: 3}
+      propertyPath: videoPlayer
+      value: 
+      objectReference: {fileID: 6162027453470537314}
+    - target: {fileID: 5793196589981225707, guid: ad2478b0c800f1547a58bb1a0a9453ff, type: 3}
       propertyPath: settingsPanel
       value: 
       objectReference: {fileID: 1474611169}
@@ -4860,17 +4864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2057070350 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 418871856084222688, guid: ebe01fd8cc63a494b8993d9e4bbfd890, type: 3}
-  m_PrefabInstance: {fileID: 6162027453470537313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6162027453470537313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4984,6 +4977,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebe01fd8cc63a494b8993d9e4bbfd890, type: 3}
+--- !u!328 &6162027453470537314 stripped
+VideoPlayer:
+  m_CorrespondingSourceObject: {fileID: 1335328809592580941, guid: ebe01fd8cc63a494b8993d9e4bbfd890, type: 3}
+  m_PrefabInstance: {fileID: 6162027453470537313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6363017820980858571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4996,6 +4994,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DescriptionManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7631479074039507276, guid: 50598a9240a1c6342a017e5783a3ec4d, type: 3}
+      propertyPath: videoPlayer
+      value: 
+      objectReference: {fileID: 6162027453470537314}
     - target: {fileID: 7631479074039507276, guid: 50598a9240a1c6342a017e5783a3ec4d, type: 3}
       propertyPath: parentObject
       value: 
@@ -5015,7 +5017,7 @@ PrefabInstance:
     - target: {fileID: 7631479074039507276, guid: 50598a9240a1c6342a017e5783a3ec4d, type: 3}
       propertyPath: characterInfographic
       value: 
-      objectReference: {fileID: 2057070350}
+      objectReference: {fileID: 0}
     - target: {fileID: 8656934748059592848, guid: 50598a9240a1c6342a017e5783a3ec4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
