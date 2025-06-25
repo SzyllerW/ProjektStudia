@@ -15,6 +15,8 @@ public class MoleAbility : MonoBehaviour
     [SerializeField] private Transform parentObject;
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     private bool isDigging = false;
+    public AudioClip moundPopSound;
+    public float moundPopVolume = 1.0f;
 
     void Start()
     {
