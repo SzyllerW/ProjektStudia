@@ -94,12 +94,6 @@ public class TrapPlatform : MonoBehaviour
         {
             playerMovement.enabled = false;
         }
-
-        PlayerDeath death = player.GetComponent<PlayerDeath>();
-        if (death != null)
-        {
-            death.Kill();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

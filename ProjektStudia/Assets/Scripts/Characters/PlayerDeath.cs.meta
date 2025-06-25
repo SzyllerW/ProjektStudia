@@ -3,7 +3,8 @@ guid: 7d220a2d87e0c38478a3409bd4470368
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - deathSoundClip: {fileID: 8300000, guid: b6cc406c3e1286140b6a147a16e2e69e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

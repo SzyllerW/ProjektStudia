@@ -29,7 +29,7 @@ public class DirtMound : MonoBehaviour
             PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
             if (playerMovement != null)
             {
-                playerMovement.RequestExternalJump(bouncePower);
+                playerMovement.RequestExternalJump(bouncePower, false);
                 SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, 1f);
             }
         }

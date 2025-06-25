@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Diagnostics;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -56,6 +57,20 @@ public class PlayerMovement : MonoBehaviour
 
     private WallClingJump wallClingJump;
 
+    [HideInInspector]
+    public bool removeControl
+    {
+        get => !playerHasControl;
+        set
+        {
+            playerHasControl = !value;
+
+            StackTrace stackTrace = new StackTrace();
+            string className = stackTrace.GetFrame(1)?.GetMethod()?.DeclaringType?.Name;
+            UnityEngine.Debug.LogWarning($"{className} has removed control from the player");
+        }
+    }
+
     void Start()
     {
         rb.gravityScale = 5;
@@ -90,12 +105,14 @@ public class PlayerMovement : MonoBehaviour
         if (externalJumpRequested)
         {
             float modifiedHorizontalVelocity = rb.velocity.x * horizontalJumpReduction;
-            rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f); // wyczyœæ pionow¹ prêdkoœæ
+
+            rb.velocity = new Vector2(modifiedHorizontalVelocity, rb.velocity.y);
             rb.velocity += Vector2.up * externalJumpForce;
+
+            UnityEngine.Debug.Log($"[FIXEDUPDATE] External jump executed. New Velocity: {rb.velocity}");
+
             coyoteTimeCounter = 0;
             externalJumpRequested = false;
-            ignoreJumpRelease = true; // zablokuj trzymanie spacji
-            Debug.Log("[FIXEDUPDATE] External jump executed.");
             return;
         }
 
@@ -120,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferTime;
-            Debug.Log("[INPUT] Jump button pressed");
+            UnityEngine.Debug.Log("[INPUT] Jump button pressed");
             if (IsGrounded()) ResetTrailRenderer();
         }
         else
@@ -132,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
             (coyoteTimeCounter > 0 || (wallClingJump != null && wallClingJump.IsClinging)) &&
             !wasLaunchedFromMound)
         {
-            Debug.Log("[JUMP] Conditions met: Coyote=" + coyoteTimeCounter + ", Clinging=" + wallClingJump?.IsClinging);
+            UnityEngine.Debug.Log("[JUMP] Conditions met: Coyote=" + coyoteTimeCounter + ", Clinging=" + wallClingJump?.IsClinging);
             Jump();
             jumpBufferCounter = 0;
             SoundFXManager.instance.PlaySoundFXClip(jumpSound, transform, jumpVolume);
@@ -146,12 +163,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(modifiedHorizontalVelocity, 0f);
         rb.velocity += Vector2.up * modifiedJumpForce;
         coyoteTimeCounter = 0;
-        Debug.Log("[JUMP] Jump executed");
+        UnityEngine.Debug.Log("[JUMP] Jump executed");
     }
 
     private void ApplyMovement()
     {
-        if (!playerHasControl) return;
+        if (!playerHasControl || (wallClingJump != null && wallClingJump.IsClinging)) return;
 
         float targetSpeed = horizontal * (IsGrounded() ? speed : jumpHorizontalSpeed);
         float accelerationRate = IsGrounded() ? (Mathf.Abs(horizontal) > 0.1f ? acceleration : deceleration) : airAcceleration;
@@ -214,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Collider2D groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         bool grounded = groundCollider != null;
-        Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
+        UnityEngine.Debug.DrawRay(groundCheck.position, Vector2.down * 0.2f, grounded ? Color.green : Color.red);
 
         if (grounded)
         {
@@ -242,12 +259,12 @@ public class PlayerMovement : MonoBehaviour
         coyoteTimeCounter = coyoteTime;
     }
 
-    public void RequestExternalJump(float force)
+    public void RequestExternalJump(float force, bool allowHold)
     {
         externalJumpRequested = true;
         externalJumpForce = force;
-        ignoreJumpRelease = true;
-        Debug.Log("[REQUEST JUMP] Requested external jump with force: " + force);
+        ignoreJumpRelease = !allowHold;
+        UnityEngine.Debug.Log("[REQUEST JUMP] Requested external jump with force: " + force);
     }
 }
 

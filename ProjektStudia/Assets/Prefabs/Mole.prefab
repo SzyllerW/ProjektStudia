@@ -472,10 +472,7 @@ MonoBehaviour:
   groundCheck: {fileID: 440415993664081664}
   groundCheckRadius: 0.2
   animator: {fileID: 4336597031928889974}
-  diggingSound: {fileID: 8300000, guid: 181199c5d3e98b84f86eceffb516fe84, type: 3}
-  diggingVolume: 1
-  moundPopSound: {fileID: 8300000, guid: f2900608acd7e2741ac4a40dbdba1021, type: 3}
-  moundPopVolume: 1.5
+  parentObject: {fileID: 2685644148989650559}
 --- !u!212 &1201959364616346854
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -720,7 +717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8999208322784044736, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8999208322784044736, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -744,7 +741,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8250169266279454816, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8250169266279454816, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -764,7 +761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8096809280237220390, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8096809280237220390, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -848,7 +845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4113730921883770466, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4113730921883770466, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -864,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3917481436840117417, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3917481436840117417, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -888,7 +885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3808790438985163242, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3808790438985163242, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -912,7 +909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2993924110092619342, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2993924110092619342, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -972,7 +969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 635747077576858020, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 635747077576858020, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -996,7 +993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2158355216879622689, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2158355216879622689, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -1040,7 +1037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4972160052680036511, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4972160052680036511, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -1060,7 +1057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5276974917231012523, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5276974917231012523, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -1088,7 +1085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6446578264674140269, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6446578264674140269, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -1112,7 +1109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6909777329387297108, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_MaskInteraction
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6909777329387297108, guid: 1f35750f043552f4e8ba3cc7e9ef18b1, type: 3}
       propertyPath: m_RenderingLayerMask
