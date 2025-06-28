@@ -14,7 +14,6 @@ public class MapSelectionManager : MonoBehaviour
     public Button map7Button;
     public Button map8Button;
     public Button backButton;
-    public Button confirmButton;
 
     [Header("Przyciski do tutoriali")]
     public Button frogTutorialButton;
@@ -23,10 +22,9 @@ public class MapSelectionManager : MonoBehaviour
     public Button catTutorialButton;
 
     private int selectedMap = 0;
-    private Color defaultColor = Color.white;
-    private Color selectedColor = Color.grey;
 
     [SerializeField] private AudioClip buttonSoundClip;
+    [SerializeField] private TransitionsManager transitionsManager;
 
     private void Start()
     {
@@ -46,8 +44,6 @@ public class MapSelectionManager : MonoBehaviour
         map8Button.interactable = true;
 
         backButton.onClick.AddListener(BackToMainMenu);
-        confirmButton.onClick.AddListener(ConfirmSelection);
-        confirmButton.interactable = false;
 
         map1Button.onClick.AddListener(() => ToggleMapSelection(1, map1Button));
         map2Button.onClick.AddListener(() => ToggleMapSelection(2, map2Button));
@@ -62,52 +58,15 @@ public class MapSelectionManager : MonoBehaviour
         moleTutorialButton.onClick.AddListener(LoadMoleTutorial);
         penguinTutorialButton.onClick.AddListener(LoadPenguinTutorial);
         catTutorialButton.onClick.AddListener(LoadCatTutorial);
-
-        ResetButtonColors();
     }
 
     public async void ToggleMapSelection(int mapIndex, Button button)
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         await Task.Delay(100);
-
-        if (selectedMap == mapIndex)
-        {
-            selectedMap = 0;
-            confirmButton.interactable = false;
-            button.GetComponent<Image>().color = defaultColor;
-        }
-        else
-        {
-            selectedMap = mapIndex;
-            confirmButton.interactable = true;
-            ResetButtonColors();
-            button.GetComponent<Image>().color = selectedColor;
-        }
-    }
-
-    private void ResetButtonColors()
-    {
-        map1Button.GetComponent<Image>().color = defaultColor;
-        map2Button.GetComponent<Image>().color = defaultColor;
-        map3Button.GetComponent<Image>().color = defaultColor;
-        map4Button.GetComponent<Image>().color = defaultColor;
-        map5Button.GetComponent<Image>().color = defaultColor;
-        map6Button.GetComponent<Image>().color = defaultColor;
-        map7Button.GetComponent<Image>().color = defaultColor;
-        map8Button.GetComponent<Image>().color = defaultColor;
-    }
-
-    private async void ConfirmSelection()
-    {
-        if (selectedMap > 0)
-        {
-            SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-            await Task.Delay(100);
-            PlayerPrefs.SetInt("SelectedMap", selectedMap);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("Map" + selectedMap);
-        }
+        PlayerPrefs.SetInt("SelectedMap", mapIndex);
+        PlayerPrefs.Save();
+        transitionsManager.StartCoroutine(transitionsManager.fadeExit("Map" + mapIndex));
     }
 
     private async void BackToMainMenu()
@@ -141,24 +100,24 @@ public class MapSelectionManager : MonoBehaviour
     private void LoadFrogTutorial()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        SceneManager.LoadScene("FrogTutorial");
+        transitionsManager.StartCoroutine(transitionsManager.fadeExit("FrogTutorial"));
     }
 
     private void LoadMoleTutorial()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        SceneManager.LoadScene("MoleTutorial");
+        transitionsManager.StartCoroutine(transitionsManager.fadeExit("MoleTutorial"));
     }
 
     private void LoadPenguinTutorial()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        SceneManager.LoadScene("PenguinTutorial");
+        transitionsManager.StartCoroutine(transitionsManager.fadeExit("PenguinTutorial"));
     }
 
     private void LoadCatTutorial()
     {
         SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        SceneManager.LoadScene("KittyTutorial");
+        transitionsManager.StartCoroutine(transitionsManager.fadeExit("KittyTutorial"));
     }
 }
