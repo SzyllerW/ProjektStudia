@@ -96,6 +96,20 @@ public class PlayerMovement : MonoBehaviour
         {
             wasLaunchedFromMound = false;
         }
+
+        bool shouldPlayWalk = IsGrounded() && Mathf.Abs(horizontal) > 0.1f;
+
+        if (shouldPlayWalk && !isPlayingWalkingSound)
+        {
+            walkingAudioSource.loop = true;
+            walkingAudioSource.Play();
+            isPlayingWalkingSound = true;
+        }
+        else if (!shouldPlayWalk && isPlayingWalkingSound)
+        {
+            walkingAudioSource.Stop();
+            isPlayingWalkingSound = false;
+        }
     }
 
     private void FixedUpdate()

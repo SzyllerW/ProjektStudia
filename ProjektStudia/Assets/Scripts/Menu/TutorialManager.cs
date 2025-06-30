@@ -10,6 +10,8 @@ public class ChangeButtonsColor : MonoBehaviour
 
     void Update()
     {
+        Debug.Log($"[ChangeButtonsColor] TimeScale: {Time.timeScale}");
+
         for (int i = 0; i < keys.Length; i++)
         {
             // Zmiana koloru na czarny po wciœniêciu klawisza

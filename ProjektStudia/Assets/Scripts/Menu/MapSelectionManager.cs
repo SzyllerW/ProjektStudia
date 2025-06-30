@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,109 +16,92 @@ public class MapSelectionManager : MonoBehaviour
     public Button map8Button;
     public Button backButton;
 
-    [Header("Przyciski do tutoriali")]
-    public Button frogTutorialButton;
-    public Button moleTutorialButton;
-    public Button penguinTutorialButton;
-    public Button catTutorialButton;
-
-    private int selectedMap = 0;
+    [Header("Przyciski do tutoriali (przypisz w Inspectorze zgodnie z indexem postaci)")]
+    public List<Button> tutorialButtons; 
 
     [SerializeField] private AudioClip buttonSoundClip;
     [SerializeField] private TransitionsManager transitionsManager;
 
+    private int selectedMap = 0;
+    private Dictionary<string, Button> levelButtonMap;
+
     private void Start()
     {
-        int map1Completed = PlayerPrefs.GetInt("Map1Completed", 1);
-        int map2Completed = PlayerPrefs.GetInt("Map2Completed", 1);
+        SaveSystem.Load();
 
-        Debug.Log($"Map1Completed: {map1Completed}");
-        Debug.Log($"Map2Completed: {map2Completed}");
+        levelButtonMap = new Dictionary<string, Button>
+        {
+            { "Map1", map1Button },
+            { "Map2", map2Button },
+            { "Map3", map3Button },
+            { "Map4", map4Button },
+            { "Map5", map5Button },
+            { "Map6", map6Button },
+            { "Map7", map7Button },
+            { "Map8", map8Button },
+        };
 
-        map1Button.interactable = true;
-        map2Button.interactable = true;
-        map3Button.interactable = true;
-        map4Button.interactable = true;
-        map5Button.interactable = true;
-        map6Button.interactable = true;
-        map7Button.interactable = true;
-        map8Button.interactable = true;
+        foreach (var btn in levelButtonMap.Values)
+            btn.interactable = false;
+
+        foreach (string level in SaveSystem.CurrentData.unlockedLevels)
+        {
+            if (levelButtonMap.TryGetValue(level, out Button btn))
+                btn.interactable = true;
+        }
+
+        foreach (var btn in tutorialButtons)
+            btn.interactable = false;
+
+        foreach (int characterIndex in SaveSystem.CurrentData.unlockedCharacters)
+        {
+            if (characterIndex >= 0 && characterIndex < tutorialButtons.Count)
+                tutorialButtons[characterIndex].interactable = true;
+        }
+
+        map1Button.onClick.AddListener(() => ToggleMapSelection(1, "Map1"));
+        map2Button.onClick.AddListener(() => ToggleMapSelection(2, "Map2"));
+        map3Button.onClick.AddListener(() => ToggleMapSelection(3, "Map3"));
+        map4Button.onClick.AddListener(() => ToggleMapSelection(4, "Map4"));
+        map5Button.onClick.AddListener(() => ToggleMapSelection(5, "Map5"));
+        map6Button.onClick.AddListener(() => ToggleMapSelection(6, "Map6"));
+        map7Button.onClick.AddListener(() => ToggleMapSelection(7, "Map7"));
+        map8Button.onClick.AddListener(() => ToggleMapSelection(8, "Map8"));
+
+        for (int i = 0; i < tutorialButtons.Count; i++)
+        {
+            int capturedIndex = i;
+            tutorialButtons[i].onClick.AddListener(() => LoadTutorial(capturedIndex));
+        }
 
         backButton.onClick.AddListener(BackToMainMenu);
-
-        map1Button.onClick.AddListener(() => ToggleMapSelection(1, map1Button));
-        map2Button.onClick.AddListener(() => ToggleMapSelection(2, map2Button));
-        map3Button.onClick.AddListener(() => ToggleMapSelection(3, map3Button));
-        map4Button.onClick.AddListener(() => ToggleMapSelection(4, map4Button));
-        map5Button.onClick.AddListener(() => ToggleMapSelection(5, map5Button));
-        map6Button.onClick.AddListener(() => ToggleMapSelection(6, map6Button));
-        map7Button.onClick.AddListener(() => ToggleMapSelection(7, map7Button));
-        map8Button.onClick.AddListener(() => ToggleMapSelection(8, map8Button));
-
-        frogTutorialButton.onClick.AddListener(LoadFrogTutorial);
-        moleTutorialButton.onClick.AddListener(LoadMoleTutorial);
-        penguinTutorialButton.onClick.AddListener(LoadPenguinTutorial);
-        catTutorialButton.onClick.AddListener(LoadCatTutorial);
     }
 
-    public async void ToggleMapSelection(int mapIndex, Button button)
+    public async void ToggleMapSelection(int mapIndex, string sceneName)
     {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        SoundFXManager.instance?.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         await Task.Delay(100);
         PlayerPrefs.SetInt("SelectedMap", mapIndex);
         PlayerPrefs.Save();
-        transitionsManager.StartCoroutine(transitionsManager.fadeExit("Map" + mapIndex));
+        transitionsManager.StartCoroutine(transitionsManager.fadeExit(sceneName));
     }
 
     private async void BackToMainMenu()
     {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
+        SoundFXManager.instance?.PlaySoundFXClip(buttonSoundClip, transform, 1f);
         await Task.Delay(100);
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void CompleteLevel()
+    private void LoadTutorial(int index)
     {
-        Debug.Log("[LevelManager] Level Completed!");
+        SoundFXManager.instance?.PlaySoundFXClip(buttonSoundClip, transform, 1f);
 
-        int currentMap = PlayerPrefs.GetInt("SelectedMap", 1);
-        Debug.Log($"[LevelManager] Current Map: {currentMap}");
+        string[] tutorialScenes = { "FrogTutorial", "PenguinTutorial", "MoleTutorial", "KittyTutorial" };
 
-        if (currentMap == 1 && PlayerPrefs.GetInt("Map1Completed", 0) == 0)
+        if (index >= 0 && index < tutorialScenes.Length)
         {
-            PlayerPrefs.SetInt("Map1Completed", 1);
-            Debug.Log("Mapa 1 ukoñczona! Map2 odblokowana!");
+            transitionsManager.StartCoroutine(transitionsManager.fadeExit(tutorialScenes[index]));
         }
-        else if (currentMap == 2 && PlayerPrefs.GetInt("Map2Completed", 0) == 0)
-        {
-            PlayerPrefs.SetInt("Map2Completed", 1);
-            Debug.Log("Mapa 2 ukoñczona! Map3 odblokowana!");
-        }
-
-        PlayerPrefs.Save();
-    }
-
-    private void LoadFrogTutorial()
-    {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        transitionsManager.StartCoroutine(transitionsManager.fadeExit("FrogTutorial"));
-    }
-
-    private void LoadMoleTutorial()
-    {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        transitionsManager.StartCoroutine(transitionsManager.fadeExit("MoleTutorial"));
-    }
-
-    private void LoadPenguinTutorial()
-    {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        transitionsManager.StartCoroutine(transitionsManager.fadeExit("PenguinTutorial"));
-    }
-
-    private void LoadCatTutorial()
-    {
-        SoundFXManager.instance.PlaySoundFXClip(buttonSoundClip, transform, 1f);
-        transitionsManager.StartCoroutine(transitionsManager.fadeExit("KittyTutorial"));
     }
 }

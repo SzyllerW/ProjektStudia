@@ -2196,19 +2196,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a7949d0a64c0c499eadc9672f02f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map1Button: {fileID: 366809520}
+  map1Button: {fileID: 1151576612}
   map2Button: {fileID: 1722126321}
-  map3Button: {fileID: 127241907}
-  map4Button: {fileID: 333142315}
-  map5Button: {fileID: 83457264}
-  map6Button: {fileID: 1151576612}
+  map3Button: {fileID: 1717752279}
+  map4Button: {fileID: 127241907}
+  map5Button: {fileID: 333142315}
+  map6Button: {fileID: 83457264}
   map7Button: {fileID: 113107838}
-  map8Button: {fileID: 1717752279}
+  map8Button: {fileID: 366809520}
   backButton: {fileID: 1977159874}
-  frogTutorialButton: {fileID: 787101548}
-  moleTutorialButton: {fileID: 426587886}
-  penguinTutorialButton: {fileID: 200912097}
-  catTutorialButton: {fileID: 1522843926}
+  tutorialButtons:
+  - {fileID: 787101548}
+  - {fileID: 200912097}
+  - {fileID: 426587886}
+  - {fileID: 1522843926}
   buttonSoundClip: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
   transitionsManager: {fileID: 463915388}
 --- !u!1 &1516888142
