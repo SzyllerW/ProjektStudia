@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public Transform respawnPoint;
-    public CharacterDatabase characterDatabase;
+    public List<GameObject> playableCharacters; 
     public Transform characterIconPanel;
     public GameObject characterIconPrefab;
-    public List<Sprite> characterIcons;
+    public List<Sprite> characterIcons; 
 
     private List<CharacterIconButton> iconButtons = new List<CharacterIconButton>();
     private List<GameObject> activeCharacters = new List<GameObject>();
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip lossAudioClip;
     [SerializeField] private float lossVolume = 0.1f;
 
-    [Header("Warunki zwyciêstwa")]
+    [Header("Warunki zwycięstwa")]
     [SerializeField] private bool requiresAllCollectibles = false;
     [SerializeField] private bool requiresAcornDelivery = false;
     [SerializeField] private GameObject winScreen;
@@ -41,11 +41,8 @@ public class GameManager : MonoBehaviour
     private int totalBerries = 0;
     private int collectedBerries = 0;
 
-    [SerializeField] private LevelConfig levelConfig;
-
     private void Awake()
     {
-        SaveSystem.Load();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -59,12 +56,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("ODBLOKOWANE POSTACIE: " + string.Join(",", SaveSystem.GetUnlockedCharacters()));
-
         CollectibleItem.OnItemCollected += OnItemCollected;
         totalBerries = CountTotalBerries();
 
-        if (characterDatabase == null || characterDatabase.allCharacters.Count == 0) return;
+        if (playableCharacters == null || playableCharacters.Count == 0) return;
 
         if (!isTutorial) GenerateCharacterIcons();
         else SpawnTutorialCharacter();
@@ -93,12 +88,8 @@ public class GameManager : MonoBehaviour
         }
         iconButtons.Clear();
 
-        List<int> unlocked = SaveSystem.GetUnlockedCharacters();
-
-        for (int i = 0; i < characterDatabase.allCharacters.Count; i++)
+        for (int i = 0; i < playableCharacters.Count; i++)
         {
-            if (!unlocked.Contains(i)) continue;
-
             GameObject newIcon = Instantiate(characterIconPrefab, characterIconPanel);
             CharacterIconButton iconButton = newIcon.GetComponent<CharacterIconButton>();
             if (iconButton != null)
@@ -117,9 +108,9 @@ public class GameManager : MonoBehaviour
 
     private void SpawnTutorialCharacter()
     {
-        if (characterDatabase.allCharacters.Count == 0) return;
+        if (playableCharacters.Count == 0) return;
 
-        GameObject tutorialChar = Instantiate(characterDatabase.allCharacters[0], respawnPoint.position, Quaternion.identity);
+        GameObject tutorialChar = Instantiate(playableCharacters[0], respawnPoint.position, Quaternion.identity);
         tutorialChar.SetActive(true);
         activeCharacters.Add(tutorialChar);
         currentCharacterIndex = 0;
@@ -131,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     public void SelectCharacter(int index)
     {
-        if (!canSelectCharacter || index >= characterDatabase.allCharacters.Count) return;
+        if (!canSelectCharacter || index >= playableCharacters.Count) return;
 
         if (currentCharacterIndex >= 0 && currentCharacterIndex < activeCharacters.Count)
         {
@@ -146,7 +137,7 @@ public class GameManager : MonoBehaviour
 
         if (characterToActivate == null)
         {
-            characterToActivate = Instantiate(characterDatabase.allCharacters[index], respawnPoint.position, Quaternion.identity);
+            characterToActivate = Instantiate(playableCharacters[index], respawnPoint.position, Quaternion.identity);
             activeCharacters.Add(characterToActivate);
         }
 
@@ -169,16 +160,10 @@ public class GameManager : MonoBehaviour
         ResetCharacter(character);
 
         var movement = character.GetComponent<PlayerMovement>();
-        if (movement != null)
-        {
-            movement.enabled = true;
-        }
+        if (movement != null) movement.enabled = true;
 
         var berryCollector = character.GetComponent<PlayerBerryCollector>();
-        if (berryCollector != null)
-        {
-            berryCollector.ResetCollector();
-        }
+        if (berryCollector != null) berryCollector.ResetCollector();
     }
 
     private void ResetCharacter(GameObject character)
@@ -205,10 +190,7 @@ public class GameManager : MonoBehaviour
         if (character != null)
         {
             PlayerCarry carry = character.GetComponent<PlayerCarry>();
-            if (carry != null)
-            {
-                carry.DropAcornAtCheckpoint();
-            }
+            if (carry != null) carry.DropAcornAtCheckpoint();
             character.SetActive(false);
             activeCharacters.Remove(character);
         }
@@ -227,17 +209,14 @@ public class GameManager : MonoBehaviour
             activeCharacters.Clear();
         }
 
-        GameObject newChar = Instantiate(characterDatabase.allCharacters[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
+        GameObject newChar = Instantiate(playableCharacters[0], respawnPoint.position + Vector3.up * 1.2f, Quaternion.identity);
         newChar.SetActive(true);
         activeCharacters.Add(newChar);
         currentCharacterIndex = 0;
         StartCoroutine(PrepareAndActivate(newChar));
 
         var death = newChar.GetComponent<PlayerDeath>();
-        if (death != null)
-        {
-            death.ResetDeath();
-        }
+        if (death != null) death.ResetDeath();
     }
 
     private IEnumerator FinalDeathCheck()
@@ -309,15 +288,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameOverSequence()
     {
-        /*CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
-        if (cameraFollow != null)
-        {
-            cameraFollow.ShakeBeforeFollow(1f, 8f);
-        }*/
-
         yield return new WaitForSeconds(2f);
-        lossScreen.SetActive(true);
-        SoundFXManager.instance.PlaySoundFXClip(lossAudioClip, transform, lossVolume);
+        lossScreen?.SetActive(true);
+        if (lossAudioClip != null)
+            SoundFXManager.instance?.PlaySoundFXClip(lossAudioClip, transform, lossVolume);
     }
 
     private void CheckWinCondition()
@@ -335,8 +309,9 @@ public class GameManager : MonoBehaviour
     private IEnumerator WinSequence()
     {
         yield return new WaitForSeconds(0.5f);
-        winScreen.SetActive(true);
-        SoundFXManager.instance.PlaySoundFXClip(winAudioClip, transform, winVolume);
+        winScreen?.SetActive(true);
+        if (winAudioClip != null)
+            SoundFXManager.instance?.PlaySoundFXClip(winAudioClip, transform, winVolume);
     }
 }
 

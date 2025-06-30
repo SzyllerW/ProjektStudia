@@ -4116,6 +4116,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: c9603c84ecaaca84bae7ed3934de44f9, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: playableCharacters.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterPrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 1886497336514422082, guid: 6230f4f3e75eedb40aeb83ac65041e5f, type: 3}
@@ -4129,6 +4133,14 @@ PrefabInstance:
       objectReference: {fileID: 851687536131307135, guid: 6516d6ece8b108841ad817d0d7119183, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 851687536131307135, guid: 6516d6ece8b108841ad817d0d7119183, type: 3}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: playableCharacters.Array.data[0]
+      value: 
+      objectReference: {fileID: 1886497336514422082, guid: 6230f4f3e75eedb40aeb83ac65041e5f, type: 3}
+    - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
+      propertyPath: playableCharacters.Array.data[1]
       value: 
       objectReference: {fileID: 851687536131307135, guid: 6516d6ece8b108841ad817d0d7119183, type: 3}
     - target: {fileID: 3170952277242752892, guid: db8d409606a04604b994c011920aeb23, type: 3}
