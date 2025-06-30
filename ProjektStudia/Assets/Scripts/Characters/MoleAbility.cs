@@ -47,6 +47,7 @@ public class MoleAbility : MonoBehaviour
         {
             playerMovement.removeControl = true;
         }
+        SoundFXManager.instance.PlaySoundFXClip(moundPopSound, transform, moundPopVolume);
     }
 
     private void StartDigging()
@@ -64,7 +65,6 @@ public class MoleAbility : MonoBehaviour
         yield return new WaitForSeconds(diggingDelay);
 
         Instantiate(dirtMoundPrefab, transform.position, Quaternion.identity);
-        SoundFXManager.instance.PlaySoundFXClip(moundPopSound, transform, moundPopVolume);
 
         GameManager gm = FindObjectOfType<GameManager>();
         if (gm != null)

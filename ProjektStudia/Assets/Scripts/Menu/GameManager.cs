@@ -296,12 +296,17 @@ public class GameManager : MonoBehaviour
 
     private void CheckWinCondition()
     {
+        Debug.Log("CheckWinCondition wywołany");
+
         bool allItemsCollected = !requiresAllCollectibles || collectedCount >= totalCollectibles;
         bool allAcornsDelivered = !requiresAcornDelivery || deliveredAcorns >= requiredAcorns;
         bool allBerriesCollected = collectedBerries >= totalBerries;
 
+        Debug.Log($"Items: {collectedCount}/{totalCollectibles}, Acorns: {deliveredAcorns}/{requiredAcorns}, Berries: {collectedBerries}/{totalBerries}");
+
         if (allItemsCollected && allAcornsDelivered && allBerriesCollected)
         {
+            Debug.Log("Spełniono warunki zwycięstwa — odblokowuję kolejny poziom");
             StartCoroutine(WinSequence());
         }
     }
@@ -309,10 +314,57 @@ public class GameManager : MonoBehaviour
     private IEnumerator WinSequence()
     {
         yield return new WaitForSeconds(0.5f);
+
+        string currentScene = SceneManager.GetActiveScene().name;
+        Debug.Log($"WinSequence dla sceny: {currentScene}");
+
+        switch (currentScene)
+        {
+            case "FrogTutorial":
+                SaveSystem.UnlockLevel("Map6");
+                break;
+            case "Map6":
+                SaveSystem.UnlockLevel("PenguinTutorial");
+                SaveSystem.UnlockCharacter(1); // pingwin
+                break;
+            case "PenguinTutorial":
+                SaveSystem.UnlockLevel("Map2");
+                break;
+            case "Map2":
+                SaveSystem.UnlockLevel("MoleTutorial");
+                SaveSystem.UnlockCharacter(2); // kret
+                break;
+            case "MoleTutorial":
+                SaveSystem.UnlockLevel("Map8");
+                break;
+            case "Map8":
+                SaveSystem.UnlockLevel("Map3");
+                break;
+            case "Map3":
+                SaveSystem.UnlockLevel("KittyTutorial");
+                SaveSystem.UnlockCharacter(3); // kot
+                break;
+            case "KittyTutorial":
+                SaveSystem.UnlockLevel("Map4");
+                break;
+            case "Map4":
+                SaveSystem.UnlockLevel("Map5");
+                break;
+            case "Map5":
+                SaveSystem.UnlockLevel("Map7");
+                break;
+            case "Map7":
+                SaveSystem.UnlockLevel("Map1");
+                break;
+        }
+
+        SaveSystem.Save();
+
         winScreen?.SetActive(true);
         if (winAudioClip != null)
             SoundFXManager.instance?.PlaySoundFXClip(winAudioClip, transform, winVolume);
     }
+
 }
 
 

@@ -30,14 +30,13 @@ public static class SaveSystem
         {
             CurrentData = new SaveData();
             CurrentData.unlockedCharacters.Add(0);     // <- odblokuj ¯abê
-            CurrentData.unlockedLevels.Add("Map1");    // <- odblokuj poziom
+            CurrentData.unlockedLevels.Add("FrogTutorial");     // <- odblokuj poziom
             Save();
         }
     }
 
     public static void Save()
     {
-        if (IsDevMode) return;
 
         string json = JsonUtility.ToJson(CurrentData, true);
         File.WriteAllText(SavePath, json);

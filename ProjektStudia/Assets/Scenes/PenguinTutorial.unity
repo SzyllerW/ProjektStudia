@@ -5234,7 +5234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1682533256
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5991,12 +5991,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 358997815}
-  - {fileID: 0}
-  keys: 6100000064000000200000006500000020000000
+  keys: 65000000
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   pressedColor: {r: 0.70440245, g: 0.70440245, b: 0.70440245, a: 1}
 --- !u!4 &1822257408

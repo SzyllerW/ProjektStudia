@@ -473,6 +473,8 @@ MonoBehaviour:
   groundCheckRadius: 0.2
   animator: {fileID: 4336597031928889974}
   parentObject: {fileID: 2685644148989650559}
+  moundPopSound: {fileID: 8300000, guid: 181199c5d3e98b84f86eceffb516fe84, type: 3}
+  moundPopVolume: 1
 --- !u!212 &1201959364616346854
 SpriteRenderer:
   m_ObjectHideFlags: 0

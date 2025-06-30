@@ -1391,7 +1391,6 @@ GameObject:
   - component: {fileID: 7754683976235402623}
   - component: {fileID: 3803287217587590216}
   - component: {fileID: 5029550551330287471}
-  - component: {fileID: 3227160555489806696}
   - component: {fileID: 7935005210301191561}
   - component: {fileID: 7433088918897484664}
   m_Layer: 5
@@ -1459,27 +1458,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3227160555489806696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145309652393124886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a7949d0a64c0c499eadc9672f02f1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map1Button: {fileID: 0}
-  map2Button: {fileID: 0}
-  map3Button: {fileID: 0}
-  backButton: {fileID: 0}
-  confirmButton: {fileID: 0}
-  frogTutorialButton: {fileID: 0}
-  moleTutorialButton: {fileID: 0}
-  penguinTutorialButton: {fileID: 0}
-  buttonSoundClip: {fileID: 0}
 --- !u!114 &7935005210301191561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4195,7 +4173,6 @@ GameObject:
   - component: {fileID: 959851388013074081}
   - component: {fileID: 5424530265215100219}
   - component: {fileID: 3914120211645267373}
-  - component: {fileID: 4797553274709694876}
   - component: {fileID: 5837674714394570273}
   - component: {fileID: 5880156591852087634}
   m_Layer: 5
@@ -4263,27 +4240,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4797553274709694876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5943700999118386764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a7949d0a64c0c499eadc9672f02f1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map1Button: {fileID: 0}
-  map2Button: {fileID: 0}
-  map3Button: {fileID: 0}
-  backButton: {fileID: 0}
-  confirmButton: {fileID: 0}
-  frogTutorialButton: {fileID: 0}
-  moleTutorialButton: {fileID: 0}
-  penguinTutorialButton: {fileID: 0}
-  buttonSoundClip: {fileID: 0}
 --- !u!114 &5837674714394570273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6073,7 +6029,6 @@ GameObject:
   - component: {fileID: 4396034159025989957}
   - component: {fileID: 7637139084047719723}
   - component: {fileID: 3429113542378445871}
-  - component: {fileID: 3931495178761976375}
   - component: {fileID: 7209162421434493964}
   - component: {fileID: 6545648105110436488}
   m_Layer: 5
@@ -6141,27 +6096,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3931495178761976375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8555513422000947950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a7949d0a64c0c499eadc9672f02f1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map1Button: {fileID: 0}
-  map2Button: {fileID: 0}
-  map3Button: {fileID: 0}
-  backButton: {fileID: 0}
-  confirmButton: {fileID: 0}
-  frogTutorialButton: {fileID: 0}
-  moleTutorialButton: {fileID: 0}
-  penguinTutorialButton: {fileID: 0}
-  buttonSoundClip: {fileID: 0}
 --- !u!114 &7209162421434493964
 MonoBehaviour:
   m_ObjectHideFlags: 0
