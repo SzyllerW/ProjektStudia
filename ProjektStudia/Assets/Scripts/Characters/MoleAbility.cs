@@ -32,15 +32,21 @@ public class MoleAbility : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isDigging && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.E) && !isDigging && IsGrounded() && !IsOnMovingPlatform())
         {
             StartAnimation();
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && IsOnMovingPlatform())
+        {
+            Debug.Log("Nie mo¿na kopaæ na ruchomej platformie.");
         }
     }
 
     private void StartAnimation()
     {
         animator.SetBool("Dig", true);
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
 
         PlayerMovement playerMovement = GetComponent<PlayerMovement>();
         if (playerMovement != null)
@@ -82,6 +88,10 @@ public class MoleAbility : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
+    private bool IsOnMovingPlatform()
+    {
+        return transform.parent != null && transform.parent.GetComponent<MovingPlatform>() != null;
+    }
     public void SetVisibleOutsideMask()
     {
         foreach (var sr in spriteRenderers)

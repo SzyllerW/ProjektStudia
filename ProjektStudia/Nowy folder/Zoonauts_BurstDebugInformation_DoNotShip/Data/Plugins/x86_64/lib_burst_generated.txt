@@ -11,6 +11,9 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=Unity.2D.IK.Runtime;
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
+--assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.ScriptableBuildPipeline;
+--assembly-defines=Unity.InternalAPIEngineBridge.013;
 --assembly-defines=Unity.RenderPipelines.Universal.Config.Runtime;
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
@@ -21,6 +24,7 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
+--assembly-defines=Unity.Localization;
 --assembly-defines=Unity.VisualScripting.Core;
 --assembly-defines=Unity.2D.Animation.Runtime;
 --assembly-defines=Unity.2D.Tilemap.Extras;
@@ -31,9 +35,11 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Unity.Addressables;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Newtonsoft.Json;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
@@ -112,6 +118,9 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=Unity.2D.IK.Runtime;
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
+--assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.ScriptableBuildPipeline;
+--assembly-defines=Unity.InternalAPIEngineBridge.013;
 --assembly-defines=Unity.RenderPipelines.Universal.Config.Runtime;
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
@@ -122,6 +131,7 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
+--assembly-defines=Unity.Localization;
 --assembly-defines=Unity.VisualScripting.Core;
 --assembly-defines=Unity.2D.Animation.Runtime;
 --assembly-defines=Unity.2D.Tilemap.Extras;
@@ -132,9 +142,11 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Unity.Addressables;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Newtonsoft.Json;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
@@ -215,6 +227,9 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=Unity.2D.IK.Runtime;
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
+--assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.ScriptableBuildPipeline;
+--assembly-defines=Unity.InternalAPIEngineBridge.013;
 --assembly-defines=Unity.RenderPipelines.Universal.Config.Runtime;
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
@@ -225,6 +240,7 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
+--assembly-defines=Unity.Localization;
 --assembly-defines=Unity.VisualScripting.Core;
 --assembly-defines=Unity.2D.Animation.Runtime;
 --assembly-defines=Unity.2D.Tilemap.Extras;
@@ -235,9 +251,11 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Unity.Addressables;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Newtonsoft.Json;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
@@ -284,6 +302,9 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=Unity.2D.IK.Runtime;
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
+--assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.ScriptableBuildPipeline;
+--assembly-defines=Unity.InternalAPIEngineBridge.013;
 --assembly-defines=Unity.RenderPipelines.Universal.Config.Runtime;
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
@@ -294,6 +315,7 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
+--assembly-defines=Unity.Localization;
 --assembly-defines=Unity.VisualScripting.Core;
 --assembly-defines=Unity.2D.Animation.Runtime;
 --assembly-defines=Unity.2D.Tilemap.Extras;
@@ -304,9 +326,11 @@ Library: C:\Users\komp1\Documents\GitHub\ProjektStudia\ProjektStudia\Temp\BurstO
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.RenderPipelines.Universal.Shaders;
 --assembly-defines=Unity.VisualScripting.State;
+--assembly-defines=Unity.Addressables;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Newtonsoft.Json;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;

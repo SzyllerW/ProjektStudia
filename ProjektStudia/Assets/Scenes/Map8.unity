@@ -3835,7 +3835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterIcons.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterPrefabs.Array.size
@@ -3848,18 +3848,18 @@ PrefabInstance:
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterIcons.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: fb78b2c3bd9d24f4a8edff02764f3816, type: 3}
+      objectReference: {fileID: 21300000, guid: dd4311fc70b08fe459e71092e5241ffc, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterIcons.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: dd4311fc70b08fe459e71092e5241ffc, type: 3}
+      objectReference: {fileID: 21300000, guid: c9603c84ecaaca84bae7ed3934de44f9, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterIcons.Array.data[3]
       value: 
       objectReference: {fileID: 21300000, guid: c9603c84ecaaca84bae7ed3934de44f9, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: playableCharacters.Array.size
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: characterPrefabs.Array.data[0]
@@ -3884,11 +3884,11 @@ PrefabInstance:
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: playableCharacters.Array.data[1]
       value: 
-      objectReference: {fileID: 1886497336514422082, guid: 6230f4f3e75eedb40aeb83ac65041e5f, type: 3}
+      objectReference: {fileID: 8865687083874275941, guid: cadea58fc0824134ca097350db110bac, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: playableCharacters.Array.data[2]
       value: 
-      objectReference: {fileID: 8865687083874275941, guid: cadea58fc0824134ca097350db110bac, type: 3}
+      objectReference: {fileID: 851687536131307135, guid: 6516d6ece8b108841ad817d0d7119183, type: 3}
     - target: {fileID: 2850304419875988166, guid: db8d409606a04604b994c011920aeb23, type: 3}
       propertyPath: playableCharacters.Array.data[3]
       value: 

@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SaveSystem.Load(); // <- tu
+
         CollectibleItem.OnItemCollected += OnItemCollected;
         totalBerries = CountTotalBerries();
 

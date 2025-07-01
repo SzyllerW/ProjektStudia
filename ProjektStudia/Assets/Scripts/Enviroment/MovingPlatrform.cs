@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class MovingPlatform : MonoBehaviour
 {
     [Header("Platform Points")]
@@ -24,6 +24,10 @@ public class MovingPlatform : MonoBehaviour
 
         transform.position = startPoint.position;
         target = endPoint.position;
+
+        // Ustaw collider jako trigger do wykrywania gracza
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+        col.isTrigger = true;
     }
 
     private void FixedUpdate()
@@ -36,6 +40,22 @@ public class MovingPlatform : MonoBehaviour
             transform.position = target;
             goingToEnd = !goingToEnd;
             target = goingToEnd ? endPoint.position : startPoint.position;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.transform.SetParent(transform);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.transform.SetParent(null);
         }
     }
 }

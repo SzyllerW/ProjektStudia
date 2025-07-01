@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 582021584486734608}
   - component: {fileID: 6654495855282973171}
   - component: {fileID: 4285969376323659668}
-  - component: {fileID: 5597361971132797244}
   m_Layer: 5
   m_Name: LocalizationPanel
   m_TagString: Untagged
@@ -201,18 +200,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5597361971132797244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 486139421128936940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1c20021324b47e4aad3f586f2bd650a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &716669746861066508
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,7 +2978,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5597361971132797244}
+      - m_Target: {fileID: 6770967368632064974}
         m_TargetAssemblyTypeName: LocaleSelector, Assembly-CSharp
         m_MethodName: ChangeLocale
         m_Mode: 3
@@ -3689,7 +3676,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5597361971132797244}
+      - m_Target: {fileID: 6770967368632064974}
         m_TargetAssemblyTypeName: LocaleSelector, Assembly-CSharp
         m_MethodName: ChangeLocale
         m_Mode: 3
@@ -4874,6 +4861,7 @@ GameObject:
   - component: {fileID: 1111826589114431242}
   - component: {fileID: 6633085800456393716}
   - component: {fileID: 6101752234774899445}
+  - component: {fileID: 6770967368632064974}
   m_Layer: 5
   m_Name: SettingsPanel
   m_TagString: Untagged
@@ -4986,6 +4974,18 @@ MonoBehaviour:
   - {fileID: 718195044618569473}
   - {fileID: 486139421128936940}
   buttonSoundClip: {fileID: 8300000, guid: 5cad2e8d8b3a2b345ba01813fc34dc58, type: 3}
+--- !u!114 &6770967368632064974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6387024011211092187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c20021324b47e4aad3f586f2bd650a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6611536249737010267
 GameObject:
   m_ObjectHideFlags: 0

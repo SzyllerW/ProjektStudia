@@ -1642,6 +1642,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Acorn
       objectReference: {fileID: 0}
+    - target: {fileID: 4874584707990649618, guid: 425e32006593b0540b4da14af7c79c7e, type: 3}
+      propertyPath: lastCheckpoint
+      value: 
+      objectReference: {fileID: 2022289604}
     - target: {fileID: 6016776483602400115, guid: 425e32006593b0540b4da14af7c79c7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 100.9
@@ -3444,6 +3448,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2022289604}
   - {fileID: 984211285}
   - {fileID: 1294279566}
   m_Father: {fileID: 0}
@@ -5561,6 +5566,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59abed2449a22fe499cab31f76dbca9a, type: 3}
+--- !u!1 &2022289603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2022289604}
+  m_Layer: 0
+  m_Name: AcornCheckPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2022289604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022289603}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 99.6, y: 18.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1421890745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2049172599
 GameObject:
   m_ObjectHideFlags: 0
